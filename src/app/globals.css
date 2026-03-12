@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --blue:        #1B3B6F;
+    --blue-mid:    #254E99;
+    --blue-light:  #EEF3FB;
+    --amber:       #F59E0B;
+    --amber-light: #FEF3C7;
+    --white:       #FFFFFF;
+    --gray-50:     #F9FAFB;
+    --gray-100:    #F3F4F6;
+    --gray-400:    #9CA3AF;
+    --gray-600:    #4B5563;
+    --gray-900:    #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray-900);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-[#1B3B6F] hover:bg-[#254E99] text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-200 text-sm;
+  }
+  .btn-amber {
+    @apply inline-flex items-center justify-center gap-2 bg-[#F59E0B] hover:bg-amber-500 text-[#1B3B6F] font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 text-sm;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 border border-[#1B3B6F] text-[#1B3B6F] hover:bg-[#EEF3FB] font-medium py-2.5 px-5 rounded-xl transition-all duration-200 text-sm;
+  }
+  .card {
+    @apply bg-white rounded-2xl overflow-hidden border border-gray-100;
+  }
+  .input {
+    @apply w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/20 focus:border-[#1B3B6F] transition-all bg-white;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .section-label {
+    @apply text-xs font-semibold tracking-widest uppercase text-[#F59E0B] mb-3;
+  }
+  .section-title {
+    @apply font-['Playfair_Display'] text-3xl md:text-4xl font-semibold text-[#1B3B6F] leading-tight;
+  }
+}

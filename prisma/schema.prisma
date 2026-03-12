@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  phone        String?
+  passwordHash String
+  role         Role       @default(TENANT)
+  isApproved   Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  properties   Property[]
+  bookings     Booking[]
+  reviews      Review[]
+  likes        Like[]
+}
+
+model Property {
+  id          String     @id @default(cuid())
+  ownerId     String
+  owner       User       @relation(fields: [ownerId], references: [id])
+  name        String
+  description String
+  city        String
+  address     String
+  lat         Float?
+  lng         Float?
+  gender      Gender     @default(UNISEX)
+  whatsapp    String?
+  isVerified  Boolean    @default(false)
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  rooms       Room[]
+  images      Image[]
+  videos      Video[]
+  amenities   Amenity[]
+  bookings    Booking[]
+  reviews     Review[]
+  likes       Like[]
+}
+
+model Room {
+  id          String    @id @default(cuid())
+  propertyId  String
+  property    Property  @relation(fields: [propertyId], references: [id])
+  type        String
+  rent        Int
+  deposit     Int
+  isAvailable Boolean   @default(true)
+  bookings    Booking[]
+}
+
+model Booking {
+  id         String        @id @default(cuid())
+  tenantId   String
+  tenant     User          @relation(fields: [tenantId], references: [id])
+  propertyId String
+  property   Property      @relation(fields: [propertyId], references: [id])
+  roomId     String
+  room       Room          @relation(fields: [roomId], references: [id])
+  type       BookingType   @default(ENQUIRY)
+  status     BookingStatus @default(PENDING)
+  moveInDate DateTime
+  tokenPaid  Boolean       @default(false)
+  razorpayId String?
+  createdAt  DateTime      @default(now())
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  tenantId   String
+  tenant     User     @relation(fields: [tenantId], references: [id])
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+}
+
+model Image {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  url        String
+  isPrimary  Boolean  @default(false)
+}
+
+model Video {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  url        String
+}
+
+model Amenity {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  name       String
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+}
+
+enum Role {
+  TENANT
+  OWNER
+  BROKER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNISEX
+}
+
+enum BookingType {
+  ENQUIRY
+  DIRECT
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
