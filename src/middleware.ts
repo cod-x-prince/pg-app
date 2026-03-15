@@ -7,16 +7,38 @@ export default withAuth(
     const token = (req as any).nextauth?.token;
     const path = req.nextUrl.pathname;
 
+    // Always redirect to login using NEXTAUTH_URL as base — not req.url
+    // This prevents callbackUrl from leaking the deployment-specific domain
+    const loginUrl = new URL(
+      "/auth/login",
+      process.env.NEXTAUTH_URL ?? req.nextUrl.origin,
+    );
+    loginUrl.searchParams.set("callbackUrl", path);
+
+    // ── Role-based route protection ───────────────────────────────────
     if (path.startsWith("/admin") && token?.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      return NextResponse.redirect(loginUrl);
     }
 
+    if (
+      (path.startsWith("/owner") || path.startsWith("/dashboard")) &&
+      !["OWNER", "BROKER", "ADMIN", "TENANT"].includes(token?.role ?? "")
+    ) {
+      return NextResponse.redirect(loginUrl);
+    }
+
+    // ── Block unapproved owners from listing ──────────────────────────
     if (
       path.startsWith("/owner/listings") &&
       !token?.isApproved &&
       token?.role !== "ADMIN"
     ) {
-      return NextResponse.redirect(new URL("/auth/pending", req.url));
+      return NextResponse.redirect(
+        new URL(
+          "/auth/pending",
+          process.env.NEXTAUTH_URL ?? req.nextUrl.origin,
+        ),
+      );
     }
 
     return NextResponse.next();
@@ -24,6 +46,9 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token }) => !!token,
+    },
+    pages: {
+      signIn: "/auth/login",
     },
   },
 );
