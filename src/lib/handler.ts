@@ -1,35 +1,39 @@
-import { NextResponse } from "next/server"
-import * as Sentry from "@sentry/nextjs"
+import { NextResponse } from "next/server";
 
-type Handler = (...args: any[]) => Promise<NextResponse>
+type Handler = (...args: any[]) => Promise<NextResponse>;
 
 /**
  * Wraps any API route handler with:
  * - try/catch for unhandled errors
- * - Sentry error reporting with request context
+ * - Sentry error reporting (lazy import — safe at build time)
  * - Clean 500 JSON response (never exposes stack traces)
  */
 export function withHandler(fn: Handler): Handler {
   return async (...args) => {
     try {
-      return await fn(...args)
+      return await fn(...args);
     } catch (err) {
-      // Report to Sentry with full context
-      Sentry.captureException(err, {
-        extra: {
-          args: args.map((a: any) => ({
-            url: a?.url,
-            method: a?.method,
-          })),
-        },
-      })
+      console.error("[API Error]", err);
 
-      console.error("[API Error]", err)
+      // Lazy import Sentry — avoids build-time crash when SENTRY_DSN is missing
+      try {
+        const Sentry = await import("@sentry/nextjs");
+        Sentry.captureException(err, {
+          extra: {
+            args: args.map((a: any) => ({
+              url: a?.url,
+              method: a?.method,
+            })),
+          },
+        });
+      } catch {
+        // Sentry not available — silently continue
+      }
 
       return NextResponse.json(
         { error: "Internal server error. Please try again." },
-        { status: 500 }
-      )
+        { status: 500 },
+      );
     }
-  }
+  };
 }
