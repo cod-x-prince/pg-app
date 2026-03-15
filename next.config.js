@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-const { withSentryConfig } = require("@sentry/nextjs");
 
 const nextConfig = {
   compress: true,
@@ -67,25 +66,8 @@ const nextConfig = {
   },
 };
 
-module.exports = withSentryConfig(nextConfig, {
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-
-  // Suppress verbose Sentry build output
-  silent: true,
-
-  // Only upload source maps when auth token is present
-  // Without this, missing token causes build failure
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-
-  // Don't fail the build if source map upload fails
-  errorHandler(err, invokeErr, compilation) {
-    compilation.warnings.push("Sentry: " + err.message);
-  },
-
-  // Hide source maps from public JS bundle
-  hideSourceMaps: true,
-
-  // Disable Sentry telemetry during CI/build
-  telemetry: false,
-});
+// NOTE: withSentryConfig wrapper removed — it caused build failures on Vercel
+// Sentry is initialized via instrumentation.ts which works without the wrapper.
+// Source map uploads can be re-enabled later by adding SENTRY_AUTH_TOKEN to
+// Vercel env vars and re-wrapping with withSentryConfig.
+module.exports = nextConfig;
