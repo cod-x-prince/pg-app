@@ -13,7 +13,7 @@ Built for the Indian market — WhatsApp-first, mobile-ready, production-grade.
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase)](https://supabase.com)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
 
-[Live Demo](https://pglife.in) · [Report Bug](https://github.com/cod-x-prince/pglife/issues) · [Request Feature](https://github.com/cod-x-prince/pglife/issues)
+[Live Demo](https://pg-app.in) · [Report Bug](https://github.com/cod-x-prince/pg-app/issues) · [Request Feature](https://github.com/cod-x-prince/pg-app/issues)
 
 </div>
 
