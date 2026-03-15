@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { signIn } from "next-auth/react"
+import TurnstileWidget from "@/components/ui/TurnstileWidget"
 
 type Role = "TENANT" | "OWNER"
 
@@ -36,6 +37,7 @@ export default function SignupPage() {
   const [role, setRole] = useState<Role>("TENANT")
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" })
   const [error, setError] = useState("")
+  const [turnstileToken, setTurnstileToken] = useState("")
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
@@ -45,7 +47,7 @@ export default function SignupPage() {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, role }),
+      body: JSON.stringify({ ...form, role, turnstileToken }),
     })
     const data = await res.json()
     if (!res.ok) { setError(data.error || "Something went wrong"); setLoading(false); return }
@@ -242,6 +244,8 @@ export default function SignupPage() {
                     autoComplete="new-password"
                   />
                 </div>
+                <TurnstileWidget onVerify={setTurnstileToken} />
+
                 <button
                   type="submit"
                   disabled={loading}

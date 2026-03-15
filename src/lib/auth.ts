@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import { rateLimit } from "@/lib/rateLimit"
@@ -15,6 +16,23 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/login",
   },
   providers: [
+    // Google OAuth — set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in env
+    ...(process.env.GOOGLE_CLIENT_ID ? [
+      GoogleProvider({
+        clientId:     process.env.GOOGLE_CLIENT_ID!,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        profile(profile) {
+          return {
+            id:         profile.sub,
+            name:       profile.name,
+            email:      profile.email,
+            image:      profile.picture,
+            role:       "TENANT",
+            isApproved: true,
+          }
+        },
+      }),
+    ] : []),
     CredentialsProvider({
       name: "credentials",
       credentials: {

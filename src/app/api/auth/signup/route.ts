@@ -36,6 +36,16 @@ export async function POST(req: Request) {
       select: { id: true, role: true, isApproved: true },
     })
 
+    // Send welcome email (non-blocking)
+    try {
+      const { sendWelcomeEmail } = await import("@/lib/email")
+      await sendWelcomeEmail({
+        name:  sanitizeString(name, 100).trim(),
+        email,
+        role,
+      })
+    } catch { /* email failure should not block signup */ }
+
     return NextResponse.json({ success: true, role: user.role, isApproved: user.isApproved })
   } catch {
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 })
