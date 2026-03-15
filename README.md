@@ -345,7 +345,7 @@ Bangalore · Mumbai · Delhi · Hyderabad · Chennai · Kolkata · Pune · Jammu
 
 ## Contributing
 
-This is a startup project. If you find a security vulnerability, please email prince@pglife.in rather than opening a public issue.
+This is a startup project. If you find a security vulnerability, please email businessinfo1201@gmail.com rather than opening a public issue.
 
 For feature requests and bugs, open an issue.
 
@@ -359,7 +359,7 @@ Private — all rights reserved. © 2026 PGLife.
 
 <div align="center">
 
-Built with ❤️ in India by [Prince Jamwal](https://github.com/cod-x-prince) & Paras Jamwal
+Built with ❤️ in India by [Prince Rajput](https://github.com/cod-x-prince) & Paras Jamwal
 
 _"Find your home away from home"_
 
