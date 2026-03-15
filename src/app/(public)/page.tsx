@@ -51,47 +51,58 @@ const HOW_IT_WORKS = [
 ];
 
 async function getStats() {
-  const [totalProperties, totalBookings, totalTenants, ratingAgg, cities] =
-    await Promise.all([
-      prisma.property.count({ where: { isActive: true } }),
-      prisma.booking.count({
-        where: { status: { in: ["CONFIRMED", "COMPLETED"] } },
-      }),
-      prisma.user.count({ where: { role: "TENANT" } }),
-      prisma.review.aggregate({ _avg: { rating: true } }),
-      prisma.property.groupBy({
-        by: ["city"],
-        where: { isActive: true },
-        _count: true,
-        orderBy: { _count: { city: "desc" } },
-      }),
-    ]);
-  return {
-    totalProperties,
-    totalBookings,
-    totalTenants,
-    avgRating: ratingAgg._avg.rating ?? 0,
-    cities,
-  };
+  try {
+    const totalProperties = await prisma.property.count({
+      where: { isActive: true },
+    });
+    const totalBookings = await prisma.booking.count({
+      where: { status: { in: ["CONFIRMED", "COMPLETED"] } },
+    });
+    const totalTenants = await prisma.user.count({ where: { role: "TENANT" } });
+    const ratingAgg = await prisma.review.aggregate({ _avg: { rating: true } });
+    const cities = await prisma.property.groupBy({
+      by: ["city"],
+      where: { isActive: true },
+      _count: true,
+      orderBy: { _count: { city: "desc" } },
+    });
+    return {
+      totalProperties,
+      totalBookings,
+      totalTenants,
+      avgRating: ratingAgg._avg.rating ?? 0,
+      cities,
+    };
+  } catch {
+    return {
+      totalProperties: 0,
+      totalBookings: 0,
+      totalTenants: 0,
+      avgRating: 0,
+      cities: [],
+    };
+  }
 }
 
 async function getTestimonials() {
-  return prisma.review.findMany({
-    where: { rating: 5, comment: { not: null } },
-    include: {
-      tenant: { select: { name: true } },
-      property: { select: { city: true } },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 3,
-  });
+  try {
+    return prisma.review.findMany({
+      where: { rating: 5, comment: { not: null } },
+      include: {
+        tenant: { select: { name: true } },
+        property: { select: { city: true } },
+      },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+    });
+  } catch {
+    return [];
+  }
 }
 
 export default async function HomePage() {
-  const [stats, testimonials] = await Promise.all([
-    getStats(),
-    getTestimonials(),
-  ]);
+  const stats = await getStats();
+  const testimonials = await getTestimonials();
 
   const STATS = [
     {
