@@ -67,20 +67,25 @@ const nextConfig = {
   },
 };
 
-// Sentry config — only wraps in production build
-// In development, Sentry is disabled so it doesn't interfere
 module.exports = withSentryConfig(nextConfig, {
-  // Suppresses Sentry build output
-  silent: !process.env.CI,
-
-  // Upload source maps to Sentry for readable stack traces
-  // Requires SENTRY_AUTH_TOKEN in your Vercel env vars
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
 
-  // Automatically tree-shake Sentry logger in production
-  // disableLogger removed — use webpack.treeshake.removeDebugLogging instead
+  // Suppress verbose Sentry build output
+  silent: true,
 
-  // Hides source maps from the public bundle
+  // Only upload source maps when auth token is present
+  // Without this, missing token causes build failure
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Don't fail the build if source map upload fails
+  errorHandler(err, invokeErr, compilation) {
+    compilation.warnings.push("Sentry: " + err.message);
+  },
+
+  // Hide source maps from public JS bundle
   hideSourceMaps: true,
+
+  // Disable Sentry telemetry during CI/build
+  telemetry: false,
 });
