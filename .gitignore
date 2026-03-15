@@ -51,3 +51,5 @@ PRIORITY_FIXES_REPORT.md
 sentry.server.config.ts
 sentry.edge.config.ts
 sentry.client.config.ts
+.vercel
+.env*.local
