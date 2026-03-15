@@ -11,7 +11,7 @@ export const POST = withHandler(async (req: Request) => {
   const user = session?.user as any
   if (!user) return NextResponse.json({ error: "Please login to book" }, { status: 401 })
 
-  const rl = rateLimit(`booking:${user.id}`, 10, 24 * 60 * 60 * 1000)
+  const rl = await rateLimit(`booking:${user.id}`, 10, 24 * 60 * 60 * 1000)
   if (!rl.success)
     return NextResponse.json({ error: "Too many booking requests today." }, { status: 429 })
 

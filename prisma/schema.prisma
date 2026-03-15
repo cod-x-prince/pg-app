@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -16,6 +17,7 @@ model User {
   role         Role       @default(TENANT)
   isApproved   Boolean    @default(false)
   createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   properties   Property[]
   bookings     Booking[]
   reviews      Review[]
@@ -37,6 +39,7 @@ model Property {
   isVerified  Boolean    @default(false)
   isActive    Boolean    @default(true)
   createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   rooms       Room[]
   images      Image[]
   videos      Video[]
@@ -44,6 +47,14 @@ model Property {
   bookings    Booking[]
   reviews     Review[]
   likes       Like[]
+
+  @@index([city])
+  @@index([isActive])
+  @@index([gender])
+  @@index([ownerId])
+  @@index([city, isActive])
+  @@index([city, isActive, gender])
+  @@index([createdAt])
 }
 
 model Room {
@@ -55,6 +66,9 @@ model Room {
   deposit     Int
   isAvailable Boolean   @default(true)
   bookings    Booking[]
+
+  @@index([propertyId])
+  @@index([propertyId, isAvailable])
 }
 
 model Booking {
@@ -71,6 +85,12 @@ model Booking {
   tokenPaid  Boolean       @default(false)
   razorpayId String?
   createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@index([tenantId])
+  @@index([propertyId])
+  @@index([roomId])
+  @@index([tenantId, status])
 }
 
 model Review {
@@ -82,6 +102,9 @@ model Review {
   rating     Int
   comment    String?
   createdAt  DateTime @default(now())
+
+  @@unique([tenantId, propertyId])
+  @@index([propertyId])
 }
 
 model Image {
@@ -90,6 +113,8 @@ model Image {
   property   Property @relation(fields: [propertyId], references: [id])
   url        String
   isPrimary  Boolean  @default(false)
+
+  @@index([propertyId])
 }
 
 model Video {
@@ -97,6 +122,8 @@ model Video {
   propertyId String
   property   Property @relation(fields: [propertyId], references: [id])
   url        String
+
+  @@index([propertyId])
 }
 
 model Amenity {
@@ -104,6 +131,9 @@ model Amenity {
   propertyId String
   property   Property @relation(fields: [propertyId], references: [id])
   name       String
+
+  @@index([propertyId])
+  @@index([name])
 }
 
 model Like {
@@ -112,6 +142,10 @@ model Like {
   user       User     @relation(fields: [userId], references: [id])
   propertyId String
   property   Property @relation(fields: [propertyId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, propertyId])
+  @@index([propertyId])
 }
 
 enum Role {

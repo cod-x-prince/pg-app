@@ -63,7 +63,7 @@ export const POST = withHandler(async (req: Request) => {
   if (!user.isApproved)
     return NextResponse.json({ error: "Account pending approval" }, { status: 403 })
 
-  const rl = rateLimit(`create-listing:${user.id}`, 10, 24 * 60 * 60 * 1000)
+  const rl = await rateLimit(`create-listing:${user.id}`, 10, 24 * 60 * 60 * 1000)
   if (!rl.success)
     return NextResponse.json({ error: "Too many listings created today." }, { status: 429 })
 

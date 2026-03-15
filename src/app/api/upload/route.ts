@@ -15,7 +15,7 @@ export const POST = withHandler(async (req: Request) => {
   if (!user.isApproved)
     return NextResponse.json({ error: "Account pending approval" }, { status: 403 })
 
-  const rl = rateLimit(`upload:${user.id}`, 30, 60 * 60 * 1000)
+  const rl = await rateLimit(`upload:${user.id}`, 30, 60 * 60 * 1000)
   if (!rl.success)
     return NextResponse.json({ error: "Upload limit reached. Try again later." }, { status: 429 })
 

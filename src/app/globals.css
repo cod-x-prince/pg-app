@@ -59,3 +59,61 @@
     @apply font-['Playfair_Display'] text-3xl md:text-4xl font-semibold text-[#1B3B6F] leading-tight;
   }
 }
+
+/* ── Page transitions ──────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in   { animation: fadeIn  0.3s ease-out forwards; }
+.animate-slide-up  { animation: slideUp 0.4s ease-out forwards; }
+.animate-scale-in  { animation: scaleIn 0.25s ease-out forwards; }
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 300ms; }
+
+/* Main content entrance */
+main { animation: fadeIn 0.35s ease-out; }
+
+/* Card hover lift */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(27, 59, 111, 0.1);
+}
+
+/* Smooth image zoom on card hover */
+.img-zoom { transition: transform 0.4s ease; will-change: transform; }
+.group:hover .img-zoom { transform: scale(1.04); }
+
+/* Focus ring consistent */
+*:focus-visible {
+  outline: 2px solid #1B3B6F;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

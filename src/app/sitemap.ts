@@ -6,13 +6,13 @@ const BASE = process.env.NEXTAUTH_URL ?? "https://pglife.in"
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const properties = await prisma.property.findMany({
     where:  { isActive: true },
-    select: { id: true, city: true, createdAt: true },
+    select: { id: true, city: true, updatedAt: true },
     take:   1000,
   })
 
-  const propertyUrls = properties.map((p: any) => ({
+  const propertyUrls = properties.map((p: { id: string; city: string; updatedAt: Date }) => ({
     url:          `${BASE}/properties/${p.city.toLowerCase()}/${p.id}`,
-    lastModified: p.createdAt,
+    lastModified: p.updatedAt,
     changeFrequency: "weekly" as const,
     priority:     0.8,
   }))

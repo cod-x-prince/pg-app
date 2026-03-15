@@ -8,7 +8,7 @@ import { SignupSchema, parseBody } from "@/lib/schemas"
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get("x-forwarded-for") ?? "unknown"
-    const rl = rateLimit(`signup:${ip}`, 5, 60 * 60 * 1000)
+    const rl = await rateLimit(`signup:${ip}`, 5, 60 * 60 * 1000)
     if (!rl.success)
       return NextResponse.json({ error: "Too many signup attempts. Try again later." }, { status: 429 })
 
