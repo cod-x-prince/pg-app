@@ -1,10 +1,12 @@
+export const dynamic = "force-dynamic"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { CreateVideoSchema, parseBody } from "@/lib/schemas"
+import { withHandler } from "@/lib/handler"
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export const POST = withHandler(async (req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
   const user = session?.user as any
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -18,8 +20,6 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   if (!parsed.success)
     return NextResponse.json({ error: parsed.error }, { status: 400 })
 
-  const video = await prisma.video.create({
-    data: { propertyId: params.id, url: parsed.data.url },
-  })
+  const video = await prisma.video.create({ data: { propertyId: params.id, url: parsed.data.url } })
   return NextResponse.json(video, { status: 201 })
-}
+})

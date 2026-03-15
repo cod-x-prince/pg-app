@@ -1,10 +1,12 @@
+export const dynamic = "force-dynamic"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { AdminPropertySchema, parseBody } from "@/lib/schemas"
+import { withHandler } from "@/lib/handler"
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export const PUT = withHandler(async (req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
   const user = session?.user as any
   if (!user || user.role !== "ADMIN")
@@ -16,8 +18,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
   const updated = await prisma.property.update({
     where: { id: params.id },
-    data: parsed.data,
+    data:  parsed.data,
     select: { id: true, isVerified: true, isActive: true },
   })
   return NextResponse.json(updated)
-}
+})

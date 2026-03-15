@@ -1,18 +1,17 @@
+export const dynamic = "force-dynamic"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { UpdatePropertySchema, parseBody } from "@/lib/schemas"
+import { withHandler } from "@/lib/handler"
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export const GET = withHandler(async (_req: Request, { params }: { params: { id: string } }) => {
   const property = await prisma.property.findUnique({
     where: { id: params.id },
     include: {
-      images:    true,
-      videos:    true,
-      rooms:     true,
-      amenities: true,
-      reviews:   {
+      images: true, videos: true, rooms: true, amenities: true,
+      reviews: {
         include: { tenant: { select: { id: true, name: true } } },
         orderBy: { createdAt: "desc" },
         take: 20,
@@ -24,9 +23,9 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   if (!property || !property.isActive)
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   return NextResponse.json(property)
-}
+})
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export const PUT = withHandler(async (req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
   const user = session?.user as any
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -40,14 +39,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   if (!parsed.success)
     return NextResponse.json({ error: parsed.error }, { status: 400 })
 
-  const updated = await prisma.property.update({
-    where: { id: params.id },
-    data: parsed.data as any,
-  })
+  const updated = await prisma.property.update({ where: { id: params.id }, data: parsed.data as any })
   return NextResponse.json(updated)
-}
+})
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+export const DELETE = withHandler(async (_req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
   const user = session?.user as any
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -59,4 +55,4 @@ export async function DELETE(_req: Request, { params }: { params: { id: string }
 
   await prisma.property.update({ where: { id: params.id }, data: { isActive: false } })
   return NextResponse.json({ success: true })
-}
+})
