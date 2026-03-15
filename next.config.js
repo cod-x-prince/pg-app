@@ -32,7 +32,7 @@ const nextConfig = {
               "default-src 'self'",
               process.env.NODE_ENV === "development"
                 ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://checkout.razorpay.com"
-                : "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://browser.sentry-cdn.com",
+                : "script-src 'self' 'unsafe-inline' blob: https://checkout.razorpay.com https://browser.sentry-cdn.com https://vercel.live",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               process.env.NODE_ENV === "development"
