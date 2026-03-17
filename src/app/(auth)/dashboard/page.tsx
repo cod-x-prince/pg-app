@@ -1,4 +1,5 @@
 "use client"
+import type { SessionUser } from "@/types"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import Navbar from "@/components/layout/Navbar"
@@ -15,7 +16,7 @@ const STATUS_CONFIG: Record<string, { label: string; style: string }> = {
 
 export default function TenantDashboard() {
   const { data: session } = useSession()
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
   const [bookings, setBookings] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -97,7 +98,7 @@ export default function TenantDashboard() {
             </div>
           ) : (
             <div className="space-y-3">
-              {bookings.map((b: any) => {
+              {bookings.map((b) => {
                 const status = STATUS_CONFIG[b.status] ?? STATUS_CONFIG.PENDING
                 return (
                   <div key={b.id} className="bg-white rounded-2xl border border-gray-100 shadow-card p-5 flex gap-5 hover:border-[#1B3B6F]/20 transition-colors">

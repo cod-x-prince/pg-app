@@ -1,11 +1,12 @@
 "use client"
+import type { SessionUser } from "@/types"
 import { useSession, signOut } from "next-auth/react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
 export default function Navbar() {
   const { data: session } = useSession()
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 

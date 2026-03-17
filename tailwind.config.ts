@@ -1,6 +1,7 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class", // Enable class-based dark mode (we'll add 'dark' to html)
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,27 +10,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        background: "#09090B", // deep black background
+        surface: "#121214", // cards, sheets
+        primary: "#EAB308", // warm amber (accent)
+        secondary: "#A1A1AA", // zinc-400 for muted text
+        border: "#27272A", // zinc-800 for borders
+        // Keep some semantic aliases for now, but they'll be phased out
         blue: {
-          DEFAULT: "#1B3B6F",
-          mid:     "#254E99",
-          light:   "#EEF3FB",
+          DEFAULT: "#1B3B6F", // keep for legacy? We may replace later
+          light: "#EEF3FB",
         },
         amber: {
-          DEFAULT: "#F59E0B",
-          light:   "#FEF3C7",
+          DEFAULT: "#EAB308",
+          light: "#FEF3C7",
         },
       },
       fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        heading: ["Outfit", "system-ui", "sans-serif"],
+        // Keep serif for any old components, but we'll migrate
         serif: ["Playfair Display", "Georgia", "serif"],
-        sans:  ["DM Sans", "sans-serif"],
       },
       boxShadow: {
-        card:    "0 2px 16px 0 rgba(27,59,111,0.08)",
-        "card-hover": "0 8px 32px 0 rgba(27,59,111,0.16)",
-        amber:   "0 4px 24px 0 rgba(245,158,11,0.25)",
+        glow: "0 0 20px rgba(234, 179, 8, 0.5)",
+        "glow-lg": "0 0 30px rgba(234, 179, 8, 0.6)",
+        card: "0 4px 20px rgba(0, 0, 0, 0.5)",
       },
     },
   },
   plugins: [],
-}
-export default config
+};
+
+export default config;

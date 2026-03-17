@@ -1,4 +1,5 @@
 "use client"
+import type { RazorpayResponse } from "@/types"
 import { useState, useCallback } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -20,6 +21,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
   const [roomId, setRoomId]     = useState("")
   const [moveInDate, setMoveInDate] = useState("")
   const [loading, setLoading]   = useState(false)
+  const [rzpReady, setRzpReady]   = useState(false)
   const [success, setSuccess]   = useState(false)
   const [error, setError]       = useState("")
 
@@ -85,11 +87,11 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
         description: `Token for ${propertyName} — ${selectedRoom?.type}`,
         order_id:    order.orderId,
         prefill: {
-          name:  (session?.user as any)?.name,
-          email: (session?.user as any)?.email,
+          name:  session?.user?.name ?? "",
+          email: session?.user?.email ?? "",
         },
         theme: { color: "#1B3B6F" },
-        handler: async (response: any) => {
+        handler: async (response: RazorpayResponse) => {
           // Step 4: Verify payment
           const verifyRes = await fetch("/api/payments/verify", {
             method: "POST",
@@ -158,7 +160,12 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
 
   return (
     <>
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+      <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="afterInteractive"
+        onLoad={() => setRzpReady(true)}
+        onError={() => console.warn("Razorpay script failed to load")}
+      />
 
       <div className="card p-6">
         {/* Tab switcher */}
@@ -256,7 +263,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
 
         <button
           onClick={tab === "token" ? handleTokenBooking : handleEnquiry}
-          disabled={loading || availableRooms.length === 0}
+          disabled={loading || availableRooms.length === 0 || (tab === "token" && !rzpReady)}
           className={`w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed ${
             tab === "token" ? "btn-amber" : "btn-primary"
           }`}

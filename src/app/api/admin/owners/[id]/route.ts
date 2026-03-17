@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
+import type { SessionUser } from "@/types"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { ApproveOwnerSchema, parseBody } from "@/lib/schemas"
@@ -8,7 +9,7 @@ import { withHandler } from "@/lib/handler"
 
 export const PUT = withHandler(async (req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
   if (!user || user.role !== "ADMIN")
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
 

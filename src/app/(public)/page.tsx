@@ -317,7 +317,7 @@ export default async function HomePage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((t: any, i: number) => (
+              {(testimonials as any[]).map((t, i: number) => (
                 <div key={t.id} className={`reveal reveal-d${i + 2} glass-dark rounded-3xl p-7`}>
                   {/* Stars */}
                   <div className="flex gap-0.5 mb-5">

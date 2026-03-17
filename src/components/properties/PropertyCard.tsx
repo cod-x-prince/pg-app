@@ -1,21 +1,10 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import type { PropertyListItem } from "@/types"
 
-interface Props {
-  property: {
-    id: string
-    name: string
-    city: string
-    address: string
-    gender: string
-    isVerified: boolean
-    images: { url: string; isPrimary: boolean }[]
-    rooms: { rent: number; isAvailable: boolean }[]
-    reviews: { rating: number }[]
-  }
-}
+interface Props { property: PropertyListItem }
 
 const GENDER_BADGE: Record<string, { label: string; style: string }> = {
   MALE:   { label: "Boys",   style: "bg-blue-50 text-[#1B3B6F] border border-blue-100" },
@@ -24,7 +13,8 @@ const GENDER_BADGE: Record<string, { label: string; style: string }> = {
 }
 
 export default function PropertyCard({ property }: Props) {
-  const cardRef = useRef<HTMLDivElement>(null)
+  const cardRef    = useRef<HTMLDivElement>(null)
+  const [saved, setSaved] = useState(false)
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = cardRef.current
@@ -41,16 +31,16 @@ export default function PropertyCard({ property }: Props) {
     }
   }
 
-  const primaryImg      = property.images.find(i => i.isPrimary)?.url || property.images[0]?.url
-  const availableRooms  = property.rooms.filter(r => r.isAvailable)
-  const minRent         = availableRooms.length ? Math.min(...availableRooms.map(r => r.rent)) : null
-  const avgRating       = property.reviews.length
+  const primaryImg     = property.images.find(i => i.isPrimary)?.url || property.images[0]?.url
+  const availableRooms = property.rooms.filter(r => r.isAvailable)
+  const minRent        = availableRooms.length ? Math.min(...availableRooms.map(r => r.rent)) : null
+  const avgRating      = property.reviews.length
     ? (property.reviews.reduce((s, r) => s + r.rating, 0) / property.reviews.length).toFixed(1)
     : null
   const gender = GENDER_BADGE[property.gender] ?? GENDER_BADGE.UNISEX
 
   return (
-    <Link href={`/properties/${property.city.toLowerCase()}/${property.id}`}>
+    <Link href={`/properties/${property.city.toLowerCase()}/${property.id}`} className="block">
       <div
         ref={cardRef}
         className="property-card group cursor-pointer"
@@ -58,7 +48,7 @@ export default function PropertyCard({ property }: Props) {
         onMouseLeave={onLeave}
         style={{ transition: "transform 0.15s ease", transformStyle: "preserve-3d", willChange: "transform" }}
       >
-        {/* Image */}
+        {/* Image container */}
         <div className="property-card-image mb-3.5">
           {primaryImg ? (
             <>
@@ -69,7 +59,6 @@ export default function PropertyCard({ property }: Props) {
                 className="object-cover"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               />
-              {/* Shimmer effect */}
               <div className="property-card-shimmer" />
             </>
           ) : (
@@ -80,7 +69,7 @@ export default function PropertyCard({ property }: Props) {
             </div>
           )}
 
-          {/* Top badges */}
+          {/* Verified badge */}
           <div className="absolute top-3 left-3 flex gap-1.5">
             {property.isVerified && (
               <span className="glass flex items-center gap-1 text-emerald-700 text-[11px] font-semibold px-2.5 py-1 rounded-full">
@@ -92,30 +81,41 @@ export default function PropertyCard({ property }: Props) {
             )}
           </div>
 
-          {/* Heart / Save button */}
+          {/* Save button — instant fill on click */}
           <button
-            className="absolute top-3 right-3 w-8 h-8 glass rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
-            onClick={e => e.preventDefault()}
-            aria-label="Save property"
+            className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
+              saved
+                ? "bg-red-500 opacity-100 scale-110"
+                : "glass opacity-0 group-hover:opacity-100 hover:bg-white hover:scale-105"
+            }`}
+            onClick={e => { e.preventDefault(); setSaved(s => !s) }}
+            aria-label={saved ? "Unsave property" : "Save property"}
           >
-            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            <svg
+              className={`w-4 h-4 transition-all duration-200 ${saved ? "text-white" : "text-gray-600"}`}
+              fill={saved ? "currentColor" : "none"}
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>
           </button>
 
-          {/* Bottom overlay */}
+          {/* Gradient overlay */}
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/40 to-transparent rounded-b-[20px]" />
 
-          {/* Price */}
+          {/* Price badge */}
           {minRent && (
             <div className="absolute bottom-3 right-3">
               <span className="bg-[#1B3B6F] text-white text-sm font-semibold px-3 py-1.5 rounded-xl shadow-lg">
-                ₹{minRent.toLocaleString()}<span className="text-white/60 font-normal text-xs">/mo</span>
+                ₹{minRent.toLocaleString("en-IN")}
+                <span className="text-white/60 font-normal text-xs">/mo</span>
               </span>
             </div>
           )}
 
-          {/* Rating */}
+          {/* Rating badge */}
           {avgRating && (
             <div className="absolute bottom-3 left-3">
               <span className="glass flex items-center gap-1 text-gray-800 text-[11px] font-semibold px-2.5 py-1 rounded-full">
@@ -128,7 +128,7 @@ export default function PropertyCard({ property }: Props) {
           )}
         </div>
 
-        {/* Card body */}
+        {/* Info */}
         <div className="px-0.5">
           <div className="flex items-start justify-between gap-2 mb-1.5">
             <h3 className="font-serif font-medium text-gray-900 text-[15px] leading-snug group-hover:text-[#1B3B6F] transition-colors line-clamp-1">
@@ -140,7 +140,8 @@ export default function PropertyCard({ property }: Props) {
           </div>
           <p className="text-gray-400 text-xs flex items-center gap-1.5">
             <svg className="w-3 h-3 shrink-0 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
             </svg>
             <span className="truncate">{property.address}</span>
           </p>

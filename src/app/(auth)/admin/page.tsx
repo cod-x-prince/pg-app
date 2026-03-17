@@ -1,4 +1,5 @@
 "use client"
+import type { SessionUser } from "@/types"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import Navbar from "@/components/layout/Navbar"
@@ -15,7 +16,7 @@ type Tab = "approvals" | "properties"
 
 export default function AdminPanel() {
   const { data: session } = useSession()
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
 
   const [tab, setTab]             = useState<Tab>("approvals")
   const [pending, setPending]     = useState<any[]>([])

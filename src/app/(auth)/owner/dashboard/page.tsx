@@ -1,4 +1,5 @@
 "use client"
+import type { SessionUser } from "@/types"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import Navbar from "@/components/layout/Navbar"
@@ -15,7 +16,7 @@ const STATUS_CONFIG: Record<string, { label: string; style: string }> = {
 
 export default function OwnerDashboard() {
   const { data: session } = useSession()
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
   const [properties, setProperties] = useState<any[]>([])
   const [bookings, setBookings]     = useState<any[]>([])
   const [loading, setLoading]       = useState(true)
@@ -43,8 +44,13 @@ export default function OwnerDashboard() {
 
   const deleteListing = async (id: string) => {
     if (!confirm("Remove this listing? This cannot be undone.")) return
-    await fetch(`/api/properties/${id}`, { method: "DELETE" })
-    setProperties(prev => prev.filter(p => p.id !== id))
+    // Wait for server confirmation before removing from UI
+    const res = await fetch(`/api/properties/${id}`, { method: "DELETE" })
+    if (res.ok) {
+      setProperties(prev => prev.filter(p => p.id !== id))
+    } else {
+      alert("Failed to delete listing. Please try again.")
+    }
   }
 
   // Unapproved state
@@ -153,7 +159,7 @@ export default function OwnerDashboard() {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {properties.map((p: any) => (
+                {properties.map((p) => (
                   <div key={p.id} className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden hover:border-[#1B3B6F]/20 hover:shadow-card-hover transition-all">
                     <div className="h-44 bg-gray-100 relative">
                       {p.images?.[0] ? (
@@ -203,7 +209,7 @@ export default function OwnerDashboard() {
               </div>
             ) : (
               <div className="space-y-3">
-                {bookings.map((b: any) => {
+                {bookings.map((b) => {
                   const status = STATUS_CONFIG[b.status] ?? STATUS_CONFIG.PENDING
                   return (
                     <div key={b.id} className={`bg-white rounded-2xl border shadow-card p-5 transition-colors ${

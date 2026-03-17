@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
+import type { SessionUser } from "@/types"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { withHandler } from "@/lib/handler"
@@ -8,7 +9,7 @@ import { withHandler } from "@/lib/handler"
 // POST — toggle like
 export const POST = withHandler(async (_req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
   if (!user) return NextResponse.json({ error: "Login to save properties" }, { status: 401 })
 
   const existing = await prisma.like.findFirst({
@@ -27,7 +28,7 @@ export const POST = withHandler(async (_req: Request, { params }: { params: { id
 // GET — check like status
 export const GET = withHandler(async (_req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
   if (!user) return NextResponse.json({ liked: false })
 
   const existing = await prisma.like.findFirst({

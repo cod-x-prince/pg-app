@@ -7,6 +7,7 @@ import { rateLimit } from "@/lib/rateLimit"
 import { ALLOWED_GENDERS, ALLOWED_AMENITIES } from "@/lib/validation"
 import { CreatePropertySchema, parseBody } from "@/lib/schemas"
 import { withHandler } from "@/lib/handler"
+import type { SessionUser } from "@/types"
 
 export const GET = withHandler(async (req: Request) => {
   const { searchParams } = new URL(req.url)
@@ -22,7 +23,7 @@ export const GET = withHandler(async (req: Request) => {
   const safeMaxRent   = maxRent ? Math.max(0, Math.min(parseInt(maxRent) || 500000, 500000)) : null
   const safeAmenities = amenities.filter(a => ALLOWED_AMENITIES.includes(a))
 
-  const where: any = { isActive: true }
+  const where: Record<string, unknown> = { isActive: true }
   if (city) where.city = { equals: city, mode: "insensitive" }
   if (safeGender) where.gender = safeGender
   if (safeAmenities.length) where.amenities = { some: { name: { in: safeAmenities } } }
@@ -33,7 +34,7 @@ export const GET = withHandler(async (req: Request) => {
     }}}
   }
 
-  const orderBy: any = sort === "price_asc" ? { rooms: { _count: "asc" } } : { createdAt: "desc" }
+  const orderBy: Record<string, unknown> = sort === "price_asc" ? { rooms: { _count: "asc" } } : { createdAt: "desc" }
 
   const page  = Math.max(1, parseInt(searchParams.get("page") || "1"))
   const limit = Math.min(50, parseInt(searchParams.get("limit") || "20"))
@@ -58,7 +59,7 @@ export const GET = withHandler(async (req: Request) => {
 
 export const POST = withHandler(async (req: Request) => {
   const session = await getServerSession(authOptions)
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
   if (!user || !["OWNER", "BROKER", "ADMIN"].includes(user.role))
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   if (!user.isApproved)
@@ -74,7 +75,7 @@ export const POST = withHandler(async (req: Request) => {
 
   const { name, description, city, address, gender, whatsapp, lat, lng } = parsed.data
   const property = await prisma.property.create({
-    data: { ownerId: user.id, name, description, city, address, gender: gender as any, whatsapp: whatsapp ?? null, lat: lat ?? null, lng: lng ?? null },
+    data: { ownerId: user.id, name, description, city, address, gender, whatsapp: whatsapp ?? null, lat: lat ?? null, lng: lng ?? null } as any,
   })
   return NextResponse.json(property, { status: 201 })
 })

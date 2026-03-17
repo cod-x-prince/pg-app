@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
+import type { SessionUser } from "@/types"
 import { authOptions } from "@/lib/auth"
 import cloudinary from "@/lib/cloudinary"
 import { ALLOWED_IMAGE_TYPES, ALLOWED_VIDEO_TYPES, MAX_IMAGE_SIZE, MAX_VIDEO_SIZE } from "@/lib/validation"
@@ -9,7 +10,7 @@ import { withHandler } from "@/lib/handler"
 
 export const POST = withHandler(async (req: Request) => {
   const session = await getServerSession(authOptions)
-  const user = session?.user as any
+  const user = session?.user as SessionUser | undefined
 
   if (!user || !["OWNER", "BROKER", "ADMIN"].includes(user.role))
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
