@@ -1,19 +1,32 @@
 <div align="center">
 
-# PGLife
+<br/>
 
-**India's modern PG booking marketplace**
+```
+██████╗  ██████╗ ██╗     ██╗███████╗███████╗
+██╔══██╗██╔════╝ ██║     ██║██╔════╝██╔════╝
+██████╔╝██║  ███╗██║     ██║█████╗  █████╗
+██╔═══╝ ██║   ██║██║     ██║██╔══╝  ██╔══╝
+██║     ╚██████╔╝███████╗██║██║     ███████╗
+╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝     ╚══════╝
+```
 
-Connect tenants with verified PG accommodations across India.
-Built for the Indian market — WhatsApp-first, mobile-ready, production-grade.
+**India's premium PG booking marketplace**
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://typescriptlang.org)
-[![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?logo=prisma)](https://prisma.io)
-[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase)](https://supabase.com)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
+_Verified listings · Real photos · Direct booking · Zero broker fees_
 
-[Live Demo](https://pg-app.in) · [Report Bug](https://github.com/cod-x-prince/pg-app/issues) · [Request Feature](https://github.com/cod-x-prince/pg-app/issues)
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
+[![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma)](https://prisma.io)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel)](https://vercel.com)
+[![License](https://img.shields.io/badge/License-Private-red?style=flat-square)]()
+
+<br/>
+
+[**Live Demo**](https://pg-app-i1h8.vercel.app) · [**Report Bug**](https://github.com/cod-x-prince/pg-app/issues) · [**Request Feature**](https://github.com/cod-x-prince/pg-app/issues)
+
+<br/>
 
 </div>
 
@@ -21,11 +34,30 @@ Built for the Indian market — WhatsApp-first, mobile-ready, production-grade.
 
 ## What is PGLife?
 
-PGLife is a two-sided marketplace for Paying Guest (PG) accommodation in India. Owners list verified PGs, tenants discover and book them — with token payments, WhatsApp integration, and a trust-first experience built for the Indian rental market.
+PGLife is a two-sided marketplace for Paying Guest (PG) accommodation in India. Owners list verified PGs, tenants discover and book them — with token payments, WhatsApp integration, and a trust-first experience built natively for the Indian rental market.
 
-**The problem**: Finding a trustworthy PG in Indian cities is fragmented, opaque, and dominated by brokers. Most listings are fake, photos are recycled, and there's no accountability.
+**The problem:** Finding a trustworthy PG in Indian cities is fragmented, opaque, and dominated by brokers charging 1–2 months rent. Most listings are fake, photos are recycled, and there is zero accountability.
 
-**The solution**: Verified listings with real photos, direct owner contact, token booking to hold rooms, and a review system that only allows verified tenants to write reviews.
+**The solution:** Verified listings with real photos, direct owner contact via WhatsApp, token booking to hold rooms, and a review system that only allows verified tenants to write reviews.
+
+---
+
+## Design System
+
+Built with a dark luxury aesthetic — designed to stand apart from generic real estate platforms.
+
+| Token           | Value                    | Usage                |
+| --------------- | ------------------------ | -------------------- |
+| `--ink`         | `#0A0A0F`                | Primary background   |
+| `--ink2`        | `#12121A`                | Secondary surfaces   |
+| `--gold`        | `#C9A84C`                | Accent, CTAs, badges |
+| `--gold-light`  | `#F0D080`                | Shimmer, gradients   |
+| `--border`      | `rgba(255,255,255,0.08)` | All borders          |
+| `--border-gold` | `rgba(201,168,76,0.25)`  | Highlighted borders  |
+
+**Typography:** [Cinzel](https://fonts.google.com/specimen/Cinzel) (headings) + [Josefin Sans](https://fonts.google.com/specimen/Josefin+Sans) (body)
+
+**Effects:** Liquid glass morphism · Gold shimmer text · 3D tilt cards · Ambient glow blobs · Cinematic page loader · Magnetic cursor · Bento grid layout
 
 ---
 
@@ -33,47 +65,49 @@ PGLife is a two-sided marketplace for Paying Guest (PG) accommodation in India. 
 
 ### For Tenants
 
-- 🔍 **City-based search** with filters — gender, rent range, amenities
-- 🏠 **Property galleries** — lightbox with keyboard navigation, thumbnail strip
-- 💬 **WhatsApp direct contact** — pre-filled message to owner
-- 📅 **Token booking** — pay a small token via Razorpay to hold a room
-- ⭐ **Verified reviews** — only tenants with confirmed bookings can review
-- 💾 **Save listings** — Like/save properties for later
+- City-based search with premium command palette — autocomplete, keyboard navigation, city tags
+- Property galleries with lightbox, keyboard navigation, and CLS-free loading
+- WhatsApp direct contact with pre-filled messages
+- Token booking (₹500 via Razorpay) to hold a room instantly
+- Verified reviews — only tenants with confirmed bookings can review
+- Save/favourite properties with instant-fill heart button
+- Sticky mobile CTA bar — Book Now + WhatsApp always visible
 
 ### For Owners
 
-- 📝 **5-step listing wizard** — name, rooms, photos, amenities, preview
-- 📸 **Cloudinary image upload** — drag & drop, auto-optimized
-- 📊 **Dashboard** — booking requests, confirm/decline, analytics
-- 🔔 **Email notifications** — instant alerts for new bookings via Resend
-- ✅ **Verified badge** — admin-reviewed verification for trust signal
+- 5-step listing wizard — name, rooms, photos, amenities, preview
+- Cloudinary image upload — sequential, crash-safe, auto-optimized
+- Owner dashboard — booking requests, confirm/decline, delete listings
+- Email notifications via Resend — new bookings + approval alerts
+- Verified badge — admin-reviewed verification
 
 ### For Platform
 
-- 🛡️ **Admin panel** — approve owners, verify/delist properties
-- 📈 **Live platform stats** — properties, bookings, tenants, avg rating
-- 🗺️ **Dynamic sitemap** — auto-generated for all active listings
-- 📱 **Fully responsive** — mobile-first design
+- Admin panel — approve owners, verify/delist properties, live stats
+- Dynamic sitemap — auto-generated for all active listings
+- Fully responsive — mobile-first with slide-up filter drawer
+- Anti-bot CAPTCHA — Cloudflare Turnstile on signup
 
 ---
 
 ## Tech Stack
 
-| Layer                | Technology                                           |
-| -------------------- | ---------------------------------------------------- |
-| **Framework**        | Next.js 14 (App Router)                              |
-| **Language**         | TypeScript 5 (strict mode)                           |
-| **Styling**          | Tailwind CSS + DM Sans + Playfair Display            |
-| **Database**         | PostgreSQL via Supabase                              |
-| **ORM**              | Prisma 5 (with migrations)                           |
-| **Auth**             | NextAuth.js v4 (JWT + credentials)                   |
-| **Images**           | Cloudinary (auto-optimize to AVIF/WebP)              |
-| **Payments**         | Razorpay (token booking)                             |
-| **Email**            | Resend (transactional)                               |
-| **Rate Limiting**    | Upstash Redis (persistent across Vercel cold starts) |
-| **Error Monitoring** | Sentry (client + server + edge)                      |
-| **Deployment**       | Vercel (edge network)                                |
-| **SEO**              | Dynamic sitemap, OG tags, robots.txt                 |
+| Layer            | Technology                   | Notes                            |
+| ---------------- | ---------------------------- | -------------------------------- |
+| Framework        | Next.js 14 App Router        | Force-dynamic API routes         |
+| Language         | TypeScript 5 (strict)        | Central types in `@/types`       |
+| Styling          | Tailwind CSS + CSS Variables | Dark luxury design system        |
+| Database         | PostgreSQL via Supabase      | Session pooler for Vercel        |
+| ORM              | Prisma 5.22                  | CUID IDs, 12 indexes             |
+| Auth             | NextAuth.js v4               | JWT + credentials + Google OAuth |
+| Images           | Cloudinary                   | AVIF/WebP auto-optimization      |
+| Payments         | Razorpay                     | ₹500 token booking flow          |
+| Email            | Resend                       | 4 transactional templates        |
+| Rate Limiting    | Upstash Redis                | Persistent across cold starts    |
+| Error Monitoring | Sentry                       | Client + server + edge           |
+| Analytics        | Vercel Analytics             | Anonymous page views             |
+| CAPTCHA          | Cloudflare Turnstile         | Managed (smart, invisible)       |
+| Deployment       | Vercel                       | Edge network, auto-deploy        |
 
 ---
 
@@ -83,113 +117,62 @@ PGLife is a two-sided marketplace for Paying Guest (PG) accommodation in India. 
 pglife/
 ├── src/
 │   ├── app/
-│   │   ├── (public)/          # Homepage, property listings, detail pages
-│   │   ├── (auth)/            # Protected: dashboards, admin, listing wizard
-│   │   ├── api/               # 23 REST API routes
-│   │   │   ├── auth/          # NextAuth + signup
-│   │   │   ├── properties/    # CRUD + rooms/images/videos/amenities/like
-│   │   │   ├── bookings/      # Tenant bookings + owner management
-│   │   │   ├── reviews/       # Verified reviews
-│   │   │   ├── payments/      # Razorpay order creation + verification
-│   │   │   ├── admin/         # Owner approval + property verification
-│   │   │   ├── upload/        # Cloudinary file upload
-│   │   │   └── stats/         # Platform-wide stats (1hr cache)
-│   │   └── auth/              # Login, signup, pending pages
+│   │   ├── (public)/           # Homepage, listings, property detail
+│   │   ├── (auth)/             # Dashboards, admin, listing wizard
+│   │   ├── api/                # 23 REST API routes (all force-dynamic)
+│   │   │   ├── auth/           # NextAuth + signup (Turnstile protected)
+│   │   │   ├── properties/     # CRUD + rooms/images/amenities/like
+│   │   │   ├── bookings/       # Tenant bookings + owner management
+│   │   │   ├── payments/       # Razorpay create-order + verify
+│   │   │   ├── email/          # Resend transactional triggers
+│   │   │   ├── admin/          # Owner approval + property verification
+│   │   │   └── stats/          # Platform stats (1hr edge cache)
+│   │   ├── privacy/            # DPDP Act 2023 compliant
+│   │   └── terms/              # 12-section ToS, Indian law
 │   ├── components/
-│   │   ├── layout/            # Navbar (scroll-aware), Footer
-│   │   ├── properties/        # PropertyCard, GalleryClient, FilterPanel, StarRating
-│   │   ├── booking/           # BookingForm with Razorpay integration
-│   │   └── home/              # HeroSearch
-│   └── lib/
-│       ├── auth.ts            # NextAuth config + rate limiting
-│       ├── handler.ts         # withHandler() — global error wrapper + Sentry
-│       ├── rateLimit.ts       # Upstash Redis rate limiter
-│       ├── schemas.ts         # Zod validation schemas (all 12 routes)
-│       ├── validation.ts      # Field validators + whitelists
-│       ├── prisma.ts          # Prisma singleton (connection pooling)
-│       ├── cloudinary.ts      # Cloudinary config
-│       └── email.ts           # Resend email templates
+│   │   ├── layout/             # Navbar (float glass), Footer (dark)
+│   │   ├── properties/         # PropertyCard (3D tilt), FilterPanel,
+│   │   │                         GalleryClient, StarRating
+│   │   ├── booking/            # BookingForm (Razorpay + WhatsApp)
+│   │   ├── home/               # HeroSearch (command palette)
+│   │   └── ui/                 # CustomCursor, PageLoader, TurnstileWidget,
+│   │                             TiltCard
+│   ├── lib/
+│   │   ├── auth.ts             # NextAuth + Google OAuth + rate limit
+│   │   ├── email.ts            # Resend service (4 templates)
+│   │   ├── handler.ts          # withHandler() — global error wrapper
+│   │   ├── rateLimit.ts        # Upstash Redis sliding window
+│   │   ├── schemas.ts          # Zod validation (all API routes)
+│   │   ├── turnstile.ts        # Cloudflare verification (fail-open)
+│   │   └── prisma.ts           # Singleton with connection pooling
+│   └── types/
+│       └── index.ts            # SessionUser, PropertyListItem, Booking, etc.
 ├── prisma/
-│   ├── schema.prisma          # 9 models, 12 indexes, composite unique constraints
-│   ├── seed.ts                # Full test data seed (7 users, 7 properties)
-│   └── seed-reviews.ts        # Force-seed reviews for existing properties
-└── instrumentation.ts         # Sentry server/edge initialization
+│   ├── schema.prisma           # 9 models, 12 indexes, cuid IDs
+│   ├── seed.ts                 # 7 users, 7 properties, reviews
+│   └── seed-reviews.ts         # Force-seed for existing properties
+└── public/
+    ├── og-image.svg            # 1200×630 OG image (dark luxury)
+    └── icon.svg                # Favicon
 ```
 
 ---
 
 ## Security
 
-PGLife is built with a security-first approach:
-
-| Category             | Implementation                                                    |
-| -------------------- | ----------------------------------------------------------------- |
-| **SQL Injection**    | Prisma parameterized queries throughout — zero raw SQL            |
-| **Authentication**   | bcrypt cost 12, JWT sessions, constant-time login                 |
-| **Authorization**    | Role-based (TENANT/OWNER/BROKER/ADMIN) on every route             |
-| **Input Validation** | Zod schemas on all 12 API routes                                  |
-| **Mass Assignment**  | `.strict()` on update schemas, field whitelists                   |
-| **Rate Limiting**    | Upstash Redis — persistent across Vercel function instances       |
-| **File Uploads**     | Type whitelist, size limits, user folder isolation on Cloudinary  |
-| **Security Headers** | CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy     |
-| **Error Handling**   | `withHandler()` wraps all routes — no stack traces exposed        |
-| **Secrets**          | All credentials in environment variables, never in code           |
-| **DB Indexes**       | 12 indexes on high-frequency query columns                        |
-| **Soft Deletes**     | `isActive: false` — no data loss, maintains referential integrity |
-
----
-
-## Database Schema
-
-```prisma
-User        → role: TENANT | OWNER | BROKER | ADMIN
-Property    → city, gender, isVerified, isActive + 7 indexes
-Room        → type, rent, deposit, isAvailable
-Booking     → status: PENDING | CONFIRMED | CANCELLED | COMPLETED
-Review      → @@unique([tenantId, propertyId]) — no duplicate reviews
-Image       → Cloudinary URLs, isPrimary flag
-Amenity     → whitelisted values only
-Like        → @@unique([userId, propertyId]) — no duplicate likes
-```
-
----
-
-## API Routes
-
-```
-POST   /api/auth/signup                  Create account
-GET    /api/auth/[...nextauth]           NextAuth session/providers
-POST   /api/auth/[...nextauth]           Sign in/out
-
-GET    /api/properties                   List (paginated, filtered)
-POST   /api/properties                   Create listing
-GET    /api/properties/[id]              Property detail
-PUT    /api/properties/[id]              Update listing
-DELETE /api/properties/[id]              Soft delete
-
-POST   /api/properties/[id]/rooms        Add room type
-POST   /api/properties/[id]/images       Add image
-POST   /api/properties/[id]/videos       Add video
-POST   /api/properties/[id]/amenities    Add amenity (whitelist enforced)
-GET    /api/properties/[id]/like         Check like status
-POST   /api/properties/[id]/like         Toggle like
-
-GET    /api/bookings                     Tenant's bookings
-POST   /api/bookings                     Create booking
-PUT    /api/bookings/[id]                Update status (owner only)
-GET    /api/owner/bookings               Owner's incoming bookings
-
-POST   /api/reviews                      Create review (confirmed booking required)
-POST   /api/upload                       Upload to Cloudinary
-GET    /api/stats                        Platform stats (1hr edge cache)
-
-GET    /api/admin/owners                 Pending approvals
-PUT    /api/admin/owners/[id]            Approve/reject owner
-PUT    /api/admin/properties/[id]        Verify/delist property
-
-POST   /api/payments/create-order        Razorpay order
-POST   /api/payments/verify              Verify payment signature
-```
+| Category         | Implementation                                        |
+| ---------------- | ----------------------------------------------------- |
+| SQL Injection    | Prisma parameterized queries — zero raw SQL           |
+| Authentication   | bcrypt cost 12, JWT, constant-time login              |
+| Authorization    | Role-based (TENANT/OWNER/BROKER/ADMIN) on every route |
+| Input Validation | Zod schemas on all 23 API routes                      |
+| Mass Assignment  | `.strict()` on update schemas, field whitelists       |
+| Rate Limiting    | Upstash Redis — persists across Vercel instances      |
+| CAPTCHA          | Cloudflare Turnstile on signup — blocks bots          |
+| File Uploads     | Type whitelist, size limits, user folder isolation    |
+| Security Headers | CSP, X-Frame-Options, X-Content-Type, Referrer-Policy |
+| Error Handling   | `withHandler()` — no stack traces exposed to clients  |
+| ID Format        | Prisma CUID — not sequential, not guessable           |
 
 ---
 
@@ -198,63 +181,67 @@ POST   /api/payments/verify              Verify payment signature
 ### Prerequisites
 
 - Node.js 20+
-- A [Supabase](https://supabase.com) project (free tier works)
-- A [Cloudinary](https://cloudinary.com) account (free tier works)
+- [Supabase](https://supabase.com) project (free tier works)
+- [Cloudinary](https://cloudinary.com) account (free tier works)
 
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/cod-x-prince/pglife.git
-cd pglife
+git clone https://github.com/cod-x-prince/pg-app.git
+cd pg-app
 npm install
 ```
 
-### 2. Set up environment variables
+### 2. Environment variables
 
 ```bash
 cp .env.example .env
 ```
 
-Fill in `.env` — the required variables:
+Fill in `.env`:
 
 ```env
-# Supabase — get from Settings → Database → Connection string
-DATABASE_URL="postgresql://postgres.YOUR_REF:PASSWORD@aws-0-ap-southeast-2.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1&prepare=false"
-DIRECT_URL="postgresql://postgres.YOUR_REF:PASSWORD@aws-0-ap-southeast-2.pooler.supabase.com:5432/postgres"
+# Supabase
+DATABASE_URL="postgresql://postgres.REF:PASS@pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1&prepare=false"
+DIRECT_URL="postgresql://postgres.REF:PASS@pooler.supabase.com:5432/postgres"
 
-# NextAuth — generate secret: openssl rand -base64 32
-NEXTAUTH_SECRET="your-secret"
+# NextAuth
+NEXTAUTH_SECRET="your-32-char-secret"
 NEXTAUTH_URL="http://localhost:3000"
 
-# Cloudinary — from cloudinary.com → Dashboard
+# Cloudinary
 CLOUDINARY_CLOUD_NAME=""
 CLOUDINARY_API_KEY=""
 CLOUDINARY_API_SECRET=""
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=""
 
-# Upstash Redis — from upstash.com → Create Database
+# Upstash Redis
 UPSTASH_REDIS_REST_URL=""
 UPSTASH_REDIS_REST_TOKEN=""
 
-# Sentry — from sentry.io → Create Project → Next.js
+# Optional — activates features when present
+RAZORPAY_KEY_ID=""
+RAZORPAY_KEY_SECRET=""
+NEXT_PUBLIC_RAZORPAY_KEY_ID=""
+RESEND_API_KEY=""
+RESEND_FROM_EMAIL="onboarding@resend.dev"
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=""
+TURNSTILE_SECRET_KEY=""
 SENTRY_DSN=""
 NEXT_PUBLIC_SENTRY_DSN=""
 ```
 
-### 3. Set up database
+### 3. Database setup
 
 ```bash
-# Push schema to Supabase
 npx prisma db push
-
-# Generate Prisma client
 npx prisma generate
-
-# Seed test data (optional)
 npx tsx prisma/seed.ts
 ```
 
-### 4. Run development server
+### 4. Run
 
 ```bash
 npm run dev
@@ -262,92 +249,87 @@ npm run dev
 
 Visit [http://localhost:3000](http://localhost:3000)
 
-### 5. Set up admin account
+### 5. Set your account as admin
 
-Go to Supabase → Table Editor → `User` table → find your email row → set:
-
-- `role` = `ADMIN`
-- `isApproved` = `true`
-
-Then visit [http://localhost:3000/admin](http://localhost:3000/admin)
+Supabase → Table Editor → `User` → your row → set `role = ADMIN`, `isApproved = true`
 
 ---
 
 ## Test Accounts (after seeding)
 
-| Email             | Password     | Role                     |
-| ----------------- | ------------ | ------------------------ |
-| admin@pglife.in   | Admin@2026   | Admin                    |
-| owner1@pglife.in  | Owner@2026   | Owner (approved)         |
-| tenant1@pglife.in | Tenant@2026  | Tenant                   |
-| pending@pglife.in | Pending@2026 | Owner (pending approval) |
-
----
-
-## Deployment
-
-### Deploy to Vercel
-
-1. Push to GitHub
-2. Import to [Vercel](https://vercel.com) → New Project
-3. Add all environment variables from `.env`
-4. Deploy
-5. Update `NEXTAUTH_URL` to your Vercel domain
-6. Redeploy
-
-### Environment variables for production
-
-Add `?pgbouncer=true&connection_limit=1&prepare=false` to `DATABASE_URL` — required for Supabase connection pooling on Vercel serverless functions.
+| Email               | Password       | Role             |
+| ------------------- | -------------- | ---------------- |
+| `admin@pglife.in`   | `Admin@2026`   | Admin            |
+| `owner1@pglife.in`  | `Owner@2026`   | Owner (approved) |
+| `tenant1@pglife.in` | `Tenant@2026`  | Tenant           |
+| `pending@pglife.in` | `Pending@2026` | Owner (pending)  |
 
 ---
 
 ## Scripts
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Production build
-npm run start        # Start production server
-npm run lint         # ESLint
-npx prisma db push   # Push schema changes
-npx prisma generate  # Regenerate Prisma client
-npx prisma studio    # Open Prisma Studio (DB GUI)
-npx tsx prisma/seed.ts  # Seed test data
+npm run dev              # Development server
+npm run build            # Production build
+npm run start            # Production server
+npx prisma db push       # Push schema changes
+npx prisma generate      # Regenerate Prisma client
+npx prisma studio        # DB GUI
+npx tsx prisma/seed.ts   # Seed test data
+npx tsx scripts/health-check.ts https://your-url.vercel.app  # Production health check
 ```
 
 ---
 
-## Cities Supported
+## Deployment
 
-Bangalore · Mumbai · Delhi · Hyderabad · Chennai · Kolkata · Pune · Jammu · Srinagar
+### Vercel (recommended)
+
+1. Push to GitHub
+2. Import to [vercel.com](https://vercel.com) → New Project
+3. Add all environment variables
+4. Deploy
+5. Update `NEXTAUTH_URL` to your Vercel domain → Redeploy
+
+> **Important:** `DATABASE_URL` must end with `?pgbouncer=true&connection_limit=1&prepare=false` for Supabase connection pooling on Vercel serverless.
 
 ---
 
 ## Roadmap
 
-- [x] Core marketplace (listings, search, filter)
-- [x] Authentication (signup, login, role-based access)
-- [x] Owner dashboard + listing wizard
-- [x] Admin panel (owner approval, property verification)
-- [x] Image gallery with lightbox
-- [x] Zod validation on all API routes
+- [x] Core marketplace — listings, search, filter, detail
+- [x] Authentication — credentials + Google OAuth
+- [x] Owner dashboard + 5-step listing wizard
+- [x] Admin panel — owner approval, property verification
+- [x] Image gallery with lightbox and CLS elimination
+- [x] Razorpay token booking (₹500)
+- [x] Resend transactional emails (4 templates)
+- [x] Cloudflare Turnstile CAPTCHA
 - [x] Upstash Redis rate limiting
 - [x] Sentry error monitoring
-- [x] Dynamic sitemap + SEO
-- [ ] Razorpay token booking (in progress)
-- [ ] Email notifications via Resend
-- [ ] Google OAuth
-- [ ] Cloudflare Turnstile CAPTCHA
-- [ ] Review submission UI
-- [ ] Google Maps embed
+- [x] Dark luxury redesign — Cinzel/Josefin, liquid glass, bento grid
+- [x] Type safety — central types, eradicate `any`
+- [x] Mobile filter drawer + sticky booking bar
+- [x] Privacy Policy + Terms of Service (DPDP Act 2023)
+- [x] Production health check script (38 routes)
+- [ ] Razorpay live keys + KYC
+- [ ] Resend domain verification (pglife.in)
+- [ ] Google Maps embed on property detail
+- [ ] Push notifications
 - [ ] Mobile app (React Native)
+- [ ] City expansion — Chennai, Kolkata, Srinagar
+
+---
+
+## Cities
+
+Bangalore · Mumbai · Delhi · Hyderabad · Chennai · Kolkata · Pune · Jammu · Srinagar
 
 ---
 
 ## Contributing
 
-This is a startup project. If you find a security vulnerability, please email businessinfo1201@gmail.com rather than opening a public issue.
-
-For feature requests and bugs, open an issue.
+This is a startup. Security vulnerabilities should be reported privately to prince@pglife.in — not opened as public issues.
 
 ---
 
@@ -359,8 +341,8 @@ Private — all rights reserved. © 2026 PGLife.
 
 <div align="center">
 
-Built with ❤️ in India by [Prince Rajput](https://github.com/cod-x-prince) & Paras Jamwal
+Built with obsession in India by [Prince Jamwal](https://github.com/cod-x-prince) & Paras Jamwal
 
-_"Find your home away from home"_
+_"Your perfect home awaits you."_
 
 </div>
