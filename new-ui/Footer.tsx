@@ -1,4 +1,3 @@
-"use client"
 import Link from "next/link"
 
 const CITIES = ["Bangalore", "Mumbai", "Delhi", "Hyderabad", "Pune", "Chennai", "Jammu"]

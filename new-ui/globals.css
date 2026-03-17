@@ -247,7 +247,7 @@
 @layer components {
   /* Buttons */
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 font-sans font-semibold text-sm tracking-widest uppercase
+    @apply inline-flex items-center justify-center gap-2 font-sans font-600 text-sm tracking-widest uppercase
            px-8 py-3.5 rounded-full transition-all duration-300 cursor-pointer;
     background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
     background-size: 200% auto;
@@ -260,7 +260,7 @@
     transform: translateY(-1px);
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 font-sans font-medium text-sm tracking-widest uppercase
+    @apply inline-flex items-center justify-center gap-2 font-sans font-500 text-sm tracking-widest uppercase
            px-8 py-3.5 rounded-full transition-all duration-300 cursor-pointer;
     border: 1px solid var(--border);
     color: var(--text-secondary);
@@ -274,7 +274,7 @@
 
   /* Inputs */
   .input-dark {
-    @apply w-full text-sm font-sans font-normal rounded-2xl px-5 py-3.5 transition-all duration-200 outline-none;
+    @apply w-full text-sm font-sans font-400 rounded-2xl px-5 py-3.5 transition-all duration-200 outline-none;
     background: rgba(255,255,255,0.04);
     border: 1px solid var(--border);
     color: var(--text-primary);
@@ -288,7 +288,7 @@
 
   /* Section label */
   .section-label {
-    @apply inline-flex items-center gap-2 text-xs font-sans font-semibold tracking-[4px] uppercase;
+    @apply inline-flex items-center gap-2 text-xs font-sans font-600 tracking-[4px] uppercase;
     color: var(--gold);
   }
 
@@ -318,19 +318,19 @@
 
   /* Badge */
   .badge-dark {
-    @apply inline-flex items-center text-[10px] font-sans font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full;
+    @apply inline-flex items-center text-[10px] font-sans font-600 tracking-wider uppercase px-2.5 py-1 rounded-full;
     border: 1px solid var(--border);
     color: var(--text-secondary);
     background: var(--glass-bg);
   }
   .badge-gold {
-    @apply inline-flex items-center text-[10px] font-sans font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full;
+    @apply inline-flex items-center text-[10px] font-sans font-600 tracking-wider uppercase px-2.5 py-1 rounded-full;
     border: 1px solid var(--border-gold);
     color: var(--gold);
     background: var(--gold-dim);
   }
   .badge-verified {
-    @apply inline-flex items-center gap-1 text-[10px] font-sans font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full;
+    @apply inline-flex items-center gap-1 text-[10px] font-sans font-600 tracking-wider uppercase px-2.5 py-1 rounded-full;
     border: 1px solid rgba(52,211,153,0.3);
     color: #34D399;
     background: rgba(52,211,153,0.08);
