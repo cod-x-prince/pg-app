@@ -115,8 +115,8 @@ export default function PropertyCard({ property }: Props) {
               </span>
             )}
             {minRent && (
-              <span className="badge-gold text-xs font-600">
-                ₹{minRent.toLocaleString("en-IN")}<span className="opacity-60 font-400">/mo</span>
+              <span className="badge-gold text-xs font-semibold">
+                ₹{minRent.toLocaleString("en-IN")}<span className="opacity-60 font-normal">/mo</span>
               </span>
             )}
           </div>
@@ -124,7 +124,7 @@ export default function PropertyCard({ property }: Props) {
 
         {/* Info */}
         <div className="p-4">
-          <h3 className="font-serif text-sm font-500 mb-1 line-clamp-1 transition-colors duration-200" style={{ color: "var(--text-primary)", letterSpacing: "0.03em" }}>
+          <h3 className="font-serif text-sm font-medium mb-1 line-clamp-1 transition-colors duration-200" style={{ color: "var(--text-primary)", letterSpacing: "0.03em" }}>
             {property.name}
           </h3>
           <p className="flex items-center gap-1.5 text-xs" style={{ color: "var(--text-muted)" }}>
@@ -134,7 +134,7 @@ export default function PropertyCard({ property }: Props) {
             <span className="truncate">{property.address}</span>
           </p>
           {avail.length === 0 && (
-            <p className="text-xs mt-1.5 font-500" style={{ color: "#EF4444" }}>All rooms occupied</p>
+            <p className="text-xs mt-1.5 font-medium" style={{ color: "#EF4444" }}>All rooms occupied</p>
           )}
         </div>
       </div>

@@ -1,7 +1,11 @@
-"use client"
 import Link from "next/link"
 
 const CITIES = ["Bangalore", "Mumbai", "Delhi", "Hyderabad", "Pune", "Chennai", "Jammu"]
+
+const linkClass = [
+  "text-xs transition-colors duration-200",
+  "text-[#ffffff46] hover:text-white",
+].join(" ")
 
 export default function Footer() {
   return (
@@ -12,9 +16,9 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center glass-gold">
-                <span className="font-serif text-sm font-600" style={{ background: "linear-gradient(135deg, #C9A84C, #F0D080)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>PG</span>
+                <span className="font-serif text-sm font-semibold" style={{ background: "linear-gradient(135deg, #C9A84C, #F0D080)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>PG</span>
               </div>
-              <span className="font-serif text-lg font-600 tracking-wide" style={{ color: "var(--text-primary)" }}>PGLife</span>
+              <span className="font-serif text-lg font-semibold tracking-wide" style={{ color: "var(--text-primary)" }}>PGLife</span>
             </div>
             <p className="text-xs leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
               India&apos;s trusted PG booking platform. Verified listings, real photos, direct booking.
@@ -23,13 +27,11 @@ export default function Footer() {
 
           {/* Cities */}
           <div>
-            <p className="text-xs font-600 tracking-[3px] uppercase mb-5" style={{ color: "var(--gold)" }}>Cities</p>
+            <p className="text-xs font-semibold tracking-[3px] uppercase mb-5" style={{ color: "var(--gold)" }}>Cities</p>
             <ul className="space-y-2.5">
               {CITIES.map(c => (
                 <li key={c}>
-                  <Link href={`/properties/${c.toLowerCase()}`} className="text-xs transition-colors duration-200" style={{ color: "var(--text-muted)" }}
-                    onMouseOver={e => (e.currentTarget.style.color = "var(--text-primary)")}
-                    onMouseOut={e => (e.currentTarget.style.color = "var(--text-muted)")}>
+                  <Link href={`/properties/${c.toLowerCase()}`} className={linkClass}>
                     {c}
                   </Link>
                 </li>
@@ -39,7 +41,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <p className="text-xs font-600 tracking-[3px] uppercase mb-5" style={{ color: "var(--gold)" }}>Company</p>
+            <p className="text-xs font-semibold tracking-[3px] uppercase mb-5" style={{ color: "var(--gold)" }}>Company</p>
             <ul className="space-y-2.5">
               {[
                 { href: "/auth/signup", label: "Create Account" },
@@ -47,10 +49,8 @@ export default function Footer() {
                 { href: "/auth/signup", label: "List Your PG" },
                 { href: "/owner/dashboard", label: "Owner Dashboard" },
               ].map(item => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-xs transition-colors duration-200" style={{ color: "var(--text-muted)" }}
-                    onMouseOver={e => (e.currentTarget.style.color = "var(--text-primary)")}
-                    onMouseOut={e => (e.currentTarget.style.color = "var(--text-muted)")}>
+                <li key={item.label}>
+                  <Link href={item.href} className={linkClass}>
                     {item.label}
                   </Link>
                 </li>
@@ -60,17 +60,15 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <p className="text-xs font-600 tracking-[3px] uppercase mb-5" style={{ color: "var(--gold)" }}>Legal</p>
+            <p className="text-xs font-semibold tracking-[3px] uppercase mb-5" style={{ color: "var(--gold)" }}>Legal</p>
             <ul className="space-y-2.5">
               {[
                 { href: "/privacy", label: "Privacy Policy" },
-                { href: "/terms", label: "Terms of Service" },
+                { href: "/terms",   label: "Terms of Service" },
                 { href: "mailto:support@pglife.in", label: "Contact" },
               ].map(item => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-xs transition-colors duration-200" style={{ color: "var(--text-muted)" }}
-                    onMouseOver={e => (e.currentTarget.style.color = "var(--text-primary)")}
-                    onMouseOut={e => (e.currentTarget.style.color = "var(--text-muted)")}>
+                <li key={item.label}>
+                  <Link href={item.href} className={linkClass}>
                     {item.label}
                   </Link>
                 </li>

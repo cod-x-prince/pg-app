@@ -36,13 +36,13 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-9 h-9 rounded-xl glass-gold flex items-center justify-center transition-all duration-300 group-hover:shadow-gold">
-              <span className="font-serif text-sm font-600 text-gold-gradient" style={{
+              <span className="font-serif text-sm font-semibold" style={{
                 background: "linear-gradient(135deg, #C9A84C, #F0D080)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
               }}>PG</span>
             </div>
-            <span className="font-serif text-lg font-600 tracking-wide" style={{ color: "var(--text-primary)" }}>
+            <span className="font-serif text-lg font-semibold tracking-wide" style={{ color: "var(--text-primary)" }}>
               PGLife
             </span>
           </Link>
@@ -108,7 +108,7 @@ export default function Navbar() {
             ) : (
               <>
                 <Link href="/auth/login" className="block px-3 py-2.5 text-sm rounded-xl" style={{ color: "var(--text-secondary)" }} onClick={() => setMenuOpen(false)}>Login</Link>
-                <Link href="/auth/signup" className="block px-3 py-2.5 text-sm font-600 rounded-xl" style={{ color: "var(--gold)" }} onClick={() => setMenuOpen(false)}>Get Started →</Link>
+                <Link href="/auth/signup" className="block px-3 py-2.5 text-sm font-semibold rounded-xl" style={{ color: "var(--gold)" }} onClick={() => setMenuOpen(false)}>Get Started →</Link>
               </>
             )}
           </div>

@@ -56,7 +56,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex" style={{ background: "var(--ink)" }}>
 
       {/* Left panel */}
       <div className="hidden lg:flex lg:w-[45%] relative overflow-hidden">
@@ -64,22 +64,22 @@ export default function SignupPage() {
           src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=90"
           alt="Modern PG room"
           fill
-          className="object-cover"
+          className="object-cover opacity-40"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F2347]/80 via-[#1B3B6F]/65 to-[#F59E0B]/20" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(10,10,15,0.88) 0%, rgba(10,10,15,0.6) 50%, rgba(201,168,76,0.08) 100%)" }} />
         <div className="relative z-10 flex flex-col justify-between p-14 w-full">
           <Link href="/" className="flex items-center gap-3 reveal">
-            <div className="w-10 h-10 bg-[#F59E0B] rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-sm">PG</span>
+            <div className="w-10 h-10 rounded-xl glass-gold flex items-center justify-center">
+              <span className="font-serif text-sm font-semibold" style={{ background: "linear-gradient(135deg, #C9A84C, #F0D080)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>PG</span>
             </div>
-            <span className="font-serif text-2xl font-semibold text-white">PGLife</span>
+            <span className="font-serif text-xl font-semibold" style={{ color: "var(--text-primary)" }}>PGLife</span>
           </Link>
 
           <div className="reveal reveal-d2 space-y-6">
-            <h2 className="font-serif text-4xl text-white leading-tight">
+            <h2 className="font-serif text-4xl leading-tight" style={{ color: "var(--text-primary)" }}>
               Start your<br />
-              <span className="text-[#F59E0B] italic">journey</span><br />
+              <span className="text-shimmer italic">journey</span><br />
               today.
             </h2>
             <div className="space-y-3">
@@ -90,64 +90,63 @@ export default function SignupPage() {
                 "Real tenant reviews",
               ].map((feat, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-[#F59E0B]/20 border border-[#F59E0B]/40 flex items-center justify-center">
-                    <svg className="w-3 h-3 text-[#F59E0B]" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: "var(--gold-dim)", border: "1px solid var(--border-gold)" }}>
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" style={{ color: "var(--gold)" }}>
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                   </div>
-                  <span className="text-white/70 text-sm">{feat}</span>
+                  <span className="text-sm" style={{ color: "var(--text-secondary)" }}>{feat}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <p className="text-white/30 text-xs reveal reveal-d4">
+          <p className="text-xs reveal reveal-d4" style={{ color: "var(--text-muted)" }}>
             &copy; {new Date().getFullYear()} PGLife. All rights reserved.
           </p>
         </div>
       </div>
 
       {/* Right — Signup Form */}
-      <div className="flex-1 flex items-center justify-center px-8 py-16 bg-white overflow-y-auto">
+      <div className="flex-1 flex items-center justify-center px-8 py-16 overflow-y-auto" style={{ background: "var(--ink2)" }}>
         <div className="w-full max-w-sm">
 
           <Link href="/" className="flex items-center gap-2 mb-10 lg:hidden">
-            <div className="w-9 h-9 bg-[#1B3B6F] rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-sm">PG</span>
+            <div className="w-9 h-9 rounded-xl glass-gold flex items-center justify-center">
+              <span className="font-serif text-sm font-semibold" style={{ background: "linear-gradient(135deg, #C9A84C, #F0D080)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>PG</span>
             </div>
-            <span className="font-serif text-xl font-semibold text-[#1B3B6F]">PGLife</span>
+            <span className="font-serif text-xl font-semibold" style={{ color: "var(--text-primary)" }}>PGLife</span>
           </Link>
 
           {step === "role" ? (
             <div className="reveal">
-              <h1 className="font-serif text-3xl text-gray-900 mb-2">Create account</h1>
-              <p className="text-gray-400 text-sm mb-8">Tell us who you are to get started</p>
+              <h1 className="font-serif text-3xl mb-2" style={{ color: "var(--text-primary)" }}>Create account</h1>
+              <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>Tell us who you are to get started</p>
 
               <div className="space-y-3 mb-8">
                 {ROLES.map(r => (
                   <button
                     key={r.value}
                     onClick={() => setRole(r.value)}
-                    className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 text-left transition-all duration-200 ${
-                      role === r.value
-                        ? "border-[#1B3B6F] bg-[#EEF3FB]"
-                        : "border-gray-100 hover:border-gray-200 bg-white"
-                    }`}
+                    className="w-full flex items-center gap-4 p-5 rounded-2xl border-2 text-left transition-all duration-200 cursor-pointer"
+                    style={{
+                      borderColor: role === r.value ? "var(--border-gold)" : "var(--border)",
+                      background: role === r.value ? "var(--gold-dim)" : "var(--glass-bg)",
+                    }}
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
-                      role === r.value ? "bg-[#1B3B6F] text-white" : "bg-gray-100 text-gray-400"
-                    }`}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
+                      style={{ background: role === r.value ? "var(--gold-dim)" : "transparent", border: `1px solid ${role === r.value ? "var(--border-gold)" : "var(--border)"}`, color: role === r.value ? "var(--gold)" : "var(--text-muted)" }}>
                       {r.icon}
                     </div>
                     <div>
-                      <p className={`font-semibold text-sm ${role === r.value ? "text-[#1B3B6F]" : "text-gray-700"}`}>
+                      <p className="font-semibold text-sm" style={{ color: role === r.value ? "var(--gold)" : "var(--text-primary)" }}>
                         {r.label}
                       </p>
-                      <p className="text-xs text-gray-400 mt-0.5">{r.desc}</p>
+                      <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{r.desc}</p>
                     </div>
                     {role === r.value && (
-                      <div className="ml-auto w-5 h-5 rounded-full bg-[#1B3B6F] flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="ml-auto w-5 h-5 rounded-full flex items-center justify-center" style={{ background: "var(--gold-dim)", border: "1px solid var(--border-gold)" }}>
+                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" style={{ color: "var(--gold)" }}>
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                         </svg>
                       </div>
@@ -156,13 +155,13 @@ export default function SignupPage() {
                 ))}
               </div>
 
-              <button onClick={() => setStep("details")} className="btn-primary w-full justify-center">
+              <button onClick={() => setStep("details")} className="btn-gold w-full justify-center">
                 Continue as {role === "TENANT" ? "Tenant" : "Owner"} →
               </button>
 
-              <p className="mt-6 text-center text-sm text-gray-400">
+              <p className="mt-6 text-center text-sm" style={{ color: "var(--text-muted)" }}>
                 Already have an account?{" "}
-                <Link href="/auth/login" className="text-[#1B3B6F] font-semibold hover:text-[#F59E0B] transition-colors">
+                <Link href="/auth/login" className="font-semibold transition-colors" style={{ color: "var(--gold)" }}>
                   Sign in
                 </Link>
               </p>
@@ -171,7 +170,10 @@ export default function SignupPage() {
             <div className="reveal">
               <button
                 onClick={() => setStep("role")}
-                className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 mb-8 transition-colors"
+                className="flex items-center gap-2 text-sm mb-8 transition-colors cursor-pointer"
+                style={{ color: "var(--text-muted)" }}
+                onMouseOver={e => (e.currentTarget.style.color = "var(--text-primary)")}
+                onMouseOut={e => (e.currentTarget.style.color = "var(--text-muted)")}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>
@@ -179,14 +181,14 @@ export default function SignupPage() {
                 Back
               </button>
 
-              <h1 className="font-serif text-3xl text-gray-900 mb-2">Your details</h1>
-              <p className="text-gray-400 text-sm mb-8">
+              <h1 className="font-serif text-3xl mb-2" style={{ color: "var(--text-primary)" }}>Your details</h1>
+              <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>
                 Signing up as a{" "}
-                <span className="text-[#1B3B6F] font-medium">{role === "TENANT" ? "Tenant" : "PG Owner"}</span>
+                <span style={{ color: "var(--gold)" }}>{role === "TENANT" ? "Tenant" : "PG Owner"}</span>
               </p>
 
               {error && (
-                <div className="mb-6 flex items-center gap-3 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm">
+                <div className="mb-6 flex items-center gap-3 p-4 rounded-2xl text-sm" style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#EF4444" }}>
                   <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
                   </svg>
@@ -195,61 +197,32 @@ export default function SignupPage() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Full name</label>
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="Priya Sharma"
-                    value={form.name}
-                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    required
-                    autoComplete="name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Email</label>
-                  <input
-                    type="email"
-                    className="input"
-                    placeholder="priya@example.com"
-                    value={form.email}
-                    onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                    required
-                    autoComplete="email"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Phone</label>
-                  <input
-                    type="tel"
-                    className="input"
-                    placeholder="98XXXXXXXX"
-                    value={form.phone}
-                    onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                    required
-                    autoComplete="tel"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Password</label>
-                  <input
-                    type="password"
-                    className="input"
-                    placeholder="Min 8 characters"
-                    value={form.password}
-                    onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-                    required
-                    minLength={8}
-                    autoComplete="new-password"
-                  />
-                </div>
+                {[
+                  { label: "Full name", key: "name", type: "text", placeholder: "Priya Sharma", autocomplete: "name" },
+                  { label: "Email", key: "email", type: "email", placeholder: "priya@example.com", autocomplete: "email" },
+                  { label: "Phone", key: "phone", type: "tel", placeholder: "98XXXXXXXX", autocomplete: "tel" },
+                  { label: "Password", key: "password", type: "password", placeholder: "Min 8 characters", autocomplete: "new-password" },
+                ].map(({ label, key, type, placeholder, autocomplete }) => (
+                  <div key={key}>
+                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>{label}</label>
+                    <input
+                      type={type}
+                      className="input-dark"
+                      placeholder={placeholder}
+                      value={(form as any)[key]}
+                      onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                      required
+                      minLength={key === "password" ? 8 : undefined}
+                      autoComplete={autocomplete}
+                    />
+                  </div>
+                ))}
                 <TurnstileWidget onVerify={setTurnstileToken} />
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn-primary w-full justify-center mt-2 disabled:opacity-60"
+                  className="btn-gold w-full justify-center mt-2 disabled:opacity-60"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">
@@ -263,11 +236,11 @@ export default function SignupPage() {
                 </button>
               </form>
 
-              <p className="mt-6 text-center text-xs text-gray-400">
+              <p className="mt-6 text-center text-xs" style={{ color: "var(--text-muted)" }}>
                 By signing up you agree to our{" "}
-                <Link href="/terms" className="underline hover:text-gray-600">Terms</Link>
+                <Link href="/terms" className="underline transition-colors" style={{ color: "var(--text-secondary)" }}>Terms</Link>
                 {" "}&amp;{" "}
-                <Link href="/privacy" className="underline hover:text-gray-600">Privacy Policy</Link>
+                <Link href="/privacy" className="underline transition-colors" style={{ color: "var(--text-secondary)" }}>Privacy Policy</Link>
               </p>
             </div>
           )}

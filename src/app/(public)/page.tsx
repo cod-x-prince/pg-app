@@ -84,7 +84,7 @@ export default async function HomePage() {
           </div>
 
           {/* Headline — Cinzel exaggerated */}
-          <h1 className="reveal reveal-d1 font-serif font-700 leading-none tracking-tight mb-8" style={{
+          <h1 className="reveal reveal-d1 font-serif font-bold leading-none tracking-tight mb-8" style={{
             fontSize: "clamp(3rem, 10vw, 7rem)",
             color: "var(--text-primary)",
             letterSpacing: "-0.02em",
@@ -139,7 +139,7 @@ export default async function HomePage() {
               { value: `${stats.avgRating.toFixed(1)}★`, label: "Avg Rating" },
             ].map((s, i) => (
               <div key={i} className="stat-card" style={{ borderRadius: 0, border: "none" }}>
-                <p className="font-serif text-3xl md:text-4xl font-600 mb-1 text-shimmer">{s.value}</p>
+                <p className="font-serif text-3xl md:text-4xl font-semibold mb-1 text-shimmer">{s.value}</p>
                 <p className="text-xs tracking-[3px] uppercase" style={{ color: "var(--text-muted)" }}>{s.label}</p>
               </div>
             ))}
@@ -152,7 +152,7 @@ export default async function HomePage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-20">
             <span className="section-label reveal">How it works</span>
-            <h2 className="reveal reveal-d1 font-serif text-4xl md:text-5xl font-600 mt-5" style={{ color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
+            <h2 className="reveal reveal-d1 font-serif text-4xl md:text-5xl font-semibold mt-5" style={{ color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
               Three steps to<br />your new home
             </h2>
           </div>
@@ -160,9 +160,9 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-3 gap-6">
             {HOW.map((h, i) => (
               <div key={i} className={`glass-card rounded-3xl p-8 reveal reveal-d${i + 2}`}>
-                <span className="font-serif text-6xl font-700 mb-6 block" style={{ color: "var(--border)", lineHeight: 1 }}>{h.step}</span>
+                <span className="font-serif text-6xl font-bold mb-6 block" style={{ color: "var(--border)", lineHeight: 1 }}>{h.step}</span>
                 <div className="gold-line mb-5 w-12" />
-                <h3 className="font-serif text-lg font-500 mb-3" style={{ color: "var(--text-primary)" }}>{h.title}</h3>
+                <h3 className="font-serif text-lg font-medium mb-3" style={{ color: "var(--text-primary)" }}>{h.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{h.body}</p>
               </div>
             ))}
@@ -176,9 +176,9 @@ export default async function HomePage() {
           <div className="flex items-end justify-between mb-14">
             <div>
               <span className="section-label reveal">Explore cities</span>
-              <h2 className="reveal reveal-d1 font-serif text-4xl md:text-5xl font-600 mt-5" style={{ color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
+              <h2 className="reveal reveal-d1 font-serif text-4xl md:text-5xl font-semibold mt-5" style={{ color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
                 PGs across<br />
-                <span className="text-gold-gradient" style={{ background: "linear-gradient(135deg, #C9A84C, #F0D080)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>India</span>
+                <span style={{ background: "linear-gradient(135deg, #C9A84C, #F0D080)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>India</span>
               </h2>
             </div>
             <Link href="/properties/bangalore" className="btn-ghost reveal reveal-d2 hidden md:inline-flex">
@@ -208,7 +208,7 @@ export default async function HomePage() {
                 <div className="absolute inset-0 transition-opacity duration-300" style={{ background: "linear-gradient(to top, rgba(10,10,15,0.85) 0%, rgba(10,10,15,0.2) 60%)" }} />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <span className="badge-gold text-[9px] mb-1.5 inline-block">{city.tag}</span>
-                  <p className="font-serif text-white font-500 text-base" style={{ letterSpacing: "0.03em" }}>{city.name}</p>
+                  <p className="font-serif text-white font-medium text-base" style={{ letterSpacing: "0.03em" }}>{city.name}</p>
                 </div>
               </Link>
             ))}
@@ -223,7 +223,7 @@ export default async function HomePage() {
           <div className="relative max-w-5xl mx-auto px-6">
             <div className="text-center mb-16">
               <span className="section-label reveal">Testimonials</span>
-              <h2 className="reveal reveal-d1 font-serif text-4xl md:text-5xl font-600 mt-5" style={{ color: "var(--text-primary)" }}>
+              <h2 className="reveal reveal-d1 font-serif text-4xl md:text-5xl font-semibold mt-5" style={{ color: "var(--text-primary)" }}>
                 What tenants say
               </h2>
             </div>
@@ -241,11 +241,11 @@ export default async function HomePage() {
                     &ldquo;{t.comment}&rdquo;
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center font-serif text-sm font-600" style={{ background: "var(--gold-dim)", border: "1px solid var(--border-gold)", color: "var(--gold)" }}>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center font-serif text-sm font-semibold" style={{ background: "var(--gold-dim)", border: "1px solid var(--border-gold)", color: "var(--gold)" }}>
                       {t.tenant?.name?.[0] ?? "T"}
                     </div>
                     <div>
-                      <p className="text-xs font-600 tracking-wide" style={{ color: "var(--text-primary)" }}>{t.tenant?.name}</p>
+                      <p className="text-xs font-semibold tracking-wide" style={{ color: "var(--text-primary)" }}>{t.tenant?.name}</p>
                       <p className="text-[10px] tracking-wider uppercase" style={{ color: "var(--text-muted)" }}>{t.property?.city}</p>
                     </div>
                   </div>
@@ -260,7 +260,7 @@ export default async function HomePage() {
       <section className="py-32 relative overflow-hidden" style={{ background: "var(--ink2)", borderTop: "1px solid var(--border)" }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <span className="section-label reveal">Get started</span>
-          <h2 className="reveal reveal-d1 font-serif text-4xl md:text-6xl font-600 mt-5 mb-6 leading-tight" style={{ color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
+          <h2 className="reveal reveal-d1 font-serif text-4xl md:text-6xl font-semibold mt-5 mb-6 leading-tight" style={{ color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
             Ready to find your<br />
             <span className="text-shimmer italic">perfect PG?</span>
           </h2>
