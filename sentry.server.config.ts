@@ -1,4 +1,4 @@
-import * as Sentry from "@sentry/nextjs"
+import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -8,14 +8,18 @@ Sentry.init({
   enabled: process.env.NODE_ENV === "production",
 
   // Add user context to all server errors
-  beforeSend(event) {
+  beforeSend(
+    event: Parameters<
+      NonNullable<import("@sentry/nextjs").NodeOptions["beforeSend"]>
+    >[0],
+  ) {
     // Never send passwords or tokens to Sentry
     if (event.request?.data) {
-      const data = event.request.data as any
-      if (data.password) data.password = "[REDACTED]"
-      if (data.token) data.token = "[REDACTED]"
-      if (data.turnstileToken) data.turnstileToken = "[REDACTED]"
+      const data = event.request.data as any;
+      if (data.password) data.password = "[REDACTED]";
+      if (data.token) data.token = "[REDACTED]";
+      if (data.turnstileToken) data.turnstileToken = "[REDACTED]";
     }
-    return event
+    return event;
   },
-})
+});
