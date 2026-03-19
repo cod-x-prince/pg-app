@@ -36,13 +36,13 @@ const nextConfig = {
               "default-src 'self'",
               process.env.NODE_ENV === "development"
                 ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://checkout.razorpay.com"
-                : "script-src 'self' 'unsafe-inline' blob: https://checkout.razorpay.com https://browser.sentry-cdn.com https://vercel.live https://challenges.cloudflare.com",
+                : "script-src 'self' 'unsafe-inline' blob: https://checkout.razorpay.com https://browser.sentry-cdn.com https://vercel.live https://challenges.cloudflare.com https://infird.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
+              "font-src 'self' https://fonts.gstatic.com https://vercel.live",
               process.env.NODE_ENV === "development"
-                ? "img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com"
-                : "img-src 'self' data: https://res.cloudinary.com https://images.unsplash.com",
-              "connect-src 'self' https://*.supabase.co https://api.razorpay.com https://o4504.ingest.sentry.io https://o4505.ingest.sentry.io https://o4506.ingest.sentry.io https://*.upstash.io https://challenges.cloudflare.com https://api.resend.com",
+                ? "img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com https://vercel.com"
+                : "img-src 'self' data: https://res.cloudinary.com https://images.unsplash.com https://vercel.com",
+              "connect-src 'self' https://*.supabase.co https://api.razorpay.com https://o4504.ingest.sentry.io https://o4505.ingest.sentry.io https://o4506.ingest.sentry.io https://*.upstash.io https://challenges.cloudflare.com https://api.resend.com wss://ws-us3.pusher.com https://www.google-analytics.com",
               "frame-src https://api.razorpay.com https://challenges.cloudflare.com https://vercel.live",
             ].join("; "),
           },
