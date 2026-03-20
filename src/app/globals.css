@@ -4,9 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════
-   TERRACOTTA EARTH — Design Tokens (HSL for Tailwind)
-═══════════════════════════════════════════════════ */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -40,7 +37,7 @@
     --shadow-soft:
       0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
     --shadow-elevated:
-      0 0 0 1px rgba(0, 0, 0, 0.04), 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
     --shadow-hover:
       0 2px 4px rgba(0, 0, 0, 0.06), 0 12px 28px rgba(0, 0, 0, 0.1);
   }
@@ -74,9 +71,6 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   UTILITIES
-═══════════════════════════════════════════════════ */
 @layer utilities {
   .font-display {
     font-family: "Outfit", sans-serif;
@@ -107,9 +101,6 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   REVEAL ANIMATIONS
-═══════════════════════════════════════════════════ */
 .reveal {
   opacity: 0;
   transform: translateY(16px);
@@ -141,6 +132,9 @@
   }
 }
 @keyframes fade-in {
+  from {
+    opacity: 0;
+  }
   to {
     opacity: 1;
   }
@@ -153,10 +147,18 @@
     background-position: 200% 0;
   }
 }
+@keyframes loader-progress {
+  0% {
+    width: 0%;
+  }
+  60% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
 
-/* ═══════════════════════════════════════════════════
-   PAGE LOADER
-═══════════════════════════════════════════════════ */
 .page-loader {
   position: fixed;
   inset: 0;
@@ -175,7 +177,6 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  animation: fade-in 0.3s ease forwards;
 }
 .loader-mark span {
   font-family: "Outfit", sans-serif;
@@ -205,49 +206,19 @@
   border-radius: 99px;
   animation: loader-progress 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@keyframes loader-progress {
-  0% {
-    width: 0%;
-  }
-  60% {
-    width: 70%;
-  }
-  100% {
-    width: 100%;
-  }
-}
 .page-loader-out {
   animation: fade-in 0.4s ease reverse forwards;
 }
 
-/* ═══════════════════════════════════════════════════
-   GLASS MORPHISM
-═══════════════════════════════════════════════════ */
-.glass {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid hsl(var(--border));
-}
-.glass-card {
-  background: white;
-  border: 1px solid hsl(var(--border));
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  border-radius: 16px;
-}
-
-/* ═══════════════════════════════════════════════════
-   COMPONENTS
-═══════════════════════════════════════════════════ */
 @layer components {
-  /* ── Buttons ─────────────────────────────────── */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 font-display font-medium
            text-sm cursor-pointer transition-all duration-200 select-none
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
            focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none
            bg-primary text-primary-foreground rounded-xl px-6 h-11
-           hover:bg-primary/90 active:scale-[0.98] shadow-soft hover:shadow-elevated;
+           hover:opacity-90 active:scale-[0.98];
+    box-shadow: var(--shadow-soft);
   }
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 font-display font-medium
@@ -255,7 +226,7 @@
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
            focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none
            bg-secondary text-secondary-foreground rounded-xl px-6 h-11
-           hover:bg-secondary/90 active:scale-[0.98];
+           hover:opacity-90 active:scale-[0.98];
   }
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2 font-display font-medium
@@ -278,7 +249,7 @@
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive
            focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none
            bg-destructive text-destructive-foreground rounded-xl px-6 h-11
-           hover:bg-destructive/90 active:scale-[0.98];
+           hover:opacity-90 active:scale-[0.98];
   }
   .btn-sm {
     @apply h-9 px-4 text-xs rounded-lg;
@@ -287,19 +258,17 @@
     @apply h-14 px-8 text-base rounded-xl;
   }
 
-  /* ── Input ───────────────────────────────────── */
   .input {
     @apply h-12 w-full rounded-xl border border-input bg-background px-4
            font-body text-sm text-foreground placeholder:text-muted-foreground
            transition-all duration-200 outline-none
            focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-           hover:border-muted-foreground/30 disabled:opacity-50;
+           disabled:opacity-50;
   }
   .input-error {
-    @apply border-destructive focus-visible:ring-destructive;
+    @apply border-destructive;
   }
 
-  /* ── Badges ──────────────────────────────────── */
   .badge {
     @apply inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-display font-medium;
   }
@@ -307,39 +276,38 @@
     @apply badge bg-muted text-muted-foreground;
   }
   .badge-primary {
-    @apply badge bg-primary/10 text-primary;
+    @apply badge bg-primary text-primary-foreground;
   }
   .badge-verified {
-    @apply badge bg-success/15 text-success;
+    @apply badge bg-green-50 text-green-700 border border-green-200;
   }
   .badge-boys {
-    @apply badge bg-badge-boys/15 text-badge-boys;
+    @apply badge bg-blue-50 text-blue-700;
   }
   .badge-girls {
-    @apply badge bg-badge-girls/15 text-badge-girls;
+    @apply badge bg-pink-50 text-pink-700;
   }
   .badge-unisex {
-    @apply badge bg-badge-unisex/15 text-badge-unisex;
+    @apply badge bg-purple-50 text-purple-700;
   }
   .badge-pending {
-    @apply badge bg-accent/20 text-accent-foreground;
+    @apply badge bg-amber-50 text-amber-700;
   }
   .badge-success {
-    @apply badge bg-success/15 text-success;
+    @apply badge bg-green-50 text-green-700;
   }
   .badge-danger {
-    @apply badge bg-destructive/10 text-destructive;
+    @apply badge bg-red-50 text-red-700;
   }
 
-  /* ── Cards ───────────────────────────────────── */
   .card {
-    @apply rounded-2xl bg-popover shadow-soft overflow-hidden;
+    @apply rounded-2xl bg-popover overflow-hidden;
+    box-shadow: var(--shadow-soft);
   }
   .card-hover {
-    @apply card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-hover cursor-pointer;
+    @apply card transition-all duration-200 hover:-translate-y-0.5 cursor-pointer;
   }
 
-  /* ── Layout wrappers ─────────────────────────── */
   .section-wrap {
     @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8;
   }
@@ -347,90 +315,78 @@
     @apply mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8;
   }
 
-  /* ── Section label ───────────────────────────── */
   .section-label {
     @apply inline-flex items-center gap-2 text-xs font-display font-semibold
-           tracking-[3px] uppercase text-primary;
+           tracking-widest uppercase text-primary;
   }
 
-  /* ── Divider ─────────────────────────────────── */
   .divider {
     @apply border-t border-border;
   }
 
-  /* ── Skeleton ────────────────────────────────── */
   .skeleton {
     @apply rounded-xl;
-    background: linear-gradient(
-      90deg,
-      hsl(var(--muted)) 25%,
-      hsl(var(--card)) 50%,
-      hsl(var(--muted)) 75%
-    );
+    background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.8s linear infinite;
   }
 
-  /* ── Stat card ───────────────────────────────── */
   .stat-card {
-    @apply rounded-2xl bg-popover p-5 border border-border shadow-soft space-y-1
-           transition-shadow hover:shadow-elevated;
+    @apply rounded-2xl bg-popover p-5 border border-border space-y-1
+           transition-shadow hover:shadow-md;
+    box-shadow: var(--shadow-soft);
   }
 
-  /* ── Avatar ──────────────────────────────────── */
   .avatar {
     @apply relative flex items-center justify-center rounded-full
            bg-muted font-display font-semibold text-muted-foreground
            overflow-hidden shrink-0;
   }
 
-  /* ── Property card — Airbnb style ────────────── */
   .prop-card {
     @apply group rounded-2xl overflow-hidden cursor-pointer
-           transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]
-           hover:-translate-y-1 hover:shadow-hover bg-transparent;
+           transition-all duration-200 bg-transparent;
+  }
+  .prop-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
   }
   .prop-card-img {
     @apply relative overflow-hidden rounded-2xl;
-    aspect-ratio: 20/19;
+    aspect-ratio: 20 / 19;
   }
   .prop-card-img img {
-    @apply h-full w-full object-cover
-           transition-transform duration-500 group-hover:scale-105;
+    @apply h-full w-full object-cover transition-transform duration-500;
+  }
+  .prop-card:hover .prop-card-img img {
+    transform: scale(1.05);
   }
 
-  /* ── Tabs ────────────────────────────────────── */
   .tab-btn {
     @apply font-display font-medium text-sm px-5 py-2.5 rounded-xl transition-all duration-150 cursor-pointer;
   }
   .tab-btn-active {
-    @apply tab-btn bg-primary text-primary-foreground shadow-soft;
+    @apply tab-btn bg-primary text-primary-foreground;
   }
   .tab-btn-inactive {
     @apply tab-btn text-muted-foreground hover:text-foreground hover:bg-muted;
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   SCROLLBAR
-═══════════════════════════════════════════════════ */
 ::-webkit-scrollbar {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: #f0f0f0;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
+  background: #d0d0d0;
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 75, 43, 0.5);
+  background: #a0a0a0;
 }
 
-/* ═══════════════════════════════════════════════════
-   ACCESSIBILITY
-═══════════════════════════════════════════════════ */
 :focus-visible {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
@@ -440,21 +396,15 @@
   outline: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   TEXT SELECTION — brand terracotta tint
-═══════════════════════════════════════════════════ */
 ::selection {
   background: rgba(201, 75, 43, 0.15);
-  color: #1a2744;
+  color: #111827;
 }
 ::-moz-selection {
   background: rgba(201, 75, 43, 0.15);
-  color: #1a2744;
+  color: #111827;
 }
 
-/* ═══════════════════════════════════════════════════
-   NO-SELECT — nav, cards, prices
-═══════════════════════════════════════════════════ */
 nav,
 footer,
 .prop-card,
@@ -463,16 +413,10 @@ footer,
   user-select: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   SAFE AREA (mobile notch)
-═══════════════════════════════════════════════════ */
 .safe-bottom {
   padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
 }
 
-/* ═══════════════════════════════════════════════════
-   REDUCED MOTION
-═══════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
