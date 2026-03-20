@@ -65,6 +65,7 @@ export default function AdminPanel() {
     return (
       <>
         <Navbar />
+      <main>
         <div className="min-h-screen bg-background pt-16 flex items-center justify-center">
           <div className="text-center">
             <h1 className="font-display font-bold text-2xl text-foreground mb-2">Access Denied</h1>
@@ -130,6 +131,7 @@ export default function AdminPanel() {
             )
           )}
 
+      </main>
       <Footer />
       </>
     )
@@ -143,6 +145,7 @@ export default function AdminPanel() {
   return (
     <>
       <Navbar />
+      <main>
       <div className="min-h-screen bg-background pt-16">
 
         {/* Header */}
@@ -334,6 +337,7 @@ export default function AdminPanel() {
             )
           )}
 
+      </main>
       <Footer />
     </>
   )

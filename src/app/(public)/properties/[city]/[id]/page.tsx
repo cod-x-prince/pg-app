@@ -53,6 +53,7 @@ export default async function PropertyDetailPage({
   return (
     <>
       <Navbar />
+      <main>
       <div className="pt-16 min-h-screen bg-gray-50">
 
         {/* ── GALLERY ──────────────────────────────────────────────────── */}
@@ -137,6 +138,48 @@ export default async function PropertyDetailPage({
               )}
 
               {/* Amenities */}
+              {/* Food Plan — NEW */}
+              {property.foodPlan && property.foodPlan !== "NONE" && (
+                <div className="border border-border rounded-xl p-5 mb-5">
+                  <h3 className="font-display font-semibold text-base text-foreground mb-3 flex items-center gap-2">
+                    <span>🍽️</span> Meal Plan
+                  </h3>
+                  <div className="inline-flex items-center gap-2 bg-success/10 text-success border border-success/20 rounded-lg px-4 py-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    <span className="font-display font-semibold text-sm">
+                      {property.foodPlan === "BREAKFAST" ? "Breakfast Included" :
+                       property.foodPlan === "TWO_MEALS" ? "2 Meals/Day Included" :
+                       property.foodPlan === "THREE_MEALS" ? "3 Meals/Day Included" :
+                       "Custom Meal Plan Available"}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* House Rules — NEW */}
+              {property.houseRules && (
+                <div className="border border-border rounded-xl p-5 mb-5">
+                  <h3 className="font-display font-semibold text-base text-foreground mb-3 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    House Rules
+                  </h3>
+                  <ul className="space-y-2">
+                    {property.houseRules.split("\n").filter((rule: string) => rule.trim()).map((rule: string, i: number) => (
+                      <li key={i} className="flex items-start gap-3 font-body text-sm text-foreground">
+                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                        </div>
+                        {rule.trim()}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {property.amenities.length > 0 && (
                 <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
                   <h2 className="font-serif text-xl font-semibold text-[#1B3B6F] mb-4">Amenities</h2>
@@ -294,31 +337,33 @@ export default async function PropertyDetailPage({
           </div>
         </div>
       </div>
-      {/* Sticky mobile booking bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white border-t border-gray-200 px-5 py-3.5 safe-area-bottom">
-        <div className="flex items-center justify-between gap-4 max-w-lg mx-auto h-12">
-          {/* Left Side: Price */}
-          <div className="flex flex-col justify-center">
+      {/* Sticky mobile booking bar — full width, high contrast */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white border-t-2 border-primary px-4 py-3 safe-bottom"
+        style={{ boxShadow: "0 -4px 24px rgba(0,0,0,0.12)" }}>
+        <div className="flex items-center gap-3 max-w-lg mx-auto">
+          {/* Price */}
+          <div className="flex-1">
             {property.rooms.filter((r: { isAvailable: boolean }) => r.isAvailable).length > 0 ? (
               <>
-                <p className="font-bold text-gray-900 text-lg leading-tight">
+                <p className="font-body text-xs text-muted-foreground">Starting from</p>
+                <p className="font-display font-bold text-foreground text-xl leading-tight">
                   ₹{Math.min(...property.rooms.filter((r: PropertyRoom) => r.isAvailable).map((r: PropertyRoom) => r.rent)).toLocaleString("en-IN")}
+                  <span className="font-normal text-sm text-muted-foreground"> /mo</span>
                 </p>
-                <p className="text-xs font-medium text-gray-500 underline decoration-gray-300 underline-offset-2">per month</p>
               </>
             ) : (
-              <p className="text-sm font-semibold text-red-500">Occupied</p>
+              <p className="font-body text-sm font-semibold text-destructive">No rooms available</p>
             )}
           </div>
-          
-          {/* Right Side: Action Buttons */}
-          <div className="flex items-stretch gap-2 flex-1 justify-end h-full">
+
+          {/* Buttons */}
+          <div className="flex gap-2 shrink-0">
             {property.whatsapp && (
               <a
                 href={`https://wa.me/91${property.whatsapp}?text=Hi%2C+I+am+interested+in+${encodeURIComponent(property.name)}+on+PGLife.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-semibold px-4 rounded-xl transition-colors h-full"
+                target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 font-display font-semibold text-sm text-white rounded-xl px-4 h-12"
+                style={{ background: "#25D366" }}
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
@@ -326,7 +371,10 @@ export default async function PropertyDetailPage({
                 Chat
               </a>
             )}
-            <a href="#booking" className="flex items-center justify-center bg-[#E25A3B] hover:bg-[#d64c2e] text-white text-base font-semibold px-6 rounded-xl transition-colors h-full">
+            <a href="#booking"
+              className="flex items-center justify-center font-display font-bold text-sm text-white rounded-xl px-6 h-12 transition-all active:scale-[0.98]"
+              style={{ background: "hsl(var(--primary))", boxShadow: "0 4px 12px hsl(var(--primary) / 0.4)" }}
+            >
               Reserve
             </a>
           </div>
@@ -335,6 +383,7 @@ export default async function PropertyDetailPage({
       {/* Bottom padding for sticky bar on mobile */}
       <div className="h-20 lg:hidden" />
 
+      </main>
       <Footer />
     </>
   )

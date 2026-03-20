@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import PropertyCard from "@/components/properties/PropertyCard"
 import FilterPanel from "@/components/properties/FilterPanel"
+import SortSelect from "@/components/properties/SortSelect"
 import Link from "next/link"
 
 interface Props {
@@ -42,7 +43,7 @@ export default async function PropertiesPage({ params, searchParams }: Props) {
   const properties = await prisma.property.findMany({
     where,
     orderBy: sort === "price_asc" ? { rooms: { _count: "asc" } } : { createdAt: "desc" },
-    include: { images: true, rooms: true, reviews: { select: { id: true, rating: true } }, amenities: true },
+    include: { images: true, rooms: true, reviews: { select: { rating: true } }, amenities: true },
   })
 
   return (
@@ -71,18 +72,7 @@ export default async function PropertiesPage({ params, searchParams }: Props) {
               </div>
               <div className="flex items-center gap-3">
                 <FilterPanel city={city} />
-                <select
-                  defaultValue={sort || "newest"}
-                  onChange={e => {
-                    const url = new URL(window.location.href)
-                    url.searchParams.set("sort", e.target.value)
-                    window.location.href = url.toString()
-                  }}
-                  className="input h-10 w-auto text-sm pr-8 cursor-pointer"
-                >
-                  <option value="newest">Newest first</option>
-                  <option value="price_asc">Price: Low to High</option>
-                </select>
+                <SortSelect currentSort={sort} />
               </div>
             </div>
           </div>

@@ -1,0 +1,23 @@
+{
+  "reason": "Apply WCAG AA accessibility fixes, main landmark, and clean globals.css",
+  "tests_run": "Type check and build",
+  "tests_passed": false,
+  "id": "ag-20260321-02",
+  "rollback_plan": "git checkout main; git branch -D fix-wcag-landmarks",
+  "action": "UI Overhaul: WCAG AA, Landmarks & CSS Cleanup",
+  "autonomy_level": "Level 0 (observe-only, user-approved)",
+  "status": "started",
+  "timestamp": "2026-03-21T03:29:28+05:30",
+  "files_changed": [
+    "src/app/globals.css",
+    "src/app/(public)/page.tsx",
+    "src/app/(public)/properties/[city]/page.tsx",
+    "src/app/(public)/properties/[city]/[id]/page.tsx",
+    "src/app/(auth)/dashboard/page.tsx",
+    "src/app/(auth)/owner/dashboard/page.tsx",
+    "src/app/(auth)/admin/page.tsx",
+    "src/app/(auth)/profile/page.tsx",
+    "src/app/auth/login/page.tsx",
+    "src/app/auth/signup/page.tsx"
+  ]
+}
