@@ -64,9 +64,10 @@ export const UpdatePropertySchema = z.object({
 // ── Rooms ─────────────────────────────────────────────────────────────────────
 
 export const CreateRoomSchema = z.object({
-  type:    z.enum(ALLOWED_ROOM_TYPES as [string, ...string[]]),
-  rent:    z.coerce.number().int().min(500, "Min rent ₹500").max(500000, "Max rent ₹5,00,000"),
-  deposit: z.coerce.number().int().min(0).max(1000000),
+  type:          z.enum(ALLOWED_ROOM_TYPES as [string, ...string[]]),
+  rent:          z.coerce.number().int().min(500, "Min rent ₹500").max(500000, "Max rent ₹5,00,000"),
+  deposit:       z.coerce.number().int().min(0).max(1000000),
+  availableFrom: z.string().datetime({ offset: true }).optional().nullable(),
 })
 
 // ── Bookings ──────────────────────────────────────────────────────────────────

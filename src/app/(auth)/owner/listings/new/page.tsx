@@ -50,14 +50,14 @@ export default function NewListingPage() {
     gender: "UNISEX", whatsapp: "",
     houseRules: "", foodPlan: "NONE", neighbourhood: "",
   })
-  const [rooms, setRooms]         = useState([{ type: "Single", rent: "", deposit: "" }])
+  const [rooms, setRooms]         = useState([{ type: "Single", rent: "", deposit: "", availableFrom: "" }])
   const [images, setImages]       = useState<string[]>([])
   const [video, setVideo]         = useState<string | null>(null)
   const [amenities, setAmenities] = useState<string[]>([])
 
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }))
 
-  const addRoom    = () => setRooms(r => [...r, { type: "Single", rent: "", deposit: "" }])
+  const addRoom    = () => setRooms(r => [...r, { type: "Single", rent: "", deposit: "", availableFrom: "" }])
   const removeRoom = (i: number) => setRooms(r => r.filter((_, idx) => idx !== i))
   const setRoom    = (i: number, k: string, v: string) =>
     setRooms(r => r.map((room, idx) => idx === i ? { ...room, [k]: v } : room))
@@ -152,7 +152,7 @@ export default function NewListingPage() {
         for (const room of rooms) {
           await fetch(`/api/properties/${property.id}/rooms`, {
             method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(room),
+            body: JSON.stringify({ ...room, availableFrom: room.availableFrom ? new Date(room.availableFrom).toISOString() : null }),
           })
         }
         for (let i = 0; i < images.length; i++) {
@@ -303,7 +303,7 @@ export default function NewListingPage() {
                             className="font-body text-xs text-destructive hover:underline cursor-pointer">Remove</button>
                         )}
                       </div>
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                         <div>
                           <label className="font-body text-xs text-muted-foreground mb-1 block">Type</label>
                           <select value={room.type} onChange={e => setRoom(i, "type", e.target.value)} className="input text-sm h-10">
@@ -321,6 +321,13 @@ export default function NewListingPage() {
                           <label className="font-body text-xs text-muted-foreground mb-1 block">Deposit (₹)</label>
                           <input type="number" value={room.deposit} onChange={e => setRoom(i, "deposit", e.target.value)}
                             placeholder="16000" className="input text-sm h-10" />
+                        </div>
+                        <div className="col-span-3 sm:col-span-1">
+                          <label className="font-body text-xs text-muted-foreground mb-1 block">Available From</label>
+                          <input type="date" value={room.availableFrom}
+                            min={new Date().toISOString().split("T")[0]}
+                            onChange={e => setRoom(i, "availableFrom", e.target.value)}
+                            className="input text-sm h-10" />
                         </div>
                       </div>
                     </div>

@@ -3,6 +3,7 @@
   "plugins": ["security"],
   "rules": {
     "security/detect-object-injection": "off",
-    "security/detect-non-literal-regexp": "warn"
+    "security/detect-non-literal-regexp": "warn",
+    "@next/next/no-page-custom-font": "off"
   }
 }

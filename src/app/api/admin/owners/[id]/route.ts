@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
-import type { SessionUser } from "@/types"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { ApproveOwnerSchema, parseBody } from "@/lib/schemas"
 import { withHandler } from "@/lib/handler"
+import type { SessionUser } from "@/types"
 
 export const PUT = withHandler(async (req: Request, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
@@ -22,5 +22,16 @@ export const PUT = withHandler(async (req: Request, { params }: { params: { id: 
     data:  { isApproved: parsed.data.approved },
     select: { id: true, isApproved: true },
   })
+  // Send approval email if approved (non-blocking)
+  if (parsed.data.approved) {
+    try {
+      const owner = await prisma.user.findUnique({ where: { id: params.id }, select: { name: true, email: true } })
+      if (owner) {
+        const { sendOwnerApprovedEmail } = await import("@/lib/email")
+        await sendOwnerApprovedEmail({ name: owner.name, email: owner.email })
+      }
+    } catch { /* email failure should not block approval */ }
+  }
+
   return NextResponse.json(updated)
 })

@@ -45,7 +45,7 @@ export const GET = withHandler(async (req: Request) => {
       where, orderBy, skip, take: limit,
       include: {
         images:    { take: 3 },
-        rooms:     { select: { rent: true, isAvailable: true } },
+        rooms:     { select: { id: true, rent: true, isAvailable: true, availableFrom: true } },
         reviews:   { select: { rating: true } },
         amenities: true,
         _count:    { select: { likes: true } },
@@ -73,9 +73,16 @@ export const POST = withHandler(async (req: Request) => {
   if (!parsed.success)
     return NextResponse.json({ error: parsed.error }, { status: 400 })
 
-  const { name, description, city, address, gender, whatsapp, lat, lng } = parsed.data
+  const { name, description, city, address, gender, whatsapp, lat, lng, houseRules, foodPlan, neighbourhood } = parsed.data
   const property = await prisma.property.create({
-    data: { ownerId: user.id, name, description, city, address, gender, whatsapp: whatsapp ?? null, lat: lat ?? null, lng: lng ?? null } as any,
+    data: {
+      ownerId: user.id, name, description, city, address, gender: gender as "MALE" | "FEMALE" | "UNISEX",
+      whatsapp: whatsapp ?? null,
+      lat: lat ?? null, lng: lng ?? null,
+      houseRules: houseRules ?? null,
+      foodPlan: (foodPlan as any) ?? "NONE",
+      neighbourhood: neighbourhood ?? null,
+    },
   })
   return NextResponse.json(property, { status: 201 })
 })

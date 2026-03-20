@@ -16,11 +16,12 @@ export interface SessionUser {
 
 // ── Property types ────────────────────────────────────────────────────────────
 export interface PropertyRoom {
-  id:          string
-  type:        string
-  rent:        number
-  deposit:     number
-  isAvailable: boolean
+  id:            string
+  type:          string
+  rent:          number
+  deposit:       number
+  isAvailable:   boolean
+  availableFrom: string | Date | null
 }
 
 export interface PropertyImage {
@@ -65,7 +66,7 @@ export interface PropertyListItem {
   createdAt:  string | Date
   _count?: { likes: number }
   images:     PropertyImage[]
-  rooms:      Pick<PropertyRoom, "id" | "rent" | "isAvailable">[]
+  rooms:      Pick<PropertyRoom, "id" | "rent" | "isAvailable" | "availableFrom">[]
   reviews:    Pick<PropertyReview, "id" | "rating">[]
   amenities?: PropertyAmenity[]
 }
@@ -89,9 +90,9 @@ export interface Booking {
   id:         string
   status:     BookingStatus
   type:       BookingType
-  moveInDate: string | Date
+  moveInDate: string
   tokenPaid:  boolean
-  createdAt:  string | Date
+  createdAt:  string
   property: {
     id:     string
     name:   string

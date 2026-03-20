@@ -70,6 +70,7 @@ export default function Navbar() {
                   style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}>
                   {user?.name?.split(" ")[0]}
                 </span>
+                <Link href="/profile" className="btn-ghost btn-sm">Profile</Link>
                 <Link href={dashLink()} className="btn-outline btn-sm"
                   style={!scrolled ? { borderColor: "rgba(255,255,255,0.5)", color: "white", background: "rgba(255,255,255,0.1)" } : {}}>
                   Dashboard
@@ -121,6 +122,7 @@ export default function Navbar() {
             <div className="h-px bg-border my-2" />
             {session ? (
               <>
+                <Link href="/profile" className="block px-3 py-2.5 font-body text-sm text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Profile</Link>
                 <Link href={dashLink()} className="block px-3 py-2.5 font-body text-sm font-medium text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Dashboard</Link>
                 <button onClick={() => signOut({ callbackUrl: "/auth/login" })} className="block w-full text-left px-3 py-2.5 font-body text-sm text-muted-foreground hover:bg-muted rounded-lg cursor-pointer">Logout</button>
               </>

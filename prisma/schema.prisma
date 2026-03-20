@@ -16,6 +16,11 @@ model User {
   passwordHash String
   role         Role       @default(TENANT)
   isApproved   Boolean    @default(false)
+  avatar       String?
+  whatsapp     String?
+  kycDocUrl    String?
+  licenseUrl   String?
+  kycStatus    KycStatus  @default(NONE)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   properties   Property[]
@@ -36,6 +41,9 @@ model Property {
   lng         Float?
   gender      Gender     @default(UNISEX)
   whatsapp    String?
+  houseRules  String?    @db.Text
+  foodPlan    FoodPlan   @default(NONE)
+  neighbourhood String?
   isVerified  Boolean    @default(false)
   isActive    Boolean    @default(true)
   createdAt   DateTime   @default(now())
@@ -64,8 +72,9 @@ model Room {
   type        String
   rent        Int
   deposit     Int
-  isAvailable Boolean   @default(true)
-  bookings    Booking[]
+  isAvailable  Boolean   @default(true)
+  availableFrom DateTime?
+  bookings     Booking[]
 
   @@index([propertyId])
   @@index([propertyId, isAvailable])
@@ -171,4 +180,19 @@ enum BookingStatus {
   CONFIRMED
   CANCELLED
   COMPLETED
+}
+
+enum FoodPlan {
+  NONE
+  BREAKFAST
+  TWO_MEALS
+  THREE_MEALS
+  CUSTOM
+}
+
+enum KycStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
 }

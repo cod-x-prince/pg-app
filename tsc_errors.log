@@ -1,0 +1,44 @@
+phase1fix/mnt/user-data/outputs/pglife-phase1-complete/src/app/(public)/properties/[city]/page.tsx(118,35): error TS2345: Argument of type '(p: PropertyListItem) => JSX.Element' is not assignable to parameter of type '(value: { reviews: { rating: number; }[]; rooms: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; } & { ...; }, index: number, ar...'.
+  Types of parameters 'p' and 'value' are incompatible.
+    Type '{ reviews: { rating: number; }[]; rooms: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; } & { ...; }' is not assignable to type 'PropertyListItem'.
+      Types of property 'createdAt' are incompatible.
+        Type 'Date' is not assignable to type 'string'.
+phase1fix/mnt/user-data/outputs/pglife-phase1-complete/src/app/api/properties/route.ts(79,59): error TS2322: Type 'string' is not assignable to type 'Gender | undefined'.
+src/app/(public)/properties/[city]/[id]/page.tsx(158,39): error TS2345: Argument of type '(room: PropertyRoom) => JSX.Element' is not assignable to parameter of type '(value: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }, index: number, array: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]) => Element'.
+  Types of parameters 'room' and 'value' are incompatible.
+    Type '{ id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }' is not assignable to type 'PropertyRoom'.
+      Types of property 'availableFrom' are incompatible.
+        Type 'Date | null' is not assignable to type 'string | null'.
+          Type 'Date' is not assignable to type 'string'.
+src/app/(public)/properties/[city]/[id]/page.tsx(250,43): error TS2345: Argument of type '(r: PropertyReview) => JSX.Element' is not assignable to parameter of type '(value: { tenant: { name: string; email: string; }; } & { id: string; rating: number; comment: string | null; createdAt: Date; propertyId: string; tenantId: string; }, index: number, array: ({ ...; } & { ...; })[]) => Element'.
+  Types of parameters 'r' and 'value' are incompatible.
+    Type '{ tenant: { name: string; email: string; }; } & { id: string; rating: number; comment: string | null; createdAt: Date; propertyId: string; tenantId: string; }' is not assignable to type 'PropertyReview'.
+      Types of property 'createdAt' are incompatible.
+        Type 'Date' is not assignable to type 'string'.
+src/app/(public)/properties/[city]/[id]/page.tsx(305,55): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(predicate: (value: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }, index: number, array: { id: string; rent: number; ... 4 more ...; propertyId: string; }[]) => value is { ...; }, thisArg?: any): { ...; }[]', gave the following error.
+    Argument of type '(r: PropertyRoom) => boolean' is not assignable to parameter of type '(value: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }, index: number, array: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]) => value is { ...; }'.
+      Types of parameters 'r' and 'value' are incompatible.
+        Type '{ id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }' is not assignable to type 'PropertyRoom'.
+          Types of property 'availableFrom' are incompatible.
+            Type 'Date | null' is not assignable to type 'string | null'.
+              Type 'Date' is not assignable to type 'string'.
+  Overload 2 of 2, '(predicate: (value: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }, index: number, array: { id: string; rent: number; ... 4 more ...; propertyId: string; }[]) => unknown, thisArg?: any): { ...; }[]', gave the following error.
+    Argument of type '(r: PropertyRoom) => boolean' is not assignable to parameter of type '(value: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }, index: number, array: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]) => unknown'.
+      Types of parameters 'r' and 'value' are incompatible.
+        Type '{ id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }' is not assignable to type 'PropertyRoom'.
+          Types of property 'availableFrom' are incompatible.
+            Type 'Date | null' is not assignable to type 'string | null'.
+              Type 'Date' is not assignable to type 'string'.
+src/app/(public)/properties/[city]/[id]/page.tsx(305,95): error TS2345: Argument of type '(r: PropertyRoom) => number' is not assignable to parameter of type '(value: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }, index: number, array: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]) => number'.
+  Types of parameters 'r' and 'value' are incompatible.
+    Type '{ id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }' is not assignable to type 'PropertyRoom'.
+      Types of property 'availableFrom' are incompatible.
+        Type 'Date | null' is not assignable to type 'string | null'.
+          Type 'Date' is not assignable to type 'string'.
+src/app/(public)/properties/[city]/page.tsx(118,35): error TS2345: Argument of type '(p: PropertyListItem) => JSX.Element' is not assignable to parameter of type '(value: { reviews: { rating: number; }[]; rooms: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; } & { ...; }, index: number, ar...'.
+  Types of parameters 'p' and 'value' are incompatible.
+    Type '{ reviews: { rating: number; }[]; rooms: { id: string; rent: number; isAvailable: boolean; type: string; deposit: number; availableFrom: Date | null; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; } & { ...; }' is not assignable to type 'PropertyListItem'.
+      Types of property 'createdAt' are incompatible.
+        Type 'Date' is not assignable to type 'string'.
+src/app/api/properties/route.ts(79,59): error TS2322: Type 'string' is not assignable to type 'Gender | undefined'.

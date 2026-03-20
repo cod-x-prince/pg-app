@@ -1,0 +1,13 @@
+phase1fix/mnt/user-data/outputs/pglife-phase1-complete/src/app/(public)/properties/[city]/page.tsx(118,35): error TS2345: Argument of type '(p: PropertyListItem) => JSX.Element' is not assignable to parameter of type '(value: { rooms: { id: string; rent: number; isAvailable: boolean; availableFrom: Date | null; type: string; deposit: number; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; reviews: { ...; }[]; } & { ...; }, index: number, array: ({ ......'.
+  Types of parameters 'p' and 'value' are incompatible.
+    Type '{ rooms: { id: string; rent: number; isAvailable: boolean; availableFrom: Date | null; type: string; deposit: number; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; reviews: { ...; }[]; } & { ...; }' is not assignable to type 'PropertyListItem'.
+      Types of property 'reviews' are incompatible.
+        Type '{ rating: number; }[]' is not assignable to type 'Pick<PropertyReview, "id" | "rating">[]'.
+          Property 'id' is missing in type '{ rating: number; }' but required in type 'Pick<PropertyReview, "id" | "rating">'.
+phase1fix/mnt/user-data/outputs/pglife-phase1-complete/src/app/api/properties/route.ts(79,59): error TS2322: Type 'string' is not assignable to type 'Gender | undefined'.
+src/app/(public)/properties/[city]/page.tsx(118,35): error TS2345: Argument of type '(p: PropertyListItem) => JSX.Element' is not assignable to parameter of type '(value: { rooms: { id: string; rent: number; isAvailable: boolean; availableFrom: Date | null; type: string; deposit: number; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; reviews: { ...; }[]; } & { ...; }, index: number, array: ({ ......'.
+  Types of parameters 'p' and 'value' are incompatible.
+    Type '{ rooms: { id: string; rent: number; isAvailable: boolean; availableFrom: Date | null; type: string; deposit: number; propertyId: string; }[]; images: { id: string; propertyId: string; url: string; isPrimary: boolean; }[]; amenities: { ...; }[]; reviews: { ...; }[]; } & { ...; }' is not assignable to type 'PropertyListItem'.
+      Types of property 'reviews' are incompatible.
+        Type '{ rating: number; }[]' is not assignable to type 'Pick<PropertyReview, "id" | "rating">[]'.
+          Property 'id' is missing in type '{ rating: number; }' but required in type 'Pick<PropertyReview, "id" | "rating">'.
