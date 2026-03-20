@@ -9,8 +9,8 @@ import type { SessionUser } from "@/types"
 
 const UpdateProfileSchema = z.object({
   name:      z.string().min(2).max(100).trim().optional(),
-  phone:     z.string().regex(/^[6-9]\d{9}$/, "Invalid phone").optional().nullable(),
-  whatsapp:  z.string().regex(/^[6-9]\d{9}$/, "Invalid WhatsApp").optional().nullable(),
+  phone:     z.string().regex(/^[6-9]\d{9}$/, "Invalid phone").optional().nullable().transform(v => v === "" ? null : v),
+  whatsapp:  z.string().regex(/^[6-9]\d{9}$/, "Invalid WhatsApp").optional().nullable().transform(v => v === "" ? null : v),
   avatar:    z.string().url().optional().nullable(),
 })
 
