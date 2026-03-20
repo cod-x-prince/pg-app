@@ -53,3 +53,19 @@ sentry.edge.config.ts
 sentry.client.config.ts
 .vercel
 .env*.local
+
+# Temp / exploration folders
+fixed/
+frontend-share/
+new-ui/
+ui_new/
+ui fix/
+Claude Skills*/
+
+# Compiled CSS artifacts
+out.css
+
+# Report files
+*_REPORT.md
+SETUP_GUIDE.md
+PRE_LAUNCH_AUDIT.md
