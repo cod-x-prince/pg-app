@@ -422,7 +422,7 @@ Private — all rights reserved. © 2026 PGLife.
 
 <div align="center">
 
-Built with obsession in India by **Prince Jamwal** & **Paras Jamwal**
+Built with obsession in India by **Parmbeer Singh** & **Paras Jamwal**
 
 _"Your perfect home awaits."_
 
