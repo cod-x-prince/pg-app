@@ -426,7 +426,7 @@
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.4);
+  background: rgba(201, 75, 43, 0.5);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -445,12 +445,12 @@
    TEXT SELECTION — brand terracotta tint
 ═══════════════════════════════════════════════════ */
 ::selection {
-  background: hsl(var(--primary) / 0.15);
-  color: hsl(var(--foreground));
+  background: rgba(201, 75, 43, 0.15);
+  color: #1a2744;
 }
 ::-moz-selection {
-  background: hsl(var(--primary) / 0.15);
-  color: hsl(var(--foreground));
+  background: rgba(201, 75, 43, 0.15);
+  color: #1a2744;
 }
 
 /* ═══════════════════════════════════════════════════
