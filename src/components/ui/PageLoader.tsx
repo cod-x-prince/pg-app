@@ -67,9 +67,9 @@ export default function PageLoader() {
           100% { transform: translateX(-50%) translateY(0) scale(1.15, 0.85); animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
         }
         @keyframes gh-shadow {
-          0%,100% { transform: translateX(-50%) scaleX(1.3); opacity: .14; }
-          35%,85% { transform: translateX(-50%) scaleX(.6); opacity: .05; }
-          50%      { transform: translateX(-50%) scaleX(1.4); opacity: .18; }
+          0%, 50%, 100% { transform: translateX(-50%) scaleX(1); opacity: 0.35; filter: blur(2px); }
+          5%, 47%, 55%, 97% { transform: translateX(-50%) scaleX(1.1); opacity: 0.2; filter: blur(4px); }
+          35%, 85% { transform: translateX(-50%) scaleX(2.5); opacity: 0.02; filter: blur(12px); }
         }
         @keyframes gh-burst {
           0%   { transform: translateX(-50%) scale(1);  opacity: 1; }
@@ -101,12 +101,12 @@ export default function PageLoader() {
         }}
       />
 
-      {/* Number — top right */}
+      {/* Number — bottom right */}
       <div
         className={done ? "gh-num-exit" : ""}
         style={{
           position: "absolute",
-          top: 28,
+          bottom: 28,
           right: 36,
           display: "flex",
           alignItems: "baseline",
@@ -117,8 +117,8 @@ export default function PageLoader() {
         <span
           style={{
             fontSize: "clamp(72px,11vw,104px)",
-            fontWeight: 300,
-            letterSpacing: "-0.04em",
+            fontWeight: 900,
+            letterSpacing: "-0.06em",
             color: "#0F172A",
             fontVariantNumeric: "tabular-nums",
             lineHeight: 1,
@@ -129,8 +129,8 @@ export default function PageLoader() {
         <span
           style={{
             fontSize: "clamp(72px,11vw,104px)",
-            fontWeight: 300,
-            letterSpacing: "-0.04em",
+            fontWeight: 900,
+            letterSpacing: "-0.06em",
             color: "#FF7A3D",
             lineHeight: 1,
           }}
@@ -162,7 +162,7 @@ export default function PageLoader() {
               width: 40,
               height: 10,
               borderRadius: "50%",
-              background: "rgba(255,122,61,.14)",
+              background: "#FF7A3D",
             }}
           />
         )}
