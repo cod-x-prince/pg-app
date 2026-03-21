@@ -116,10 +116,11 @@ export default function PageLoader() {
       >
         <span
           style={{
-            fontSize: "clamp(72px,11vw,104px)",
+            fontSize: "clamp(120px,18vw,200px)",
             fontWeight: 900,
             letterSpacing: "-0.06em",
-            color: "#0F172A",
+            color: "transparent",
+            WebkitTextStroke: "3px #0F172A",
             fontVariantNumeric: "tabular-nums",
             lineHeight: 1,
           }}
@@ -128,10 +129,11 @@ export default function PageLoader() {
         </span>
         <span
           style={{
-            fontSize: "clamp(72px,11vw,104px)",
+            fontSize: "clamp(120px,18vw,200px)",
             fontWeight: 900,
             letterSpacing: "-0.06em",
-            color: "#FF7A3D",
+            color: "transparent",
+            WebkitTextStroke: "3px #FF7A3D",
             lineHeight: 1,
           }}
         >
