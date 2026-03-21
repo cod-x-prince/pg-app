@@ -52,7 +52,7 @@ export default function OwnerDashboard() {
   if (user && !user.isApproved) {
     return (
       <>
-        <Navbar />
+        <Navbar forceWhite />
         <main>
           <div className="min-h-screen bg-background pt-16 flex items-center justify-center px-4">
           <div className="rounded-2xl bg-popover shadow-elevated max-w-md w-full p-10 text-center">
@@ -77,7 +77,7 @@ export default function OwnerDashboard() {
 
   return (
     <>
-      <Navbar />
+      <Navbar forceWhite />
       <main>
       <div className="min-h-screen bg-background pt-16">
 

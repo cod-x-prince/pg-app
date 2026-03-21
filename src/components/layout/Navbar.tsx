@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import type { SessionUser } from "@/types"
 
-export default function Navbar() {
+export default function Navbar({ forceWhite = false }: { forceWhite?: boolean }) {
   const { data: session } = useSession()
   const user = session?.user as SessionUser | undefined
   const [scrolled, setScrolled] = useState(false)
@@ -27,9 +27,9 @@ export default function Navbar() {
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-200"
       style={{
-        background: scrolled ? "white" : "transparent",
-        borderBottom: scrolled ? "1px solid hsl(var(--border))" : "none",
-        boxShadow: scrolled ? "0 1px 3px rgba(0,0,0,0.06)" : "none",
+        background: (scrolled || forceWhite) ? "white" : "transparent",
+        borderBottom: (scrolled || forceWhite) ? "1px solid hsl(var(--border))" : "none",
+        boxShadow: (scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.06)" : "none",
       }}
     >
       <div className="section-wrap">
@@ -37,7 +37,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-content:center transition-transform group-hover:scale-105 flex items-center justify-center">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
               <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
                 <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
                 <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
@@ -45,7 +45,7 @@ export default function Navbar() {
             </div>
             <span
               className="font-display font-bold text-lg transition-colors"
-              style={{ color: scrolled ? "hsl(var(--foreground))" : "white", letterSpacing: "-0.025em" }}
+              style={{ color: (scrolled || forceWhite) ? "hsl(var(--foreground))" : "white", letterSpacing: "-0.025em" }}
             >
               Gharam
             </span>
@@ -56,7 +56,7 @@ export default function Navbar() {
             {["Bangalore","Mumbai","Delhi","Hyderabad"].map(city => (
               <Link key={city} href={`/properties/${city.toLowerCase()}`}
                 className="font-body text-sm px-3 py-1.5 rounded-lg transition-all duration-150"
-                style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.85)" }}
+                style={{ color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.85)" }}
                 onMouseOver={e => (e.currentTarget.style.background = "hsl(var(--muted))", e.currentTarget.style.color = "hsl(var(--foreground))")}
                 onMouseOut={e => (e.currentTarget.style.background = "transparent", e.currentTarget.style.color = scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.85)")}
               >
@@ -70,12 +70,12 @@ export default function Navbar() {
             {session ? (
               <>
                 <span className="font-body text-sm mr-1"
-                  style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}>
+                  style={{ color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}>
                   {user?.name?.split(" ")[0]}
                 </span>
                 <Link href="/profile" className="btn-ghost btn-sm">Profile</Link>
                 <Link href={dashLink()} className="btn-outline btn-sm"
-                  style={!scrolled ? { borderColor: "rgba(255,255,255,0.5)", color: "white", background: "rgba(255,255,255,0.1)" } : {}}>
+                  style={!(scrolled || forceWhite) ? { borderColor: "rgba(255,255,255,0.5)", color: "white", background: "rgba(255,255,255,0.1)" } : {}}>
                   Dashboard
                 </Link>
                 {(user?.role === "OWNER" || user?.role === "BROKER") && user?.isApproved && (
@@ -83,7 +83,7 @@ export default function Navbar() {
                 )}
                 <button onClick={() => signOut({ callbackUrl: "/auth/login" })}
                   className="font-body text-sm px-3 py-1.5 rounded-lg cursor-pointer transition-colors"
-                  style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.7)" }}>
+                  style={{ color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.7)" }}>
                   Logout
                 </button>
               </>

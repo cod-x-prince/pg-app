@@ -191,7 +191,7 @@ export default function NewListingPage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar forceWhite />
       <div className="pt-16 min-h-screen bg-background">
 
         {/* Header */}

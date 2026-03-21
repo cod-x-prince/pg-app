@@ -31,7 +31,7 @@ export default function TenantDashboard() {
 
   return (
     <>
-      <Navbar />
+      <Navbar forceWhite />
       <main>
       <div className="min-h-screen bg-background pt-16">
 

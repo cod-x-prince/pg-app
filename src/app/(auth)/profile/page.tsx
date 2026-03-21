@@ -124,7 +124,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <>
-        <Navbar />
+        <Navbar forceWhite />
         <main>
           <div className="min-h-screen bg-background pt-16 flex items-center justify-center">
           <div className="space-y-3 w-full max-w-lg px-4">
@@ -142,7 +142,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar forceWhite />
       <main>
       <div className="min-h-screen bg-background pt-16">
 

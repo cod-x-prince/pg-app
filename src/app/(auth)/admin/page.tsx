@@ -64,7 +64,7 @@ export default function AdminPanel() {
   if (user?.role !== "ADMIN") {
     return (
       <>
-        <Navbar />
+        <Navbar forceWhite />
       <main>
         <div className="min-h-screen bg-background pt-16 flex items-center justify-center">
           <div className="text-center">
@@ -144,7 +144,7 @@ export default function AdminPanel() {
 
   return (
     <>
-      <Navbar />
+      <Navbar forceWhite />
       <main>
       <div className="min-h-screen bg-background pt-16">
 
