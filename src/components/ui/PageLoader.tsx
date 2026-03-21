@@ -56,21 +56,24 @@ export default function PageLoader() {
     >
       <style>{`
         @keyframes gh-bounce {
-          0%   { bottom: 0px; animation-timing-function: cubic-bezier(.215,.61,.355,1); }
-          35%  { bottom: 120px; animation-timing-function: cubic-bezier(.755,.05,.855,.06); }
-          50%  { bottom: 0px; width: 64px; height: 44px; }
-          52%  { bottom: 0px; width: 52px; height: 52px; }
-          85%  { bottom: 120px; animation-timing-function: cubic-bezier(.755,.05,.855,.06); }
-          100% { bottom: 0px; width: 64px; height: 44px; }
+          0% { transform: translateX(-50%) translateY(0) scale(1.15, 0.85); animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
+          5% { transform: translateX(-50%) translateY(0) scale(0.9, 1.1); animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
+          35% { transform: translateX(-50%) translateY(-120px) scale(1, 1); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+          47% { transform: translateX(-50%) translateY(0) scale(0.95, 1.05); animation-timing-function: cubic-bezier(0, 0, 1, 1); }
+          50% { transform: translateX(-50%) translateY(0) scale(1.15, 0.85); animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
+          55% { transform: translateX(-50%) translateY(0) scale(0.95, 1.05); animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
+          85% { transform: translateX(-50%) translateY(-120px) scale(1, 1); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+          97% { transform: translateX(-50%) translateY(0) scale(0.95, 1.05); animation-timing-function: cubic-bezier(0, 0, 1, 1); }
+          100% { transform: translateX(-50%) translateY(0) scale(1.15, 0.85); animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
         }
         @keyframes gh-shadow {
-          0%,100% { transform: scaleX(1.4); opacity: .14; }
-          35%,85% { transform: scaleX(.65); opacity: .05; }
-          50%      { transform: scaleX(1.6); opacity: .18; }
+          0%,100% { transform: translateX(-50%) scaleX(1.3); opacity: .14; }
+          35%,85% { transform: translateX(-50%) scaleX(.6); opacity: .05; }
+          50%      { transform: translateX(-50%) scaleX(1.4); opacity: .18; }
         }
         @keyframes gh-burst {
-          0%   { transform: scale(1);  opacity: 1; }
-          100% { transform: scale(50); opacity: 1; }
+          0%   { transform: translateX(-50%) scale(1);  opacity: 1; }
+          100% { transform: translateX(-50%) scale(50); opacity: 1; }
         }
         @keyframes gh-fade-down {
           from { opacity: 1; }
@@ -173,6 +176,7 @@ export default function PageLoader() {
               bottom: 0,
               left: "50%",
               transform: "translateX(-50%)",
+              transformOrigin: "center bottom",
               width: 52,
               height: 52,
               borderRadius: "50%",
@@ -190,6 +194,7 @@ export default function PageLoader() {
               bottom: 0,
               left: "50%",
               transform: "translateX(-50%)",
+              transformOrigin: "center center",
               width: 52,
               height: 52,
               borderRadius: "50%",
