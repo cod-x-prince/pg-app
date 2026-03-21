@@ -5,7 +5,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms and conditions for using PGLife — India\'s PG booking platform.",
+  description: "Terms and conditions for using Gharam — India\'s PG booking platform.",
 }
 
 const LAST_UPDATED = "March 15, 2026"
@@ -14,12 +14,12 @@ const SECTIONS = [
   {
     id: "acceptance",
     title: "1. Acceptance of Terms",
-    content: "By accessing or using PGLife, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms, please do not use our platform. These terms constitute a legally binding agreement between you and PGLife Technologies.",
+    content: "By accessing or using Gharam, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms, please do not use our platform. These terms constitute a legally binding agreement between you and Gharam Technologies.",
   },
   {
     id: "platform-description",
     title: "2. Platform Description",
-    content: "PGLife is a two-sided marketplace that connects PG (Paying Guest) property owners with tenants in India. We provide tools for owners to list properties and for tenants to discover, compare, and book PG accommodation. PGLife is a platform intermediary and is not itself a property owner, landlord, or rental agent.",
+    content: "Gharam is a two-sided marketplace that connects PG (Paying Guest) property owners with tenants in India. We provide tools for owners to list properties and for tenants to discover, compare, and book PG accommodation. Gharam is a platform intermediary and is not itself a property owner, landlord, or rental agent.",
   },
   {
     id: "accounts",
@@ -29,8 +29,8 @@ const SECTIONS = [
       "You must provide accurate, current, and complete information during registration.",
       "You are responsible for maintaining the confidentiality of your password.",
       "You are responsible for all activities that occur under your account.",
-      "You must notify us immediately at support@pglife.in of any unauthorized use of your account.",
-      "PGLife reserves the right to terminate accounts that violate these terms.",
+      "You must notify us immediately at support@gharam.in of any unauthorized use of your account.",
+      "Gharam reserves the right to terminate accounts that violate these terms.",
     ],
   },
   {
@@ -38,12 +38,12 @@ const SECTIONS = [
     title: "4. PG Owner Obligations",
     items: [
       "Owners must provide accurate and truthful property listings including real photographs.",
-      "Owners must obtain PGLife admin approval before their listings go live.",
+      "Owners must obtain Gharam admin approval before their listings go live.",
       "Owners must honor bookings confirmed through the platform.",
       "Owners must not charge tenants broker fees or hidden charges beyond the listed rent.",
       "Owners are responsible for compliance with local laws including police verification requirements.",
       "Owners must keep pricing, availability, and property information up to date.",
-      "PGLife reserves the right to delist properties that receive consistent negative reviews or violate policies.",
+      "Gharam reserves the right to delist properties that receive consistent negative reviews or violate policies.",
     ],
   },
   {
@@ -60,7 +60,7 @@ const SECTIONS = [
   {
     id: "payments",
     title: "6. Payments and Fees",
-    content: "Token booking payments are processed securely through Razorpay. Token amounts are set by PGLife (typically ₹500–₹2,000) and are applied toward your first month\'s rent. Token payments are non-refundable if you cancel within 48 hours of move-in date. In the event an owner cancels a confirmed booking, the full token amount will be refunded. PGLife charges no brokerage fees to tenants. Platform fees for owners will be communicated separately when introduced.",
+    content: "Token booking payments are processed securely through Razorpay. Token amounts are set by Gharam (typically ₹500–₹2,000) and are applied toward your first month\'s rent. Token payments are non-refundable if you cancel within 48 hours of move-in date. In the event an owner cancels a confirmed booking, the full token amount will be refunded. Gharam charges no brokerage fees to tenants. Platform fees for owners will be communicated separately when introduced.",
   },
   {
     id: "prohibited",
@@ -78,17 +78,17 @@ const SECTIONS = [
   {
     id: "limitation",
     title: "8. Limitation of Liability",
-    content: "PGLife is a platform that facilitates connections between owners and tenants. We do not guarantee the accuracy of property listings, the conduct of owners or tenants, or the quality of any accommodation. PGLife\'s liability is limited to the amount paid through our platform for the specific booking in question. We are not liable for any indirect, incidental, or consequential damages arising from use of the platform.",
+    content: "Gharam is a platform that facilitates connections between owners and tenants. We do not guarantee the accuracy of property listings, the conduct of owners or tenants, or the quality of any accommodation. Gharam\'s liability is limited to the amount paid through our platform for the specific booking in question. We are not liable for any indirect, incidental, or consequential damages arising from use of the platform.",
   },
   {
     id: "dispute",
     title: "9. Dispute Resolution",
-    content: "In the event of a dispute between a tenant and owner, you may contact PGLife support at support@pglife.in. We will attempt to mediate in good faith but are not obligated to resolve private disputes. Any unresolved disputes shall be subject to arbitration under the Arbitration and Conciliation Act, 1996. The seat of arbitration shall be Bangalore, Karnataka, India.",
+    content: "In the event of a dispute between a tenant and owner, you may contact Gharam support at support@gharam.in. We will attempt to mediate in good faith but are not obligated to resolve private disputes. Any unresolved disputes shall be subject to arbitration under the Arbitration and Conciliation Act, 1996. The seat of arbitration shall be Bangalore, Karnataka, India.",
   },
   {
     id: "modifications",
     title: "10. Modifications to Terms",
-    content: "PGLife reserves the right to modify these terms at any time. We will provide at least 7 days notice via email before material changes take effect. Continued use of the platform after changes constitutes acceptance of the updated terms.",
+    content: "Gharam reserves the right to modify these terms at any time. We will provide at least 7 days notice via email before material changes take effect. Continued use of the platform after changes constitutes acceptance of the updated terms.",
   },
   {
     id: "governing-law",
@@ -98,7 +98,7 @@ const SECTIONS = [
   {
     id: "contact",
     title: "12. Contact",
-    content: "For questions about these Terms, contact us at legal@pglife.in. Our registered address will be updated upon company incorporation.",
+    content: "For questions about these Terms, contact us at legal@gharam.in. Our registered address will be updated upon company incorporation.",
   },
 ]
 
@@ -115,7 +115,7 @@ export default function TermsPage() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>
               </svg>
-              Back to PGLife
+              Back to Gharam
             </Link>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-[#EEF3FB] flex items-center justify-center">
@@ -130,7 +130,7 @@ export default function TermsPage() {
               Last updated: <span className="text-gray-600 font-medium">{LAST_UPDATED}</span>
             </p>
             <p className="text-gray-500 mt-4 leading-relaxed">
-              Please read these Terms of Service carefully before using PGLife. By using our 
+              Please read these Terms of Service carefully before using Gharam. By using our 
               platform, you agree to these terms. These terms apply to all users — tenants, 
               owners, and visitors.
             </p>
@@ -188,8 +188,8 @@ export default function TermsPage() {
               <Link href="/privacy" className="text-sm text-[#1B3B6F] hover:text-[#F59E0B] transition-colors font-medium">
                 Privacy Policy →
               </Link>
-              <a href="mailto:legal@pglife.in" className="text-sm text-[#1B3B6F] hover:text-[#F59E0B] transition-colors font-medium">
-                legal@pglife.in
+              <a href="mailto:legal@gharam.in" className="text-sm text-[#1B3B6F] hover:text-[#F59E0B] transition-colors font-medium">
+                legal@gharam.in
               </a>
             </div>
           </div>

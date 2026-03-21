@@ -42,7 +42,7 @@ export default function LoginPage() {
                 </span>
               </div>
               <span className="font-display font-bold text-xl text-white">
-                PGLife
+                Gharam
               </span>
             </Link>
 
@@ -97,7 +97,7 @@ export default function LoginPage() {
                 </span>
               </div>
               <span className="font-display font-bold text-lg text-foreground">
-                PGLife
+                Gharam
               </span>
             </Link>
 

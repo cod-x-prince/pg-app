@@ -51,7 +51,7 @@ function baseTemplate(content: string) {
                   <p style="margin:0;">
                     <a href="${BASE}/privacy" style="color:#9ca3af;">Privacy Policy</a> &nbsp;·&nbsp;
                     <a href="${BASE}/terms" style="color:#9ca3af;">Terms of Service</a> &nbsp;·&nbsp;
-                    <a href="mailto:support@pglife.in" style="color:#9ca3af;">Support</a>
+                    <a href="mailto:support@gharam.in" style="color:#9ca3af;">Support</a>
                   </p>
                 </td>
               </tr>

@@ -117,7 +117,7 @@ export default function SignupPage() {
                 </span>
               </div>
               <span className="font-display font-bold text-xl text-white">
-                PGLife
+                Gharam
               </span>
             </Link>
             <div>
@@ -170,7 +170,7 @@ export default function SignupPage() {
                   PG
                 </span>
               </div>
-              <span className="font-display font-bold text-lg">PGLife</span>
+              <span className="font-display font-bold text-lg">Gharam</span>
             </Link>
 
             {/* Progress */}
@@ -214,7 +214,7 @@ export default function SignupPage() {
                   className="font-display font-bold text-2xl text-foreground mb-2"
                   style={{ letterSpacing: "-0.02em" }}
                 >
-                  How will you use PGLife?
+                  How will you use Gharam?
                 </h1>
                 <p className="font-body text-sm text-muted-foreground mb-8">
                   Choose your role to get started

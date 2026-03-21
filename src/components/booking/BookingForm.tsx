@@ -83,7 +83,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
         key:         order.keyId,
         amount:      order.amount,
         currency:    order.currency,
-        name:        "PGLife",
+        name:        "Gharam",
         description: `Token for ${propertyName} — ${selectedRoom?.type}`,
         order_id:    order.orderId,
         prefill: {
@@ -106,7 +106,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
           if (verifyRes.ok) {
             setSuccess(true)
           } else {
-            setError("Payment verification failed. Contact support@pglife.in with your payment ID.")
+            setError("Payment verification failed. Contact support@gharam.in with your payment ID.")
           }
           setLoading(false)
         },
@@ -139,7 +139,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
         </p>
         {whatsapp && (
           <a
-            href={`https://wa.me/91${whatsapp}?text=Hi%2C+I+just+booked+${encodeURIComponent(propertyName)}+on+PGLife.`}
+            href={`https://wa.me/91${whatsapp}?text=Hi%2C+I+just+booked+${encodeURIComponent(propertyName)}+on+Gharam.`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary w-full justify-center mb-3 bg-[#25D366] hover:bg-green-600"
@@ -282,7 +282,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
         {/* WhatsApp direct */}
         {whatsapp && (
           <a
-            href={`https://wa.me/91${whatsapp}?text=Hi%2C+I+am+interested+in+${encodeURIComponent(propertyName)}+listed+on+PGLife.`}
+            href={`https://wa.me/91${whatsapp}?text=Hi%2C+I+am+interested+in+${encodeURIComponent(propertyName)}+listed+on+Gharam.`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full mt-3 py-3 rounded-2xl border border-gray-100 text-gray-500 text-sm hover:bg-gray-50 transition-all"

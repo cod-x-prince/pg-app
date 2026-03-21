@@ -5,7 +5,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How PGLife collects, uses, and protects your personal information.",
+  description: "How Gharam collects, uses, and protects your personal information.",
 }
 
 const LAST_UPDATED = "March 15, 2026"
@@ -85,11 +85,11 @@ const SECTIONS = [
     content: [
       {
         subtitle: "Rights under Indian law",
-        text: "Under the Digital Personal Data Protection Act, 2023, you have the right to access your personal data, correct inaccurate data, erase your data (with certain exceptions), and withdraw consent for data processing. To exercise these rights, email us at privacy@pglife.in.",
+        text: "Under the Digital Personal Data Protection Act, 2023, you have the right to access your personal data, correct inaccurate data, erase your data (with certain exceptions), and withdraw consent for data processing. To exercise these rights, email us at privacy@gharam.in.",
       },
       {
         subtitle: "Account deletion",
-        text: "You can request account deletion at any time by emailing privacy@pglife.in. We will delete your account and personal data within 30 days, except data we are required to retain by law.",
+        text: "You can request account deletion at any time by emailing privacy@gharam.in. We will delete your account and personal data within 30 days, except data we are required to retain by law.",
       },
     ],
   },
@@ -109,7 +109,7 @@ const SECTIONS = [
     content: [
       {
         subtitle: "Privacy inquiries",
-        text: "For privacy-related questions or to exercise your rights, contact us at privacy@pglife.in. For general support, use support@pglife.in. We aim to respond to all privacy requests within 72 hours.",
+        text: "For privacy-related questions or to exercise your rights, contact us at privacy@gharam.in. For general support, use support@gharam.in. We aim to respond to all privacy requests within 72 hours.",
       },
     ],
   },
@@ -128,7 +128,7 @@ export default function PrivacyPage() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>
               </svg>
-              Back to PGLife
+              Back to Gharam
             </Link>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-[#EEF3FB] flex items-center justify-center">
@@ -143,7 +143,7 @@ export default function PrivacyPage() {
               Last updated: <span className="text-gray-600 font-medium">{LAST_UPDATED}</span>
             </p>
             <p className="text-gray-500 mt-4 leading-relaxed">
-              PGLife (operated by PGLife Technologies) is committed to protecting your privacy. 
+              Gharam (operated by Gharam Technologies) is committed to protecting your privacy. 
               This policy explains how we collect, use, and protect your personal information 
               in compliance with the Information Technology Act, 2000 and the Digital Personal 
               Data Protection Act, 2023.
@@ -193,8 +193,8 @@ export default function PrivacyPage() {
               <Link href="/terms" className="text-sm text-[#1B3B6F] hover:text-[#F59E0B] transition-colors font-medium">
                 Terms of Service →
               </Link>
-              <a href="mailto:privacy@pglife.in" className="text-sm text-[#1B3B6F] hover:text-[#F59E0B] transition-colors font-medium">
-                privacy@pglife.in
+              <a href="mailto:privacy@gharam.in" className="text-sm text-[#1B3B6F] hover:text-[#F59E0B] transition-colors font-medium">
+                privacy@gharam.in
               </a>
             </div>
           </div>

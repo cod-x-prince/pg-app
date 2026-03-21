@@ -34,7 +34,7 @@ export default function PendingPage() {
         </Link>
         <p className="text-xs text-gray-400 mt-4">
           Questions? Contact us at{" "}
-          <a href="mailto:support@pglife.in" className="text-[#1B3B6F] hover:underline">support@pglife.in</a>
+          <a href="mailto:support@gharam.in" className="text-[#1B3B6F] hover:underline">support@gharam.in</a>
         </p>
       </div>
     </div>

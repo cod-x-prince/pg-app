@@ -360,7 +360,7 @@ export default async function PropertyDetailPage({
           <div className="flex gap-2 shrink-0">
             {property.whatsapp && (
               <a
-                href={`https://wa.me/91${property.whatsapp}?text=Hi%2C+I+am+interested+in+${encodeURIComponent(property.name)}+on+PGLife.`}
+                href={`https://wa.me/91${property.whatsapp}?text=Hi%2C+I+am+interested+in+${encodeURIComponent(property.name)}+on+Gharam.`}
                 target="_blank" rel="noopener noreferrer"
                 className="flex items-center justify-center gap-1.5 font-display font-semibold text-sm text-white rounded-xl px-4 h-12"
                 style={{ background: "#25D366" }}
