@@ -446,7 +446,6 @@ export default function NewListingPage() {
                   <div className="grid grid-cols-4 gap-2 mt-3">
                     {images.map((url, i) => (
                       <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={url} alt="" className="w-full h-full object-cover" />
                         {i === 0 && (
                           <span className="absolute bottom-1 left-1 badge-primary text-[9px] px-1.5 py-0.5">Cover</span>

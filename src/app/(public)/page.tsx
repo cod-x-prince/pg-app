@@ -211,7 +211,7 @@ export default async function HomePage() {
             <p className="font-body text-sm text-muted-foreground mb-10">Only verified bookings can leave reviews</p>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {(testimonials as any[]).map((t, i) => (
+              {(testimonials as any[]).map((t) => (
                 <div key={t.id} className="bg-white rounded-2xl p-6 shadow-soft">
                   <div className="flex gap-0.5 mb-4">
                     {[...Array(5)].map((_, j) => (

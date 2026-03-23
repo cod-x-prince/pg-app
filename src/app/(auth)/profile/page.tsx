@@ -18,8 +18,6 @@ export default function ProfilePage() {
   const { data: session } = useSession()
   const user        = session?.user as SessionUser | undefined
   const fileRef     = useRef<HTMLInputElement>(null)
-  const kycRef      = useRef<HTMLInputElement>(null)
-  const licenseRef  = useRef<HTMLInputElement>(null)
 
   const [profile,      setProfile]      = useState<any>(null)
   const [loading,      setLoading]      = useState(true)
