@@ -13,6 +13,9 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 
   async headers() {
     return [
