@@ -1,6 +1,6 @@
 <div align="center">
   
-  <img src="https://raw.githubusercontent.com/cod-x-prince/pg-app/main/public/logo.png" alt="Gharam Logo" width="120" />
+  <img src="https://github.com/cod-x-prince/pg-app/blob/main/public/icon.svg" alt="Gharam Logo" width="120" />
 
   # Gharam
 
