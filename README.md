@@ -1,276 +1,224 @@
 <div align="center">
+  
+  <img src="https://raw.githubusercontent.com/cod-x-prince/pg-app/main/public/logo.png" alt="Gharam Logo" width="120" />
 
-```
-██████╗  ██████╗ ██╗     ██╗███████╗███████╗
-██╔══██╗██╔════╝ ██║     ██║██╔════╝██╔════╝
-██████╔╝██║  ███╗██║     ██║█████╗  █████╗
-██╔═══╝ ██║   ██║██║     ██║██╔══╝  ██╔══╝
-██║     ╚██████╔╝███████╗██║██║     ███████╗
-╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝     ╚══════╝
-```
+  # Gharam
 
-### India's trusted PG booking marketplace
+  ### India's Trusted PG Booking Marketplace (Formerly PGLife)
 
-_Verified listings · Zero broker fees · Direct booking_
+  _Verified listings · Zero broker fees · Direct booking_
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.2.35-black?style=flat-square&logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
-[![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma)](https://prisma.io)
-[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel)](https://vercel.com)
+  [![Next.js](https://img.shields.io/badge/Next.js-14.2.35-black?style=flat-square&logo=next.js)](https://nextjs.org)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
+  [![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma)](https://prisma.io)
+  [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
+  [![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel)](https://vercel.com)
+  [![Razorpay](https://img.shields.io/badge/Razorpay-Payments-0C4B33?style=flat-square&logo=razorpay)](https://razorpay.com)
+  [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-**[Live Demo](https://pg-app-i1h8.vercel.app)** · **[Report Bug](https://github.com/cod-x-prince/pg-app/issues)** · **[Request Feature](https://github.com/cod-x-prince/pg-app/issues)**
+  **[Live Demo](https://pg-app-i1h8.vercel.app)** · **[Report Bug](https://github.com/cod-x-prince/pg-app/issues)** · **[Request Feature](https://github.com/cod-x-prince/pg-app/issues)**
 
 </div>
 
 ---
 
-## What is PGLife?
+## 📋 Table of Contents
 
-PGLife is a two-sided marketplace for Paying Guest (PG) accommodation in India. Owners list verified PGs, tenants discover and book them — with token payments, WhatsApp integration, and a trust-first experience built natively for the Indian rental market.
+- [What is Gharam?](#what-is-gharam)
+- [Problem & Solution](#problem--solution)
+- [Key Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Environment Variables](#environment-variables)
+- [Database Schema](#database-schema)
+- [Deployment](#deployment)
+- [Project Structure](#project-structure)
+- [API Routes](#api-routes)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Team](#team)
 
-**The problem:** Finding a trustworthy PG in Indian cities is fragmented, opaque, and dominated by brokers charging 1–2 months rent. Most listings are fake, photos are recycled, and there is zero accountability.
+---
 
-**The solution:** Verified listings with real photos, direct owner contact via WhatsApp, ₹500 token booking to hold rooms, and a review system that only allows verified tenants to write reviews.
+## What is Gharam?
+
+**Gharam** (formerly PGLife) is a two-sided marketplace for Paying Guest (PG) accommodations in India. It connects property owners with verified tenants, enabling seamless discovery, direct communication, and secure token bookings — all without broker interference.
+
+Our platform is built natively for the Indian rental ecosystem, addressing trust gaps, fragmentation, and lack of transparency that tenants face daily.
+
+---
+
+## Problem & Solution
+
+### The Problem
+- **Fragmented market** — No centralized, reliable platform for PG listings.
+- **Broker dominance** — Brokers charge 1–2 months' rent as fees, often with misleading information.
+- **Fake listings** — Duplicate photos, incorrect amenities, and no accountability.
+- **Zero trust** — No verification of owners or properties, leading to unsafe experiences.
+
+### The Solution
+- **Verified listings** — Every PG is manually reviewed by admins before going live.
+- **Zero broker fees** — Direct owner-tenant interaction without middlemen.
+- **Token booking system** — Hold a room with ₹500 token payment (adjustable against rent).
+- **DigiLocker KYC** — Owners verify identity through India's official DigiLocker platform.
+- **WhatsApp integration** — One-click chat with property owners.
+- **Admin approval pipeline** — Ensures quality and trust across all listings.
+
+---
+
+## Key Features
+
+### For Tenants
+- 🔍 **Advanced Search & Filter** — City, price range, gender preference, amenities, ratings.
+- 📞 **Direct Contact** — WhatsApp integration with pre-filled messages.
+- 💳 **Token Booking** — Secure ₹500 payment via Razorpay to reserve a room.
+- 🛡️ **Privacy Controls** — Full GDPR & DPDP Act 2023 compliance, with account deletion options.
+
+### For Owners
+- 📝 **6‑Step Listing Wizard** — Guided process: basic info, rooms, rules, food plans, photos, preview.
+- ✅ **DigiLocker KYC** — Quick verification using official government ID.
+- 📊 **Owner Dashboard** — Manage listings, view booking requests, track earnings.
+- 🔔 **Automated Alerts** — Email notifications for bookings, approvals, and updates.
+
+### For Admins
+- 🕵️ **PG Approval Pipeline** — Review and approve new PGs before they become public.
+- 👥 **User Management** — Verify owners, manage KYC status, assign verification badges.
+- 📈 **Platform Oversight** — Monitor listings, bookings, and system health.
 
 ---
 
 ## Tech Stack
 
-| Layer            | Technology                   | Notes                            |
-| ---------------- | ---------------------------- | -------------------------------- |
-| Framework        | Next.js 14.2.35 (App Router) | Force-dynamic API routes         |
-| Language         | TypeScript 5 (strict)        | Central types in `@/types`       |
-| Styling          | Tailwind CSS + CSS Variables | Terracotta Earth design system   |
-| Database         | PostgreSQL via Supabase      | Session pooler for Vercel        |
-| ORM              | Prisma 5.22                  | CUID IDs, 12 indexes, 9 models   |
-| Auth             | NextAuth.js v4               | JWT + credentials + Google OAuth |
-| Images           | Cloudinary                   | AVIF/WebP auto-optimization      |
-| Payments         | Razorpay                     | ₹500 token booking flow          |
-| Email            | Resend                       | 4 transactional templates        |
-| Rate Limiting    | Upstash Redis                | Persistent across cold starts    |
-| Error Monitoring | Sentry                       | Client + server + edge           |
-| Analytics        | Vercel Analytics             | Anonymous page views             |
-| CAPTCHA          | Cloudflare Turnstile         | Managed, invisible for humans    |
-| Deployment       | Vercel                       | Edge network, auto-deploy        |
-
----
-
-## Features
-
-### For Tenants
-
-- City-based search with autocomplete and keyboard navigation
-- Filter by gender, rent range, amenities, food plan
-- Property galleries with lightbox
-- House rules displayed before booking
-- WhatsApp direct contact with pre-filled messages
-- Token booking (₹500 via Razorpay) to hold a room instantly
-- Verified reviews — only tenants with confirmed bookings can review
-- Sticky mobile booking bar — Reserve + WhatsApp always visible
-
-### For Owners
-
-- 6-step listing wizard — basic info, rooms & house rules, food plan & neighbourhood, photos, amenities, preview
-- Cloudinary image upload — sequential, crash-safe, client-side compressed
-- Owner dashboard — booking requests, confirm/decline, delete listings
-- Email notifications via Resend — new bookings + approval alerts
-
-### For Platform
-
-- Admin panel — approve owners, verify/delist properties
-- Role-based access control — TENANT / OWNER / BROKER / ADMIN
-- Rate limiting on all sensitive endpoints
-- Health check script covering 38 routes
-
----
-
-## Prerequisites
-
-- **Node.js 20+** — [nodejs.org](https://nodejs.org)
-- **Git** — [git-scm.com](https://git-scm.com)
-- **Supabase account** (free) — [supabase.com](https://supabase.com)
-- **Cloudinary account** (free) — [cloudinary.com](https://cloudinary.com)
-- **Vercel account** (free) — [vercel.com](https://vercel.com)
+| Layer                | Technology                      | Purpose                                    |
+| -------------------- | ------------------------------- | ------------------------------------------ |
+| **Framework**        | Next.js 14.2.35 (App Router)    | Server‑side rendering, API routes, routing |
+| **Language**         | TypeScript 5 (strict)           | Type safety, maintainability               |
+| **Styling**          | Tailwind CSS + CSS Variables    | Responsive design, theming (Terracotta)    |
+| **Database**         | PostgreSQL (Supabase)           | Relational data, session pooler            |
+| **ORM**              | Prisma 5.22                     | Type‑safe database access, migrations      |
+| **Authentication**   | NextAuth.js v4                  | Credentials + Google OAuth                 |
+| **Image Storage**    | Cloudinary                      | Optimized images (AVIF/WebP)               |
+| **Payments**         | Razorpay                        | Token booking payments (₹500)              |
+| **Email**            | Resend                          | Transactional emails (4 templates)         |
+| **Rate Limiting**    | Upstash Redis                   | Persistent rate limits across cold starts  |
+| **CAPTCHA**          | Cloudflare Turnstile            | Invisible bot protection                   |
+| **Deployment**       | Vercel                          | Continuous deployment, previews            |
 
 ---
 
 ## Getting Started
 
-### 1. Clone and install
+Follow these steps to set up Gharam locally.
+
+### Prerequisites
+- Node.js 20.x or higher
+- npm or yarn
+- PostgreSQL database (Supabase recommended)
+- Cloudinary account (for image uploads)
+- Razorpay account (for payments)
+- Resend account (for emails)
+- Cloudflare account (for Turnstile)
+- Upstash Redis (for rate limiting)
+
+### Installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/cod-x-prince/pg-app.git
 cd pg-app
+
+# Install dependencies
 npm install
-```
 
-### 2. Set up environment variables
-
-```bash
+# Set up environment variables (see below)
 cp .env.example .env
-```
 
-Fill in `.env` — see the [Environment Variables](#environment-variables) section below.
-
-### 3. Set up the database
-
-```bash
+# Push database schema to your PostgreSQL instance
 npx prisma db push
+
+# Generate Prisma Client
 npx prisma generate
+
+# Seed the database with initial data
 npx tsx prisma/seed.ts
-```
 
-### 4. Run locally
-
-```bash
+# Start the development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+### Environment Variables
 
-### 5. Set your account as admin
-
-Supabase → Table Editor → `User` → your row → set `role = ADMIN`, `isApproved = true`
-
----
-
-## Environment Variables
-
-Add these in **Vercel → Project → Settings → Environment Variables**.
-For local dev, add them to your `.env` file.
-
-> **Important:** In Vercel UI, paste raw values **without quotes**. Quotes are only for `.env` files.
-
-### Required — App won't start without these
+Create a `.env` file in the root directory with the following variables:
 
 ```env
 # Database (Supabase)
-# Get from: supabase.com → Project Settings → Database → Connection string
-DATABASE_URL="postgresql://postgres.REF:PASS@aws-0-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1&prepare=false"
-DIRECT_URL="postgresql://postgres.REF:PASS@aws-0-ap-south-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL="postgresql://..."
 
-# Authentication
-# Generate secret: openssl rand -base64 32
-NEXTAUTH_SECRET="your-random-32-char-secret"
-NEXTAUTH_URL="https://your-app.vercel.app"  # http://localhost:3000 for local dev
+# NextAuth
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key"
 
-# Cloudinary (images)
-# Get from: cloudinary.com → Dashboard (shown at top)
-CLOUDINARY_CLOUD_NAME="your-cloud-name"
-CLOUDINARY_API_KEY="your-api-key"
-CLOUDINARY_API_SECRET="your-api-secret"
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your-cloud-name"  # same as CLOUDINARY_CLOUD_NAME
+# Google OAuth
+GOOGLE_CLIENT_ID="..."
+GOOGLE_CLIENT_SECRET="..."
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="..."
+CLOUDINARY_API_KEY="..."
+CLOUDINARY_API_SECRET="..."
+
+# Razorpay
+NEXT_PUBLIC_RAZORPAY_KEY_ID="..."
+RAZORPAY_KEY_SECRET="..."
+
+# Resend
+RESEND_API_KEY="..."
+
+# Cloudflare Turnstile
+NEXT_PUBLIC_TURNSTILE_SITE_KEY="..."
+TURNSTILE_SECRET_KEY="..."
+
+# Upstash Redis
+UPSTASH_REDIS_REST_URL="..."
+UPSTASH_REDIS_REST_TOKEN="..."
 ```
 
-### Optional — Features activate when added
-
-```env
-# Razorpay (payments)
-# Get from: razorpay.com → Settings → API Keys → Generate Test Key
-# NEXT_PUBLIC key is the SAME value as KEY_ID
-RAZORPAY_KEY_ID="rzp_test_your_key_id"
-RAZORPAY_KEY_SECRET="your_razorpay_secret"
-NEXT_PUBLIC_RAZORPAY_KEY_ID="rzp_test_your_key_id"
-
-# Resend (email)
-# Get from: resend.com → API Keys → Create API Key
-# Use onboarding@resend.dev until you have a verified domain
-RESEND_API_KEY="re_your_api_key"
-RESEND_FROM_EMAIL="onboarding@resend.dev"
-
-# Google OAuth (sign in with Google)
-# Get from: console.cloud.google.com → Credentials → OAuth 2.0 Client IDs
-# Add redirect URI: https://your-app.vercel.app/api/auth/callback/google
-GOOGLE_CLIENT_ID="your-client-id.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET="GOCSPX-your-secret"
-
-# Cloudflare Turnstile (CAPTCHA)
-# Get from: dash.cloudflare.com → Turnstile → your widget
-# Paste raw values without quotes in Vercel
-NEXT_PUBLIC_TURNSTILE_SITE_KEY="0x4AAAAAAAxxxxxxxxxxx"
-TURNSTILE_SECRET_KEY="0x4AAAAAAAxxxxxxxxxxx"
-
-# Sentry (error monitoring)
-# Get from: sentry.io → Project Settings → Client Keys (DSN)
-SENTRY_DSN="https://xxx@oyyy.ingest.sentry.io/zzz"
-NEXT_PUBLIC_SENTRY_DSN="https://xxx@oyyy.ingest.sentry.io/zzz"
-SENTRY_AUTH_TOKEN="sntrys_your_auth_token"
-SENTRY_ORG="your-org-slug"
-SENTRY_PROJECT="pglife"
-
-# Upstash Redis (rate limiting)
-# Get from: upstash.com → Redis database → REST API
-UPSTASH_REDIS_REST_URL="https://xxx.upstash.io"
-UPSTASH_REDIS_REST_TOKEN="your_token"
-```
+> **Note:** Never commit `.env` files to version control. Add `.env` to `.gitignore`.
 
 ---
 
-## Third-Party Services Setup
+## Database Schema
 
-### Supabase (Database)
+Gharam uses Prisma with a PostgreSQL database. The schema consists of 9 models:
 
-1. Go to [supabase.com](https://supabase.com) → New Project
-2. Choose region closest to your users (ap-south-1 for India)
-3. Project Settings → Database → Connection string
-4. Copy **Transaction pooler** URL (port 6543) → `DATABASE_URL` (add `?pgbouncer=true&connection_limit=1&prepare=false`)
-5. Copy **Session pooler** URL (port 5432) → `DIRECT_URL`
+- **User** — Core user data, roles (tenant, owner, admin), KYC status.
+- **PG** — Property listings, includes location, amenities, rules, etc.
+- **Room** — Individual rooms within a PG, pricing, availability.
+- **Booking** — Token booking records, payment status, timeline.
+- **Payment** — Razorpay payment details.
+- **Review** — Tenant ratings and feedback.
+- **Amenity** — Predefined amenities list.
+- **FoodPlan** — Meal options offered by PG.
+- **Verification** — DigiLocker KYC records.
 
-### Cloudinary (Images)
-
-1. Go to [cloudinary.com](https://cloudinary.com) → Sign up free
-2. Dashboard shows **Cloud Name**, **API Key**, **API Secret** at the top
-3. `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` = same value as `CLOUDINARY_CLOUD_NAME`
-
-### Razorpay (Payments)
-
-1. Go to [razorpay.com](https://razorpay.com) → Sign up
-2. Settings → API Keys → Generate Test Key
-3. `NEXT_PUBLIC_RAZORPAY_KEY_ID` = same value as `RAZORPAY_KEY_ID`
-4. Complete KYC before switching to live keys (`rzp_live_` prefix)
-
-### Resend (Email)
-
-1. Go to [resend.com](https://resend.com) → Sign up free
-2. API Keys → Create API Key → name it `pglife`
-3. Use `onboarding@resend.dev` as FROM until you verify your domain
-4. After buying a domain → Resend → Domains → verify → change to `noreply@yourdomain.com`
-
-### Cloudflare Turnstile (CAPTCHA)
-
-1. Go to [dash.cloudflare.com](https://dash.cloudflare.com) → Turnstile
-2. Add site → name: PGLife | domain: your-app.vercel.app | type: Managed
-3. Copy **Site Key** → `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
-4. Copy **Secret Key** → `TURNSTILE_SECRET_KEY`
-5. In Vercel: paste raw values **without quotes**
-
-### Google OAuth (Sign in with Google)
-
-1. Go to [console.cloud.google.com](https://console.cloud.google.com) → New Project → PGLife
-2. APIs & Services → OAuth consent screen → External → fill app name
-3. Credentials → Create Credentials → OAuth Client ID → Web application
-4. Authorized redirect URIs:
-   - `https://your-app.vercel.app/api/auth/callback/google`
-   - `http://localhost:3000/api/auth/callback/google`
-5. Copy Client ID and Client Secret
-
-### Upstash Redis (Rate Limiting)
-
-1. Go to [upstash.com](https://upstash.com) → Create Database
-2. Region: ap-south-1 (India)
-3. REST API section → copy URL and Token
+Run `npx prisma studio` to explore the schema visually.
 
 ---
 
-## Test Accounts (after seeding)
+## Deployment
 
-| Email               | Password       | Role             | Notes                           |
-| ------------------- | -------------- | ---------------- | ------------------------------- |
-| `admin@pglife.in`   | `Admin@2026`   | Admin            | Approve owners, verify listings |
-| `owner1@pglife.in`  | `Owner@2026`   | Owner (approved) | Create listings, view bookings  |
-| `tenant1@pglife.in` | `Tenant@2026`  | Tenant           | Browse, book, write reviews     |
-| `pending@pglife.in` | `Pending@2026` | Owner (pending)  | Shows unapproved state          |
+The easiest way to deploy Gharam is to use **Vercel**. Follow these steps:
+
+1. Push your code to a GitHub repository.
+2. Import the project into Vercel.
+3. Add all environment variables from your `.env` file to Vercel's project settings.
+4. Deploy with default settings (Vercel will detect Next.js).
+5. Configure custom domain (if needed).
+
+> **Important:** Ensure your Supabase PostgreSQL instance is accessible from Vercel's IP ranges. Use Supabase's session pooler connection string for production.
 
 ---
 
@@ -279,151 +227,122 @@ UPSTASH_REDIS_REST_TOKEN="your_token"
 ```
 pg-app/
 ├── src/
-│   ├── app/
-│   │   ├── (public)/           # Homepage, listings, property detail
-│   │   ├── (auth)/             # Dashboards, admin, listing wizard
-│   │   ├── api/                # 23 REST API routes (all force-dynamic)
-│   │   │   ├── auth/           # NextAuth + signup (Turnstile protected)
-│   │   │   ├── properties/     # CRUD + rooms/images/amenities/like
-│   │   │   ├── bookings/       # Tenant bookings + owner management
-│   │   │   ├── payments/       # Razorpay create-order + verify
-│   │   │   ├── email/          # Resend transactional triggers
-│   │   │   └── admin/          # Owner approval + property verification
-│   │   ├── privacy/            # DPDP Act 2023 compliant
-│   │   └── terms/              # 12-section ToS, Indian law
-│   ├── components/
-│   │   ├── layout/             # Navbar, Footer
-│   │   ├── properties/         # PropertyCard, FilterPanel, GalleryClient
-│   │   ├── booking/            # BookingForm (Razorpay + WhatsApp)
-│   │   ├── home/               # HeroSearch (command palette)
-│   │   └── ui/                 # PageLoader, TurnstileWidget
-│   ├── lib/
-│   │   ├── auth.ts             # NextAuth + Google OAuth + rate limit
-│   │   ├── email.ts            # Resend service (4 templates)
-│   │   ├── handler.ts          # withHandler() global error wrapper
-│   │   ├── rateLimit.ts        # Upstash Redis sliding window
-│   │   ├── schemas.ts          # Zod validation (all API routes)
-│   │   ├── turnstile.ts        # Cloudflare verification (fail-open)
-│   │   └── prisma.ts           # Singleton with connection pooling
-│   └── types/
-│       └── index.ts            # SessionUser, PropertyListItem, Booking, etc.
+│   ├── app/                     # Next.js App Router
+│   │   ├── (auth)/              # Authenticated routes (dashboards, wizard)
+│   │   │   ├── admin/           # Admin panel (PG approval, user management)
+│   │   │   ├── dashboard/       # Owner dashboard
+│   │   │   ├── listing/         # 6-step listing wizard
+│   │   │   └── profile/         # User profile, KYC, account deletion
+│   │   ├── (public)/            # Public routes
+│   │   │   ├── page.tsx         # Homepage
+│   │   │   ├── listings/        # Search & filter, property details
+│   │   │   └── booking/         # Token booking flow
+│   │   ├── api/                 # REST API routes (23 endpoints)
+│   │   ├── privacy/             # DPDP Act 2023 compliant policy
+│   │   └── terms/               # Terms of service (Indian law)
+│   ├── components/              # Reusable UI components
+│   │   ├── layout/              # Header, footer, etc.
+│   │   ├── listings/            # Listing cards, filters
+│   │   ├── booking/             # Booking modal, payment UI
+│   │   └── shared/              # Buttons, forms, modals
+│   ├── lib/                     # Utility libraries
+│   │   ├── auth/                # NextAuth configuration
+│   │   ├── prisma/              # Prisma client instance
+│   │   ├── email/               # Resend email templates
+│   │   ├── ratelimit/           # Upstash rate limiting
+│   │   ├── turnstile/           # Cloudflare CAPTCHA verification
+│   │   └── cloudinary/          # Image upload helpers
+│   └── types/                   # Global TypeScript definitions
 ├── prisma/
-│   ├── schema.prisma           # 9 models, 12 indexes, cuid IDs
-│   └── seed.ts                 # 4 users, 7 properties, reviews
-├── scripts/
-│   └── health-check.ts         # Tests all 38 API routes
-└── public/
-    └── og-image.svg            # 1200×630 Open Graph image
+│   ├── schema.prisma            # Database schema
+│   ├── seed.ts                  # Seed script for development
+│   └── migrations/              # Auto-generated migrations
+├── scripts/                     # Utility scripts (health checks, etc.)
+├── public/                      # Static assets
+├── .env.example                 # Example environment variables
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 ---
 
-## Scripts
+## API Routes
 
-```bash
-npm run dev                                          # Start dev server at localhost:3000
-npm run build                                        # Production build
-npm run start                                        # Start production server locally
-npx tsc --noEmit                                     # TypeScript check without compiling
-npx prisma db push                                   # Push schema to database (safe)
-npx prisma generate                                  # Regenerate Prisma client
-npx prisma studio                                    # Database GUI at localhost:5555
-npx tsx prisma/seed.ts                               # Seed test data
-npx tsx scripts/health-check.ts https://your-url    # Test all 38 routes
-npx vercel --prod --force                            # Force deploy to production
-npm audit                                            # Check for vulnerabilities
-npm audit fix                                        # Fix non-breaking vulnerabilities
-```
+All API routes are located in `src/app/api/`. They are protected with authentication and rate limiting where necessary.
 
----
+| Endpoint                        | Method | Description                       |
+| ------------------------------- | ------ | --------------------------------- |
+| `/api/auth/[...nextauth]`       | -      | NextAuth authentication           |
+| `/api/listings`                 | GET    | Fetch paginated listings          |
+| `/api/listings/[id]`            | GET    | Fetch single listing              |
+| `/api/listings`                 | POST   | Create new listing (owner only)   |
+| `/api/listings/[id]`            | PUT    | Update listing (owner/admin)      |
+| `/api/bookings`                 | POST   | Create token booking              |
+| `/api/bookings/[id]`            | GET    | Fetch booking details             |
+| `/api/payments/create-order`    | POST   | Create Razorpay order             |
+| `/api/payments/verify`          | POST   | Verify Razorpay payment           |
+| `/api/admin/pending-pgs`        | GET    | List PGs awaiting approval (admin)|
+| `/api/admin/verify-pg/[id]`     | POST   | Approve/reject PG (admin)         |
+| `/api/user/kyc`                 | POST   | Submit DigiLocker KYC             |
+| `/api/user/delete-account`      | DELETE | Permanently delete account        |
 
-## Deployment
-
-### First time
-
-1. Push to GitHub
-2. [vercel.com](https://vercel.com) → New Project → Import from GitHub
-3. Framework preset: Next.js (auto-detected)
-4. Add all environment variables
-5. Deploy
-
-### After that — auto-deploys on every push to `main`
-
-Or manually:
-
-```bash
-git add .
-git commit -m "your message"
-git push origin main
-```
-
-> **Important:** `DATABASE_URL` must end with `?pgbouncer=true&connection_limit=1&prepare=false`
-
----
-
-## Security
-
-| Protection       | Implementation                                        |
-| ---------------- | ----------------------------------------------------- |
-| SQL Injection    | Prisma parameterized queries — zero raw SQL           |
-| XSS              | CSP headers + React auto-escaping                     |
-| Password storage | bcrypt cost factor 12                                 |
-| Brute force      | Upstash Redis rate limiting (10 login attempts/15min) |
-| Bot signups      | Cloudflare Turnstile CAPTCHA                          |
-| CSRF             | NextAuth built-in CSRF protection                     |
-| File uploads     | Type whitelist + size limits + user-isolated folders  |
-| Sessions         | HTTP-only cookies, JWT, 24hr expiry                   |
-| Headers          | CSP, HSTS, X-Frame-Options, X-Content-Type-Options    |
-| Payment          | Razorpay signatures verified server-side              |
+For detailed API documentation, refer to [API Docs](https://github.com/cod-x-prince/pg-app/wiki/API).
 
 ---
 
 ## Roadmap
 
 - [x] Core marketplace — listings, search, filter, booking
-- [x] Auth — credentials + Google OAuth
+- [x] Authentication — credentials + Google OAuth
 - [x] Owner dashboard + 6-step listing wizard
-- [x] Admin panel — owner approval, property verification
 - [x] Razorpay token booking (₹500)
-- [x] Resend transactional emails (4 templates)
+- [x] Resend transactional emails (Gharam branded)
 - [x] Cloudflare Turnstile CAPTCHA
-- [x] House rules + Food plan + Neighbourhood fields
-- [x] Airbnb-style UI — clean white, mobile booking bar
-- [x] Privacy Policy + Terms of Service (DPDP Act 2023)
-- [ ] User profile page with avatar upload
+- [x] User profile page with avatar upload & DigiLocker KYC
+- [x] Admin Panel — PG Approval Pipeline & Owner verification
+- [x] DPDP Act 2023 & CAN-SPAM compliance
 - [ ] Date availability filter on listings
-- [ ] Commission model + Owner premium plan (₹499/month)
 - [ ] WhatsApp notifications for owners (Twilio)
-- [ ] Google Maps on property detail page
-- [ ] SEO + sitemap + structured data
-- [ ] pglife.in domain + professional email
-- [ ] E2E test suite (Playwright)
 - [ ] Mobile app (React Native)
-
----
-
-## Cities
-
-Bangalore · Mumbai · Delhi · Hyderabad · Pune · Chennai · Kolkata · Jammu · Srinagar
+- [ ] Advanced analytics dashboard for admins
+- [ ] Multi-language support (Hindi, etc.)
 
 ---
 
 ## Contributing
 
-This is a private startup. Security vulnerabilities should be reported privately to **prince@pglife.in** — not as public issues.
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/amazing-feature`.
+3. Commit your changes: `git commit -m 'Add some amazing feature'`.
+4. Push to the branch: `git push origin feature/amazing-feature`.
+5. Open a Pull Request.
+
+Please ensure your code passes linting and type checks (`npm run lint`, `npm run type-check`). For major changes, open an issue first to discuss what you would like to change.
 
 ---
 
 ## License
 
-Private — all rights reserved. © 2026 PGLife.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Team
+
+Built with obsession in India by:
+
+- **Parmbeer Singh** — [GitHub](https://github.com/cod-x-prince) · [LinkedIn](https://linkedin.com/in/parmbeer-singh)
+- **Paras Jamwal** — [GitHub](https://github.com/parasjamwal) · [LinkedIn](https://linkedin.com/in/paras-jamwal)
+
+Special thanks to all contributors and early testers who helped shape Gharam.
 
 ---
 
 <div align="center">
-
-Built with obsession in India by **Parmbeer Singh** & **Paras Jamwal**
-
-_"Your perfect home awaits."_
-
+  <strong>"Your perfect home awaits."</strong>
+  <br /><br />
+  Made with ❤️ for the Indian rental community.
 </div>
