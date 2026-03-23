@@ -92,7 +92,7 @@ export default async function HomePage() {
           sizes="100vw"
         />
         {/* Light gradient overlay — not too dark */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/30 to-black/50" />
 
         {/* Content */}
         <div className="relative z-10 w-full max-w-3xl mx-auto px-4 text-center">
@@ -190,7 +190,7 @@ export default async function HomePage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
                   <span className="absolute bottom-2.5 left-3 font-display font-semibold text-white text-sm">
                     {city.name}
                   </span>
