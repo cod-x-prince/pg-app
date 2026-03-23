@@ -1,9 +1,8 @@
 "use client"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 export default function SortSelect({ currentSort }: { currentSort?: string }) {
   const router = useRouter()
-  const params = useSearchParams()
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const url = new URL(window.location.href)

@@ -83,7 +83,6 @@ export default function GalleryClient({ images, name }: Props) {
         <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center" onClick={close}>
           {/* Image */}
         {/* Image — kept as <img> intentionally: fullscreen overlay with percentage-based sizing */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={images[lightbox]}
           alt={`${name} ${lightbox + 1}`}
