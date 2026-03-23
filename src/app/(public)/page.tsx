@@ -83,7 +83,7 @@ export default async function HomePage() {
       <main>
 
       {/* ── HERO — Airbnb style: full bleed image, search centered ─── */}
-      <section className="relative h-[580px] md:h-[640px] flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative h-[580px] md:h-[640px] flex flex-col items-center justify-center overflow-hidden bg-[#0F172A]">
         {/* Background image */}
         <Image
           src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1800&q=80"
@@ -116,7 +116,7 @@ export default async function HomePage() {
             {["Bangalore","Mumbai","Delhi","Hyderabad","Pune","Jammu"].map(city => (
               <Link key={city} href={`/properties/${city.toLowerCase()}`}
                 className="font-body text-xs text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm
-                           border border-white/30 px-3 py-1.5 rounded-full transition-all duration-150">
+                           border border-white/30 px-3 py-1.5 rounded-full transition-all duration-150 cursor-pointer">
                 {city}
               </Link>
             ))}

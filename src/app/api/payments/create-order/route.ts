@@ -40,7 +40,7 @@ export const POST = withHandler(async (req: Request) => {
   const order = await razorpay.orders.create({
     amount:   TOKEN_AMOUNT,
     currency: "INR",
-    receipt:  `pglife_token_${bookingId.slice(0, 8)}`,
+    receipt:  `gharam_token_${bookingId.slice(0, 8)}`,
     notes: {
       bookingId,
       propertyName: booking.property.name,

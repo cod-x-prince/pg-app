@@ -34,7 +34,11 @@ export const GET = withHandler(async (req: Request) => {
     }}}
   }
 
-  const orderBy: Record<string, unknown> = sort === "price_asc" ? { rooms: { _count: "asc" } } : { createdAt: "desc" }
+  const orderBy: Record<string, unknown> =
+    sort === "price_asc"  ? { rooms: { _count: "asc" } } :
+    sort === "price_desc" ? { rooms: { _count: "desc" } } :
+    sort === "top_rated"  ? { reviews: { _count: "desc" } } :
+    { createdAt: "desc" }
 
   const page  = Math.max(1, parseInt(searchParams.get("page") || "1"))
   const limit = Math.min(50, parseInt(searchParams.get("limit") || "20"))
@@ -82,6 +86,7 @@ export const POST = withHandler(async (req: Request) => {
       houseRules: houseRules ?? null,
       foodPlan: (foodPlan as any) ?? "NONE",
       neighbourhood: neighbourhood ?? null,
+      isActive: false, // Force all new PGs to go to Admin pending approval queue
     },
   })
   return NextResponse.json(property, { status: 201 })

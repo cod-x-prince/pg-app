@@ -42,7 +42,11 @@ export default async function PropertiesPage({ params, searchParams }: Props) {
 
   const properties = await prisma.property.findMany({
     where,
-    orderBy: sort === "price_asc" ? { rooms: { _count: "asc" } } : { createdAt: "desc" },
+    orderBy:
+      sort === "price_asc"  ? { rooms: { _count: "asc" } } :
+      sort === "price_desc" ? { rooms: { _count: "desc" } } :
+      sort === "top_rated"  ? { reviews: { _count: "desc" } } :
+      { createdAt: "desc" },
     include: { images: true, rooms: true, reviews: { select: { id: true, rating: true } }, amenities: true },
   })
 
@@ -71,7 +75,6 @@ export default async function PropertiesPage({ params, searchParams }: Props) {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <FilterPanel city={city} />
                 <SortSelect currentSort={sort} />
               </div>
             </div>

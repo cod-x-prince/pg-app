@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 
-type Tab = "approvals" | "properties" | "kyc"
+type Tab = "approvals" | "properties" | "kyc" | "pgs"
 
 export default function AdminPanel() {
   const { data: session } = useSession()
@@ -59,6 +59,17 @@ export default function AdminPanel() {
       setProperties(prev => prev.map(p => p.id === id ? { ...p, isVerified: !current } : p))
       showToast(!current ? "Property verified" : "Verification removed")
     } else showToast("Action failed", "error")
+  }
+
+  const approvePg = async (id: string) => {
+    const res = await fetch(`/api/admin/properties/${id}`, {
+      method: "PUT", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isActive: true }),
+    })
+    if (res.ok) {
+      setProperties(prev => prev.map(p => p.id === id ? { ...p, isActive: true } : p))
+      showToast("PG is now Live and Approved!")
+    } else showToast("Approval failed", "error")
   }
 
   if (user?.role !== "ADMIN") {
@@ -172,9 +183,9 @@ export default function AdminPanel() {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { label: "Pending Approvals", value: pending.length },
+              { label: "Pending Owners",    value: pending.length },
+              { label: "Pending PGs",       value: properties.filter(p => !p.isActive).length },
               { label: "Total Listings",    value: properties.length },
-              { label: "Verified PGs",      value: properties.filter(p => p.isVerified).length },
               { label: "Active Listings",   value: properties.filter(p => p.isActive).length },
             ].map(s => (
               <div key={s.label} className="stat-card">
@@ -187,7 +198,10 @@ export default function AdminPanel() {
           {/* Tabs */}
           <div className="flex gap-2 mb-6 p-1 bg-muted rounded-xl w-fit">
             <button onClick={() => setTab("approvals")} className={tab === "approvals" ? "tab-btn-active" : "tab-btn-inactive"}>
-              Pending Approvals {pending.length > 0 && <span className="badge-danger ml-1 text-[10px]">{pending.length}</span>}
+              Owners {pending.length > 0 && <span className="badge-danger ml-1 text-[10px]">{pending.length}</span>}
+            </button>
+            <button onClick={() => setTab("pgs")} className={tab === "pgs" ? "tab-btn-active" : "tab-btn-inactive"}>
+              Pending PGs {properties.filter(p => !p.isActive).length > 0 && <span className="badge-danger ml-1 text-[10px]">{properties.filter(p => !p.isActive).length}</span>}
             </button>
             <button onClick={() => setTab("properties")} className={tab === "properties" ? "tab-btn-active" : "tab-btn-inactive"}>
               All Listings ({properties.length})
@@ -237,7 +251,34 @@ export default function AdminPanel() {
                 ))}
               </div>
             )
-          ) : (
+          ) : tab === "pgs" ? (
+            properties.filter(p => !p.isActive).length === 0 ? (
+              <div className="rounded-xl bg-popover shadow-soft p-12 text-center">
+                <div className="w-14 h-14 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-7 h-7 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <h3 className="font-display font-semibold text-lg text-foreground mb-2">No pending PGs!</h3>
+                <p className="font-body text-sm text-muted-foreground">All submitted PGs are live.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {properties.filter(p => !p.isActive).map(p => (
+                  <div key={p.id} className="rounded-xl bg-popover shadow-soft p-5 flex items-center gap-4 border-l-4 border-l-orange-400">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <h3 className="font-display font-semibold text-base text-foreground truncate">{p.name}</h3>
+                        <span className="badge-pending text-[10px]">Awaiting Approval</span>
+                      </div>
+                      <p className="font-body text-sm text-muted-foreground">{p.city} · {p.owner?.name}</p>
+                    </div>
+                    <button onClick={() => approvePg(p.id)} className="btn-primary btn-sm">Approve Live</button>
+                  </div>
+                ))}
+              </div>
+            )
+          ) : tab === "properties" ? (
             <div>
               <input
                 value={search}
@@ -266,7 +307,7 @@ export default function AdminPanel() {
                 ))}
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 

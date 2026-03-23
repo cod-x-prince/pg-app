@@ -112,9 +112,10 @@ export default function SignupPage() {
           <div className="relative z-10 flex flex-col justify-between p-14 w-full">
             <Link href="/" className="flex items-center gap-2.5">
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-elevated">
-                <span className="font-display font-bold text-sm text-white">
-                  PG
-                </span>
+                <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
+                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
+                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                </svg>
               </div>
               <span className="font-display font-bold text-xl text-white">
                 Gharam
@@ -166,9 +167,10 @@ export default function SignupPage() {
             {/* Mobile logo */}
             <Link href="/" className="flex items-center gap-2 mb-8 lg:hidden">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="font-display font-bold text-xs text-white">
-                  PG
-                </span>
+                <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
+                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
+                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                </svg>
               </div>
               <span className="font-display font-bold text-lg">Gharam</span>
             </Link>

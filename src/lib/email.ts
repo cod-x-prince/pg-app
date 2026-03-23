@@ -1,8 +1,8 @@
 import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const FROM   = process.env.RESEND_FROM_EMAIL ?? "PGLife <noreply@pglife.in>"
-const BASE   = process.env.NEXTAUTH_URL ?? "https://pglife.in"
+const FROM   = process.env.RESEND_FROM_EMAIL ?? "Gharam <noreply@gharam.in>"
+const BASE   = process.env.NEXTAUTH_URL ?? "https://gharam.in"
 
 // ── Templates ─────────────────────────────────────────────────────────────
 
@@ -12,7 +12,7 @@ function baseTemplate(content: string) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PGLife</title>
+  <title>Gharam</title>
 </head>
 <body style="margin:0;padding:0;background:#f9fafb;font-family:\'DM Sans\',Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 16px;">
@@ -26,11 +26,11 @@ function baseTemplate(content: string) {
                 <td>
                   <table cellpadding="0" cellspacing="0">
                     <tr>
-                      <td style="background:#F59E0B;width:40px;height:40px;border-radius:10px;text-align:center;vertical-align:middle;">
-                        <span style="color:white;font-weight:700;font-size:14px;">PG</span>
+                      <td style="background:#FF7A3D;width:40px;height:40px;border-radius:10px;text-align:center;vertical-align:middle;">
+                        <span style="color:white;font-weight:700;font-size:16px;">G</span>
                       </td>
                       <td style="padding-left:12px;">
-                        <span style="color:white;font-size:22px;font-weight:600;">PGLife</span>
+                        <span style="color:white;font-size:22px;font-weight:600;">Gharam</span>
                       </td>
                     </tr>
                   </table>
@@ -47,11 +47,14 @@ function baseTemplate(content: string) {
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:40px;padding-top:24px;border-top:1px solid #f3f4f6;">
               <tr>
                 <td style="color:#9ca3af;font-size:12px;text-align:center;line-height:1.6;">
-                  <p style="margin:0 0 8px;">PGLife · India\'s trusted PG booking platform</p>
+                  <p style="margin:0 0 8px;">Gharam · Stay where it feels right</p>
                   <p style="margin:0;">
                     <a href="${BASE}/privacy" style="color:#9ca3af;">Privacy Policy</a> &nbsp;·&nbsp;
                     <a href="${BASE}/terms" style="color:#9ca3af;">Terms of Service</a> &nbsp;·&nbsp;
                     <a href="mailto:support@gharam.in" style="color:#9ca3af;">Support</a>
+                  </p>
+                  <p style="margin:12px 0 0;">
+                    <a href="${BASE}/profile" style="color:#9ca3af;font-size:11px;">Unsubscribe or manage email preferences</a>
                   </p>
                 </td>
               </tr>
@@ -87,7 +90,7 @@ export async function sendBookingConfirmedTenant(data: {
       Booking Confirmed! 🎉
     </h1>
     <p style="color:#6b7280;font-size:15px;margin:0 0 32px;">
-      Hi ${data.tenantName}, your token has been received. Here are your booking details.
+      Hi ${data.tenantName}, your token has been received on Gharam. Here are your booking details.
     </p>
 
     <!-- Booking card -->
@@ -133,9 +136,9 @@ export async function sendBookingConfirmedTenant(data: {
     <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
       <tr><td>
         <p style="color:#374151;font-size:14px;margin:0 0 16px;">
-          The owner has been notified. You can contact them directly on WhatsApp:
+          The owner has been notified via Gharam. You can contact them directly on WhatsApp:
         </p>
-        <a href="https://wa.me/91${data.ownerWhatsapp}?text=Hi%2C+I+just+booked+${encodeURIComponent(data.propertyName)}+on+PGLife.+My+booking+ID+is+${data.bookingId}."
+        <a href="https://wa.me/91${data.ownerWhatsapp}?text=Hi%2C+I+just+booked+${encodeURIComponent(data.propertyName)}+on+Gharam.+My+booking+ID+is+${data.bookingId}."
           style="display:inline-block;background:#25D366;color:white;text-decoration:none;padding:12px 24px;border-radius:10px;font-weight:600;font-size:14px;">
           WhatsApp Owner →
         </a>
@@ -152,7 +155,7 @@ export async function sendBookingConfirmedTenant(data: {
   return resend.emails.send({
     from:    FROM,
     to:      data.tenantEmail,
-    subject: `Booking Confirmed — ${data.propertyName}`,
+    subject: `Booking Confirmed — ${data.propertyName} | Gharam`,
     html:    baseTemplate(content),
   })
 }
@@ -181,7 +184,7 @@ export async function sendNewBookingOwner(data: {
       New Booking ${data.tokenPaid ? "✓ Token Paid" : "Request"}!
     </h1>
     <p style="color:#6b7280;font-size:15px;margin:0 0 32px;">
-      Hi ${data.ownerName}, you have a new ${data.tokenPaid ? "confirmed token booking" : "booking enquiry"} for ${data.propertyName}.
+      Hi ${data.ownerName}, you have a new ${data.tokenPaid ? "confirmed token booking" : "booking enquiry"} for ${data.propertyName} on Gharam.
     </p>
 
     <!-- Tenant details -->
@@ -229,7 +232,7 @@ export async function sendNewBookingOwner(data: {
   return resend.emails.send({
     from:    FROM,
     to:      data.ownerEmail,
-    subject: `New Booking — ${data.propertyName} (${data.tokenPaid ? "Token Paid" : "Enquiry"})`,
+    subject: `New Booking — ${data.propertyName} (${data.tokenPaid ? "Token Paid" : "Enquiry"}) | Gharam`,
     html:    baseTemplate(content),
   })
 }
@@ -245,10 +248,10 @@ export async function sendWelcomeEmail(data: {
 
   const content = `
     <h1 style="color:#0F2347;font-size:24px;margin:0 0 8px;font-family:Georgia,serif;">
-      Welcome to PGLife! 🏠
+      Welcome to Gharam! 🏠
     </h1>
     <p style="color:#6b7280;font-size:15px;margin:0 0 24px;">
-      Hi ${data.name}, thanks for joining PGLife — India\'s trusted PG booking platform.
+      Hi ${data.name}, thanks for joining Gharam — stay where it feels right.
     </p>
 
     ${isOwner ? `
@@ -275,7 +278,7 @@ export async function sendWelcomeEmail(data: {
   return resend.emails.send({
     from:    FROM,
     to:      data.email,
-    subject: "Welcome to PGLife 🏠",
+    subject: "Welcome to Gharam 🏠",
     html:    baseTemplate(content),
   })
 }
@@ -291,7 +294,7 @@ export async function sendOwnerApprovedEmail(data: {
       Your account is approved! ✓
     </h1>
     <p style="color:#6b7280;font-size:15px;margin:0 0 24px;">
-      Hi ${data.name}, great news — your PGLife owner account has been approved.
+      Hi ${data.name}, great news — your Gharam owner account has been approved.
       You can now list your PG and start receiving booking requests.
     </p>
     <a href="${BASE}/owner/listings/new"
@@ -303,7 +306,7 @@ export async function sendOwnerApprovedEmail(data: {
   return resend.emails.send({
     from:    FROM,
     to:      data.email,
-    subject: "Your PGLife owner account is approved ✓",
+    subject: "Your Gharam owner account is approved ✓",
     html:    baseTemplate(content),
   })
 }

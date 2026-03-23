@@ -117,7 +117,7 @@ export default function TenantDashboard() {
                   <div key={b.id} className="rounded-xl bg-popover shadow-soft p-5 flex items-center gap-5">
                     {img && (
                       <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0">
-                        <Image src={img} alt={b.property.name} fill className="object-cover" sizes="80px" />
+                        <Image src={img} alt={b.property.name} fill className="object-cover" sizes="80px" unoptimized />
                       </div>
                     )}
                     <div className="flex-1 min-w-0">

@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import BrandedSpinner from "@/components/ui/BrandedSpinner";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -37,9 +38,10 @@ export default function LoginPage() {
           <div className="relative z-10 flex flex-col justify-between p-14 w-full">
             <Link href="/" className="flex items-center gap-2.5">
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-elevated">
-                <span className="font-display font-bold text-sm text-white">
-                  PG
-                </span>
+                <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
+                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
+                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                </svg>
               </div>
               <span className="font-display font-bold text-xl text-white">
                 Gharam
@@ -92,9 +94,10 @@ export default function LoginPage() {
             {/* Mobile logo */}
             <Link href="/" className="flex items-center gap-2 mb-8 lg:hidden">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="font-display font-bold text-xs text-white">
-                  PG
-                </span>
+                <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
+                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
+                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                </svg>
               </div>
               <span className="font-display font-bold text-lg text-foreground">
                 Gharam
@@ -169,25 +172,7 @@ export default function LoginPage() {
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
-                    <svg
-                      className="animate-spin w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                      />
-                    </svg>
+                    <BrandedSpinner size="sm" />
                     Signing in...
                   </span>
                 ) : (

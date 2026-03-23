@@ -1,10 +1,11 @@
 "use client"
-import { useSession } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import type { SessionUser } from "@/types"
+import BrandedSpinner from "@/components/ui/BrandedSpinner"
 
 const KYC_STATUS: Record<string, { label: string; cls: string }> = {
   NONE:     { label: "Not submitted", cls: "badge-default" },
@@ -27,6 +28,7 @@ export default function ProfilePage() {
   const [uploading,    setUploading]    = useState(false)
   const [kycUploading, setKycUploading] = useState(false)
   const [toast,        setToast]        = useState<{ msg: string; ok: boolean } | null>(null)
+  const [deleting,     setDeleting]     = useState(false)
 
   useEffect(() => {
     fetch("/api/profile")
@@ -102,23 +104,23 @@ export default function ProfilePage() {
   }
 
   const uploadKyc = async () => {
-    const kycFile     = kycRef.current?.files?.[0]
-    const licenseFile = licenseRef.current?.files?.[0]
-    if (!kycFile && !licenseFile) { showToast("Select at least one document", false); return }
     setKycUploading(true)
-    const fd = new FormData()
-    if (kycFile)     fd.append("kycDoc", kycFile)
-    if (licenseFile) fd.append("license", licenseFile)
-    const res = await fetch("/api/kyc", { method: "POST", body: fd })
-    setKycUploading(false)
-    if (res.ok) {
-      setProfile((p: any) => ({ ...p, kycStatus: "PENDING" }))
-      showToast("Documents submitted for review")
-      if (kycRef.current)     kycRef.current.value = ""
-      if (licenseRef.current) licenseRef.current.value = ""
-    } else {
-      showToast("Upload failed. Try again.", false)
-    }
+    // Simulate DigiLocker popup sequence
+    setTimeout(async () => {
+      try {
+        const res = await fetch("/api/kyc/digilocker", { method: "POST" })
+        if (res.ok) {
+          setProfile((p: any) => ({ ...p, kycStatus: "APPROVED" }))
+          showToast("Successfully verified with DigiLocker!")
+        } else {
+          showToast("DigiLocker verification failed.", false)
+        }
+      } catch {
+        showToast("Network error during verification.", false)
+      } finally {
+        setKycUploading(false)
+      }
+    }, 1200)
   }
 
   if (loading) {
@@ -179,11 +181,8 @@ export default function ProfilePage() {
                   )}
                 </div>
                 {uploading && (
-                  <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center">
-                    <svg className="animate-spin w-5 h-5 text-white" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                    </svg>
+                  <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center text-white">
+                    <BrandedSpinner size="md" />
                   </div>
                 )}
               </div>
@@ -261,10 +260,7 @@ export default function ProfilePage() {
               <button onClick={save} disabled={saving} className="btn-primary">
                 {saving ? (
                   <span className="flex items-center gap-2">
-                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                    </svg>
+                    <BrandedSpinner size="sm" />
                     Saving...
                   </span>
                 ) : "Save Changes"}
@@ -317,48 +313,33 @@ export default function ProfilePage() {
                 </div>
 
               ) : (
-                <div className="space-y-5">
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                    Upload your Aadhaar or PAN card and optionally your PG registration certificate.
-                    KYC-verified owners get a badge on all listings and higher tenant trust.
-                  </p>
-
-                  <div className="space-y-4">
-                    <div>
-                      <label className="font-display text-sm font-medium text-foreground block mb-2">
-                        Identity Document <span className="text-primary">*</span>
-                        <span className="font-body font-normal text-muted-foreground ml-1">(Aadhaar / PAN)</span>
-                      </label>
-                      <input ref={kycRef} type="file" accept="image/*,.pdf"
-                        className="block w-full font-body text-sm text-muted-foreground
-                          file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
-                          file:font-display file:font-medium file:text-sm
-                          file:bg-primary/10 file:text-primary
-                          hover:file:bg-primary/20 cursor-pointer" />
+                <div className="space-y-6">
+                  <div className="p-5 rounded-2xl bg-orange-50/50 border border-orange-100 flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0">
+                      <svg className="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V8.14l7-3.11v7.96z"/>
+                      </svg>
                     </div>
-
                     <div>
-                      <label className="font-display text-sm font-medium text-foreground block mb-2">
-                        PG / Business License
-                        <span className="font-body font-normal text-muted-foreground ml-1">(optional)</span>
-                      </label>
-                      <input ref={licenseRef} type="file" accept="image/*,.pdf"
-                        className="block w-full font-body text-sm text-muted-foreground
-                          file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
-                          file:font-display file:font-medium file:text-sm
-                          file:bg-muted file:text-muted-foreground
-                          hover:file:bg-muted/80 cursor-pointer" />
+                      <h4 className="font-display font-semibold text-sm text-slate-800">Secure Government Verification</h4>
+                      <p className="font-body text-sm text-slate-600 leading-relaxed mt-1">
+                        Link your DigiLocker account to securely fetch your Aadhaar or PAN card. KYC-verified owners get a badge on all listings and higher tenant trust.
+                      </p>
                     </div>
-
-                    <button onClick={uploadKyc} disabled={kycUploading} className="btn-primary">
-                      {kycUploading ? "Submitting..." : "Submit for Verification"}
-                    </button>
                   </div>
 
+                  <button onClick={uploadKyc} disabled={kycUploading} className="btn-primary w-full flex items-center justify-center gap-2">
+                    {kycUploading ? (
+                      <>
+                        <BrandedSpinner size="sm" />
+                        Connecting to DigiLocker...
+                      </>
+                    ) : "Verify with DigiLocker"}
+                  </button>
                   {profile?.kycStatus === "REJECTED" && (
                     <div className="rounded-xl bg-destructive/8 border border-destructive/20 p-4 mt-2">
                       <p className="font-body text-sm text-destructive font-medium">
-                        Previous submission was rejected. Please re-upload clearer documents.
+                        Previous submission was rejected. Please re-initiate DigiLocker verification.
                       </p>
                     </div>
                   )}
@@ -366,6 +347,38 @@ export default function ProfilePage() {
               )}
             </div>
           )}
+
+          {/* ── Danger zone ───────────────────────────────────── */}
+          <div className="rounded-2xl border border-destructive/30 p-6">
+            <h2 className="font-display font-semibold text-base text-destructive mb-2">Danger Zone</h2>
+            <p className="font-body text-sm text-muted-foreground mb-4">
+              Permanently delete your account and all personal data. Your bookings and reviews will be anonymised.
+            </p>
+            <button
+              disabled={deleting}
+              onClick={async () => {
+                if (!confirm("Are you sure? This action is irreversible. Your account, personal data, and listings will be permanently removed.")) return
+                setDeleting(true)
+                try {
+                  const res = await fetch("/api/profile/delete", { method: "DELETE" })
+                  if (res.ok) {
+                    signOut({ callbackUrl: "/auth/login" })
+                  } else {
+                    const d = await res.json()
+                    setToast({ msg: d.error || "Failed to delete account", ok: false })
+                    setDeleting(false)
+                  }
+                } catch {
+                  setToast({ msg: "Network error", ok: false })
+                  setDeleting(false)
+                }
+              }}
+              className="btn-danger btn-sm"
+            >
+              {deleting ? "Deleting..." : "Delete My Account"}
+            </button>
+          </div>
+
 
         </div>
       </div>

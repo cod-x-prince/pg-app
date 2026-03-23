@@ -25,12 +25,9 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-200"
-      style={{
-        background: (scrolled || forceWhite) ? "white" : "transparent",
-        borderBottom: (scrolled || forceWhite) ? "1px solid hsl(var(--border))" : "none",
-        boxShadow: (scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.06)" : "none",
-      }}
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        scrolled || forceWhite ? "bg-white/95 backdrop-blur-md border-b shadow-sm" : "bg-transparent"
+      }`}
     >
       <div className="section-wrap">
         <div className="flex items-center justify-between h-[72px]">
@@ -45,7 +42,11 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
             </div>
             <span
               className="font-display font-bold text-lg transition-colors"
-              style={{ color: (scrolled || forceWhite) ? "hsl(var(--foreground))" : "white", letterSpacing: "-0.025em" }}
+              style={{
+                color: (scrolled || forceWhite) ? "hsl(var(--foreground))" : "white",
+                letterSpacing: "-0.025em",
+                textShadow: !(scrolled || forceWhite) ? "0 2px 4px rgba(0,0,0,0.5)" : "none"
+              }}
             >
               Gharam
             </span>
@@ -56,7 +57,10 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
             {["Bangalore","Mumbai","Delhi","Hyderabad"].map(city => (
               <Link key={city} href={`/properties/${city.toLowerCase()}`}
                 className="font-body text-sm px-3 py-1.5 rounded-lg transition-all duration-150"
-                style={{ color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.85)" }}
+                style={{
+                  color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.95)",
+                  textShadow: !(scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
+                }}
                 onMouseOver={e => (e.currentTarget.style.background = "hsl(var(--muted))", e.currentTarget.style.color = "hsl(var(--foreground))")}
                 onMouseOut={e => (e.currentTarget.style.background = "transparent", e.currentTarget.style.color = scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.85)")}
               >
@@ -70,12 +74,15 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
             {session ? (
               <>
                 <span className="font-body text-sm mr-1"
-                  style={{ color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}>
+                  style={{
+                    color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.95)",
+                    textShadow: !(scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
+                  }}>
                   {user?.name?.split(" ")[0]}
                 </span>
                 <Link href="/profile" className="btn-ghost btn-sm">Profile</Link>
                 <Link href={dashLink()} className="btn-outline btn-sm"
-                  style={!(scrolled || forceWhite) ? { borderColor: "rgba(255,255,255,0.5)", color: "white", background: "rgba(255,255,255,0.1)" } : {}}>
+                  style={!(scrolled || forceWhite) ? { borderColor: "rgba(255,255,255,0.6)", color: "white", background: "rgba(0,0,0,0.2)", backdropFilter: "blur(4px)" } : {}}>
                   Dashboard
                 </Link>
                 {(user?.role === "OWNER" || user?.role === "BROKER") && user?.isApproved && (
@@ -83,14 +90,20 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
                 )}
                 <button onClick={() => signOut({ callbackUrl: "/auth/login" })}
                   className="font-body text-sm px-3 py-1.5 rounded-lg cursor-pointer transition-colors"
-                  style={{ color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.7)" }}>
+                  style={{
+                    color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)",
+                    textShadow: !(scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
+                  }}>
                   Logout
                 </button>
               </>
             ) : (
               <>
                 <Link href="/auth/login" className="font-body text-sm px-4 py-2 rounded-lg font-medium transition-all"
-                  style={{ color: scrolled ? "hsl(var(--foreground))" : "white" }}>
+                  style={{
+                    color: (scrolled || forceWhite) ? "hsl(var(--foreground))" : "white",
+                    textShadow: !(scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
+                  }}>
                   Log in
                 </Link>
                 <Link href="/auth/signup" className="btn-primary btn-sm">Sign up</Link>
@@ -103,7 +116,10 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
             className="md:hidden p-2 rounded-lg transition-colors cursor-pointer"
             onClick={() => setOpen(!open)}
             aria-label="Menu"
-            style={{ color: scrolled ? "hsl(var(--foreground))" : "white" }}
+            style={{
+              color: (scrolled || forceWhite) ? "hsl(var(--foreground))" : "white",
+              filter: !(scrolled || forceWhite) ? "drop-shadow(0 2px 4px rgba(0,0,0,0.5))" : "none"
+            }}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {open
@@ -119,20 +135,20 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
           <div className="md:hidden border-t border-border pb-4 pt-3 space-y-1 bg-white">
             {["Bangalore","Mumbai","Delhi","Hyderabad","Pune"].map(city => (
               <Link key={city} href={`/properties/${city.toLowerCase()}`}
-                className="block px-3 py-2.5 font-body text-sm text-muted-foreground hover:bg-muted rounded-lg"
+                className="block px-3 py-3 font-body text-sm text-muted-foreground hover:bg-muted rounded-lg"
                 onClick={() => setOpen(false)}>{city}</Link>
             ))}
             <div className="h-px bg-border my-2" />
             {session ? (
               <>
-                <Link href="/profile" className="block px-3 py-2.5 font-body text-sm text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Profile</Link>
-                <Link href={dashLink()} className="block px-3 py-2.5 font-body text-sm font-medium text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Dashboard</Link>
+                <Link href="/profile" className="block px-3 py-3 font-body text-sm text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Profile</Link>
+                <Link href={dashLink()} className="block px-3 py-3 font-body text-sm font-medium text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Dashboard</Link>
                 <button onClick={() => signOut({ callbackUrl: "/auth/login" })} className="block w-full text-left px-3 py-2.5 font-body text-sm text-muted-foreground hover:bg-muted rounded-lg cursor-pointer">Logout</button>
               </>
             ) : (
               <>
-                <Link href="/auth/login" className="block px-3 py-2.5 font-body text-sm text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Log in</Link>
-                <Link href="/auth/signup" className="block px-3 py-2.5 font-body text-sm font-semibold text-primary hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Sign up →</Link>
+                <Link href="/auth/login" className="block px-3 py-3 font-body text-sm text-foreground hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Log in</Link>
+                <Link href="/auth/signup" className="block px-3 py-3 font-body text-sm font-semibold text-primary hover:bg-muted rounded-lg" onClick={() => setOpen(false)}>Sign up →</Link>
               </>
             )}
           </div>

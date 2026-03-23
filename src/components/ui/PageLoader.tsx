@@ -119,8 +119,7 @@ export default function PageLoader() {
             fontSize: "clamp(120px,18vw,200px)",
             fontWeight: 900,
             letterSpacing: "-0.06em",
-            color: "transparent",
-            WebkitTextStroke: "3px #0F172A",
+            color: "#0F172A", // Brand dark blue
             fontVariantNumeric: "tabular-nums",
             lineHeight: 1,
           }}
@@ -132,8 +131,7 @@ export default function PageLoader() {
             fontSize: "clamp(120px,18vw,200px)",
             fontWeight: 900,
             letterSpacing: "-0.06em",
-            color: "transparent",
-            WebkitTextStroke: "3px #FF7A3D",
+            color: "#FF7A3D", // Brand orange
             lineHeight: 1,
           }}
         >

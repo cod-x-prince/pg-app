@@ -19,6 +19,8 @@ export default function SortSelect({ currentSort }: { currentSort?: string }) {
     >
       <option value="newest">Newest first</option>
       <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+      <option value="top_rated">Top Rated</option>
     </select>
   )
 }
