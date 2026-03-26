@@ -310,3 +310,49 @@ export async function sendOwnerApprovedEmail(data: {
     html:    baseTemplate(content),
   })
 }
+
+// ── Email: Password Reset ─────────────────────────────────────────────────
+
+export async function sendPasswordResetEmail(data: {
+  name:  string
+  email: string
+  token: string
+}) {
+  const resetUrl = `${BASE}/auth/reset-password?token=${encodeURIComponent(data.token)}`
+
+  const content = `
+    <h1 style="color:#0F2347;font-size:24px;margin:0 0 8px;font-family:Georgia,serif;">
+      Reset Your Password
+    </h1>
+    <p style="color:#6b7280;font-size:15px;margin:0 0 24px;">
+      Hi ${data.name}, we received a request to reset your password for your Gharam account.
+    </p>
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#fef3c7;border-radius:12px;padding:20px;margin-bottom:24px;">
+      <tr><td>
+        <p style="margin:0;color:#92400e;font-size:14px;font-weight:600;">🔒 Security Notice</p>
+        <p style="margin:8px 0 0;color:#78350f;font-size:13px;">
+          This link will expire in <strong>1 hour</strong> for security.
+          If you didn't request this, please ignore this email.
+        </p>
+      </td></tr>
+    </table>
+
+    <a href="${resetUrl}"
+      style="display:inline-block;background:#1B3B6F;color:white;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:600;font-size:14px;margin-bottom:24px;">
+      Reset Password →
+    </a>
+
+    <p style="color:#9ca3af;font-size:12px;margin:24px 0 0;line-height:1.6;">
+      Or copy and paste this link into your browser:<br>
+      <span style="color:#6b7280;word-break:break-all;">${resetUrl}</span>
+    </p>
+  `
+
+  return resend.emails.send({
+    from:    FROM,
+    to:      data.email,
+    subject: "Reset Your Gharam Password",
+    html:    baseTemplate(content),
+  })
+}

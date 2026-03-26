@@ -13,7 +13,15 @@ export default withAuth(
       "/auth/login",
       process.env.NEXTAUTH_URL ?? req.nextUrl.origin,
     );
-    loginUrl.searchParams.set("callbackUrl", path);
+    
+    // SECURITY FIX: Validate callbackUrl to prevent open redirect vulnerability
+    // Only allow internal paths (starting with /)
+    const callbackUrl = req.nextUrl.searchParams.get("callbackUrl") || path;
+    const safeCallbackUrl = callbackUrl.startsWith("/") && !callbackUrl.startsWith("//") 
+      ? callbackUrl 
+      : path;
+    
+    loginUrl.searchParams.set("callbackUrl", safeCallbackUrl);
 
     // ── Role-based route protection ───────────────────────────────────
     if (path.startsWith("/admin") && token?.role !== "ADMIN") {

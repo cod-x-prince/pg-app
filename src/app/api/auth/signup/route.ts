@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
 import { rateLimit } from "@/lib/rateLimit"
 import { sanitizeString } from "@/lib/validation"
+import { sanitizeText, sanitizeWhatsAppNumber } from "@/lib/sanitize"
+import { logger } from "@/lib/logger"
 import { SignupSchema, parseBody } from "@/lib/schemas"
 
 export async function POST(req: Request) {
@@ -22,13 +24,23 @@ export async function POST(req: Request) {
     const exists = await prisma.user.findUnique({ where: { email } })
     if (exists) return NextResponse.json({ error: "Email already registered" }, { status: 409 })
 
-    const passwordHash = await bcrypt.hash(password, 12)
+    // IMPROVED PHONE VALIDATION: Use proper sanitization
+    const sanitizedPhone = phone ? sanitizeWhatsAppNumber(phone) : null
+    if (phone && !sanitizedPhone) {
+      return NextResponse.json(
+        { error: "Invalid phone number. Must be a valid 10-digit Indian mobile number." },
+        { status: 400 }
+      )
+    }
+
+    // Security: Use 14 rounds (OWASP recommendation) instead of 12
+    const passwordHash = await bcrypt.hash(password, 14)
 
     const user = await prisma.user.create({
       data: {
-        name: sanitizeString(name, 100).trim(),
+        name: sanitizeText(sanitizeString(name, 100)),
         email,
-        phone: phone?.trim() || null,
+        phone: sanitizedPhone,
         passwordHash,
         role: role as any,
         isApproved: role === "TENANT",
@@ -36,15 +48,22 @@ export async function POST(req: Request) {
       select: { id: true, role: true, isApproved: true },
     })
 
-    // Send welcome email (non-blocking)
+    // Send welcome email (non-blocking, log failures for retry)
     try {
       const { sendWelcomeEmail } = await import("@/lib/email")
       await sendWelcomeEmail({
-        name:  sanitizeString(name, 100).trim(),
+        name:  sanitizeText(sanitizeString(name, 100)),
         email,
         role,
       })
-    } catch { /* email failure should not block signup */ }
+    } catch (emailError) {
+      // Log email failure for manual retry/investigation
+      logger.error("[Signup] Failed to send welcome email", emailError, {
+        userId: user.id,
+        email,
+      });
+      // TODO: Store in failed_emails table for retry queue
+    }
 
     return NextResponse.json({ success: true, role: user.role, isApproved: user.isApproved })
   } catch {

@@ -1,9 +1,10 @@
 "use client"
 import type { RazorpayResponse } from "@/types"
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Script from "next/script"
+import { sanitizeText } from "@/lib/sanitize"
 import BrandedSpinner from "@/components/ui/BrandedSpinner"
 
 interface Room { id: string; type: string; rent: number; deposit: number; isAvailable: boolean }
@@ -11,7 +12,7 @@ interface Props { propertyId: string; rooms: Room[]; whatsapp?: string | null; p
 
 declare global {
   interface Window {
-    Razorpay: new (opts: object) => { open: () => void }
+    Razorpay: new (opts: object) => { open: () => void; on: (event: string, handler: () => void) => void }
   }
 }
 
@@ -28,22 +29,56 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
 
   const availableRooms = rooms.filter(r => r.isAvailable)
   const selectedRoom   = rooms.find(r => r.id === roomId)
+  
+  // Sanitize property name to prevent XSS
+  const safePropertyName = sanitizeText(propertyName)
 
-  const handleEnquiry = async () => {
+  // Cleanup Razorpay instance on unmount
+  useEffect(() => {
+    return () => {
+      // Cleanup any pending Razorpay modals
+      const rzpModal = document.querySelector('.razorpay-container');
+      if (rzpModal) {
+        rzpModal.remove();
+      }
+    };
+  }, []);
+
+  const handleEnquiry = useCallback(async () => {
     if (!session) { router.push("/auth/login"); return }
     if (!roomId || !moveInDate) { setError("Please select a room and move-in date."); return }
     setLoading(true); setError("")
 
-    const res = await fetch("/api/bookings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ propertyId, roomId, moveInDate, type: "ENQUIRY" }),
-    })
+    try {
+      // Add timeout to prevent hanging requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
-    if (res.ok) setSuccess(true)
-    else { const d = await res.json(); setError(d.error || "Something went wrong.") }
-    setLoading(false)
-  }
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ propertyId, roomId, moveInDate, type: "ENQUIRY" }),
+        signal: controller.signal,
+      })
+
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        setSuccess(true)
+      } else {
+        const d = await res.json();
+        setError(d.error || "Something went wrong.")
+      }
+    } catch (err) {
+      if (err instanceof Error && err.name === "AbortError") {
+        setError("Request timeout. Please check your connection and try again.");
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false)
+    }
+  }, [session, roomId, moveInDate, propertyId, router]);
 
   const handleTokenBooking = async () => {
     if (!session) { router.push("/auth/login"); return }
@@ -140,7 +175,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
         </p>
         {whatsapp && (
           <a
-            href={`https://wa.me/91${whatsapp}?text=Hi%2C+I+just+booked+${encodeURIComponent(propertyName)}+on+Gharam.`}
+            href={`https://wa.me/91${encodeURIComponent(whatsapp)}?text=${encodeURIComponent(`Hi, I just booked ${safePropertyName} on Gharam.`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary w-full justify-center mb-3 bg-[#25D366] hover:bg-green-600"
@@ -280,7 +315,7 @@ export default function BookingForm({ propertyId, rooms, whatsapp, propertyName 
         {/* WhatsApp direct */}
         {whatsapp && (
           <a
-            href={`https://wa.me/91${whatsapp}?text=Hi%2C+I+am+interested+in+${encodeURIComponent(propertyName)}+listed+on+Gharam.`}
+            href={`https://wa.me/91${encodeURIComponent(whatsapp)}?text=${encodeURIComponent(`Hi, I am interested in ${safePropertyName} listed on Gharam.`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full mt-3 py-3 rounded-2xl border border-gray-100 text-gray-500 text-sm hover:bg-gray-50 transition-all"

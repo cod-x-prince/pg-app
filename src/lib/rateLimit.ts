@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis"
+import { logger } from "@/lib/logger"
 
 // Upstash Redis — persistent rate limiting across all Vercel function instances.
 // In-memory Map was resetting on cold starts, allowing bots to bypass limits.
@@ -29,19 +30,28 @@ export async function rateLimit(
   const redisKey = `rl:${key}:${Math.floor(Date.now() / windowMs)}`
 
   try {
-    const count = await client.incr(redisKey)
-
-    // Set expiry only on first increment to avoid resetting the window
-    if (count === 1) {
-      await client.expire(redisKey, windowSeconds)
-    }
+    // Use Lua script for atomic INCR + EXPIRE operation
+    // This prevents race condition where key persists forever if crash occurs between INCR and EXPIRE
+    const luaScript = `
+      local current = redis.call("INCR", KEYS[1])
+      if current == 1 then
+        redis.call("EXPIRE", KEYS[1], ARGV[1])
+      end
+      return current
+    `
+    
+    const count = await client.eval(
+      luaScript,
+      [redisKey],
+      [windowSeconds.toString()]
+    ) as number
 
     const remaining = Math.max(0, maxRequests - count)
     return { success: count <= maxRequests, remaining }
   } catch (err) {
     // If Redis is down, fail open — don't block legitimate users
     // Sentry will catch this and alert you
-    console.error("[RateLimit] Redis error, failing open:", err)
+    logger.error("[RateLimit] Redis error, failing open", err)
     return { success: true, remaining: maxRequests }
   }
 }
