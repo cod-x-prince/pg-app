@@ -30,7 +30,11 @@ export const ALLOWED_AMENITIES = [
 export const ALLOWED_ROOM_TYPES = ["Single", "Double", "Triple"];
 
 export function validateEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+  // Improved email validation regex (RFC 5322 simplified)
+  // Prevents common bypass patterns like test@.com, @domain.com, test@@domain.com
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+  
+  return emailRegex.test(email) && email.length <= 254 && email.length >= 6;
 }
 
 export function validatePassword(password: string): string | null {

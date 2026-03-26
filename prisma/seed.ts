@@ -477,10 +477,8 @@ async function seedBookingsAndReviews(
         where: { tenantId: tenant.id, propertyId: property.id },
       });
 
-      let booking = existingBooking;
-
       if (!existingBooking) {
-        booking = await prisma.booking.create({
+        await prisma.booking.create({
           data: {
             tenantId: tenant.id,
             propertyId: property.id,

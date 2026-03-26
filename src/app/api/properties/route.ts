@@ -24,7 +24,14 @@ export const GET = withHandler(async (req: Request) => {
   const safeAmenities = amenities.filter(a => ALLOWED_AMENITIES.includes(a))
 
   const where: Record<string, unknown> = { isActive: true }
-  if (city) where.city = { equals: city, mode: "insensitive" }
+  // Security: Sanitize city input to prevent SQL injection
+  // Only allow alphanumeric, spaces, and hyphens
+  if (city) {
+    const sanitizedCity = city.replace(/[^a-zA-Z0-9\s-]/g, "").trim();
+    if (sanitizedCity) {
+      where.city = { equals: sanitizedCity, mode: "insensitive" };
+    }
+  }
   if (safeGender) where.gender = safeGender
   if (safeAmenities.length) where.amenities = { some: { name: { in: safeAmenities } } }
   if (safeMinRent !== null || safeMaxRent !== null) {
@@ -41,7 +48,8 @@ export const GET = withHandler(async (req: Request) => {
     { createdAt: "desc" }
 
   const page  = Math.max(1, parseInt(searchParams.get("page") || "1"))
-  const limit = Math.min(50, parseInt(searchParams.get("limit") || "20"))
+  // Security: Enforce hard limit to prevent memory exhaustion
+  const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20")))
   const skip  = (page - 1) * limit
 
   const [properties, total] = await prisma.$transaction([

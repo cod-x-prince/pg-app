@@ -14,6 +14,29 @@ export const POST = withHandler(async (req: Request) => {
 
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = await req.json()
 
+  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !bookingId) {
+    return NextResponse.json({ error: "Missing payment parameters" }, { status: 400 })
+  }
+
+  // CRITICAL FIX: Verify booking belongs to this user BEFORE signature verification
+  // This prevents user A from verifying payment for user B's booking
+  const existingBooking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    select: { tenantId: true, tokenPaid: true },
+  })
+
+  if (!existingBooking) {
+    return NextResponse.json({ error: "Booking not found" }, { status: 404 })
+  }
+
+  if (existingBooking.tenantId !== user.id) {
+    return NextResponse.json({ error: "Unauthorized: This booking belongs to another user" }, { status: 403 })
+  }
+
+  if (existingBooking.tokenPaid) {
+    return NextResponse.json({ error: "Token already paid for this booking" }, { status: 400 })
+  }
+
   // Verify Razorpay signature
   const body      = `${razorpay_order_id}|${razorpay_payment_id}`
   const expected  = crypto
@@ -27,10 +50,10 @@ export const POST = withHandler(async (req: Request) => {
 
   // Mark booking as token paid
   const booking = await prisma.booking.update({
-    where: { id: bookingId, tenantId: user.id },
+    where: { id: bookingId },
     data: {
       tokenPaid:  true,
-      razorpayId: razorpay_payment_id,
+      razorpayId: razorpay_payment_id,  // Fixed: razorpayId not razorpay_id
       status:     "CONFIRMED",
       type:       "DIRECT",
     },

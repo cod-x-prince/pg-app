@@ -4,7 +4,12 @@ import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import { rateLimit } from "@/lib/rateLimit"
+import { toSessionUser, getUserFromToken } from "@/lib/typeGuards"
 import bcrypt from "bcryptjs"
+import crypto from "crypto"
+
+// Generate a random dummy hash at runtime (not hardcoded)
+const DUMMY_HASH = `$2a$14$${crypto.randomBytes(32).toString("base64").slice(0, 53)}`
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -27,7 +32,7 @@ export const authOptions: NextAuthOptions = {
             name:       profile.name,
             email:      profile.email,
             image:      profile.picture,
-            role:       "TENANT",
+            role:       "TENANT" as const,
             isApproved: true,
           }
         },
@@ -53,43 +58,61 @@ export const authOptions: NextAuthOptions = {
 
         // ── Constant-time comparison prevents timing attacks ────────────
         // Always run bcrypt even if user not found (prevents user enumeration)
-        const dummyHash = "$2a$12$dummy.hash.to.prevent.timing.attack.on.user.enum"
+        // Use random dummy hash generated at startup (not hardcoded)
         const isValid = user
           ? await bcrypt.compare(credentials.password, user.passwordHash)
-          : await bcrypt.compare(credentials.password, dummyHash)
+          : await bcrypt.compare(credentials.password, DUMMY_HASH)
 
         if (!user || !isValid) return null
 
-        return {
-          id:         user.id,
-          email:      user.email,
-          name:       user.name,
-          role:       user.role,
-          isApproved: user.isApproved,
-        }
+        const sessionUser = toSessionUser(user);
+        if (!sessionUser) return null;
+
+        return sessionUser;
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id         = (user as any).id ?? token.sub
-        token.role       = (user as any).role
-        token.isApproved = (user as any).isApproved
+        const sessionUser = toSessionUser(user);
+        if (sessionUser) {
+          token.id         = sessionUser.id;
+          token.role       = sessionUser.role;
+          token.isApproved = sessionUser.isApproved;
+        }
       }
       return token
     },
     async session({ session, token }) {
-      if (session.user) {
-        // ── Re-fetch isApproved from DB on every session refresh ────────
-        // This ensures revoked approvals take effect immediately
-        const freshUser = await prisma.user.findUnique({
-          where: { id: token.sub },
-          select: { isApproved: true, role: true }
-        })
-        ;(session.user as any).id         = (token.id as string) ?? token.sub
-        ;(session.user as any).role       = freshUser?.role       ?? token.role
-        ;(session.user as any).isApproved = freshUser?.isApproved ?? token.isApproved
+      if (session.user && token.sub) {
+        const tokenData = getUserFromToken(token);
+        if (!tokenData) return session;
+
+        // ── Re-fetch isApproved from DB periodically (cached with stale-while-revalidate) ─────
+        // Only refresh every 5 minutes to reduce database load
+        const shouldRefresh = !token.lastRefresh || 
+          (Date.now() - (token.lastRefresh as number)) > 5 * 60 * 1000;
+
+        let freshApprovalStatus = tokenData.isApproved;
+        let freshRole = tokenData.role;
+
+        if (shouldRefresh) {
+          const freshUser = await prisma.user.findUnique({
+            where: { id: token.sub },
+            select: { isApproved: true, role: true },
+          });
+          
+          if (freshUser) {
+            freshApprovalStatus = freshUser.isApproved;
+            freshRole = freshUser.role as any;
+            token.lastRefresh = Date.now();
+          }
+        }
+
+        (session.user as any).id         = tokenData.id;
+        (session.user as any).role       = freshRole;
+        (session.user as any).isApproved = freshApprovalStatus;
       }
       return session
     },

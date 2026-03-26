@@ -2,21 +2,21 @@
   
   <img src="https://github.com/cod-x-prince/pg-app/blob/main/public/icon.svg" alt="Gharam Logo" width="120" />
 
-# Gharam — Elite Documentation Hub
+  # Gharam — Elite Documentation Hub
 
-### India's Trusted PG Booking Marketplace — Complete Reference Guide
+  ### India's Trusted PG Booking Marketplace — Complete Reference Guide
 
-_Verified listings · Zero broker fees · Direct booking · Production-Ready Security_
+  _Verified listings · Zero broker fees · Direct booking · Production-Ready Security_
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.2.35-black?style=flat-square&logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
-[![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma)](https://prisma.io)
-[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel)](https://vercel.com)
-[![Security](https://img.shields.io/badge/Security-Audited-green?style=flat-square)](https://github.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+  [![Next.js](https://img.shields.io/badge/Next.js-14.2.35-black?style=flat-square&logo=next.js)](https://nextjs.org)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
+  [![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma)](https://prisma.io)
+  [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
+  [![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel)](https://vercel.com)
+  [![Security](https://img.shields.io/badge/Security-Audited-green?style=flat-square)](https://github.com)
+  [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-**[Live Demo](https://pg-app-i1h8.vercel.app)** · **[Report Bug](https://github.com/cod-x-prince/pg-app/issues)** · **[Request Feature](https://github.com/cod-x-prince/pg-app/issues)**
+  **[Live Demo](https://pg-app-i1h8.vercel.app)** · **[Report Bug](https://github.com/cod-x-prince/pg-app/issues)** · **[Request Feature](https://github.com/cod-x-prince/pg-app/issues)**
 
 </div>
 
@@ -27,7 +27,6 @@ _Verified listings · Zero broker fees · Direct booking · Production-Ready Sec
 This is the **master reference document** for Gharam. It consolidates all essential information from across the project into a single, comprehensive guide for developers, DevOps, QA, security teams, and stakeholders.
 
 **Quick Links:**
-
 - [Project Overview](#what-is-gharam) — What we built and why
 - [Quick Start](#getting-started) — Get running in 5 minutes
 - [Security & Compliance](#security--compliance) — Production-ready security features
@@ -48,7 +47,6 @@ This is the **master reference document** for Gharam. It consolidates all essent
 ### The Problem We Solve
 
 **Market Challenges:**
-
 - 🏚️ **Fragmented market** — No centralized, reliable platform for PG listings
 - 💰 **Broker dominance** — Brokers charge 1–2 months' rent as fees with misleading information
 - 🚫 **Fake listings** — Duplicate photos, incorrect amenities, zero accountability
@@ -57,7 +55,6 @@ This is the **master reference document** for Gharam. It consolidates all essent
 ### The Gharam Solution
 
 **Trust & Transparency:**
-
 - ✅ **Verified listings** — Every PG is manually reviewed by admins before going live
 - 🆓 **Zero broker fees** — Direct owner-tenant interaction without middlemen
 - 💳 **Token booking system** — Hold a room with ₹500 token payment (adjustable against rent)
@@ -68,7 +65,6 @@ This is the **master reference document** for Gharam. It consolidates all essent
 ### Security-First Architecture
 
 **Production-Ready Features:**
-
 - 🔐 **31/31 Security Issues Resolved** — Complete security audit passed
 - 🚨 **CSRF Protection** — Double-submit cookie pattern
 - 🛡️ **XSS Prevention** — Comprehensive input sanitization
@@ -83,32 +79,30 @@ This is the **master reference document** for Gharam. It consolidates all essent
 
 ### Core Technologies
 
-| Layer              | Technology                       | Purpose                                    |
-| ------------------ | -------------------------------- | ------------------------------------------ |
-| **Framework**      | Next.js 14.2.35 (App Router)     | Server‑side rendering, API routes, routing |
-| **Language**       | TypeScript 5 (strict mode)       | Type safety, maintainability               |
-| **Styling**        | Tailwind CSS 4.2 + CSS Variables | Responsive design, theming (Terracotta)    |
-| **Database**       | PostgreSQL (Supabase)            | Relational data, session pooler            |
-| **ORM**            | Prisma 5.22                      | Type‑safe database access, migrations      |
-| **Authentication** | NextAuth.js v4                   | Credentials + Google OAuth                 |
-| **Image Storage**  | Cloudinary                       | Optimized images (AVIF/WebP)               |
-| **Payments**       | Razorpay                         | Token booking payments (₹500)              |
-| **Email**          | Resend                           | Transactional emails (5 templates)         |
-| **Rate Limiting**  | Upstash Redis                    | Persistent rate limits, atomic operations  |
-| **CAPTCHA**        | Cloudflare Turnstile             | Invisible bot protection                   |
-| **Error Tracking** | Sentry                           | Production error monitoring                |
-| **Deployment**     | Vercel                           | Continuous deployment, previews            |
+| Layer                | Technology                      | Purpose                                    |
+| -------------------- | ------------------------------- | ------------------------------------------ |
+| **Framework**        | Next.js 14.2.35 (App Router)    | Server‑side rendering, API routes, routing |
+| **Language**         | TypeScript 5 (strict mode)      | Type safety, maintainability               |
+| **Styling**          | Tailwind CSS 4.2 + CSS Variables| Responsive design, theming (Terracotta)    |
+| **Database**         | PostgreSQL (Supabase)           | Relational data, session pooler            |
+| **ORM**              | Prisma 5.22                     | Type‑safe database access, migrations      |
+| **Authentication**   | NextAuth.js v4                  | Credentials + Google OAuth                 |
+| **Image Storage**    | Cloudinary                      | Optimized images (AVIF/WebP)               |
+| **Payments**         | Razorpay                        | Token booking payments (₹500)              |
+| **Email**            | Resend                          | Transactional emails (5 templates)         |
+| **Rate Limiting**    | Upstash Redis                   | Persistent rate limits, atomic operations  |
+| **CAPTCHA**          | Cloudflare Turnstile            | Invisible bot protection                   |
+| **Error Tracking**   | Sentry                          | Production error monitoring                |
+| **Deployment**       | Vercel                          | Continuous deployment, previews            |
 
 ### Architecture Patterns
 
 **Route Structure:**
-
 - `(auth)/` — Protected routes (dashboard, admin panel, profile)
 - `(public)/` — Public routes (homepage, listings, search)
 - `api/` — REST API with rate limiting and authentication
 
 **Security Layers:**
-
 1. **Middleware** — Role-based access control (RBAC)
 2. **Rate Limiting** — Per-endpoint, per-user limits
 3. **Input Validation** — Zod schemas on all endpoints
@@ -231,7 +225,6 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 ```
 
 **Security Notes:**
-
 - Never commit `.env` to version control
 - Use different secrets for development and production
 - Client-side vars must have `NEXT_PUBLIC_` prefix
@@ -245,8 +238,8 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 
 **Status:** ✅ **ALL 31 ISSUES RESOLVED**
 
-| Severity | Count | Status        |
-| -------- | ----- | ------------- |
+| Severity | Count | Status |
+|----------|-------|--------|
 | Critical | 8     | ✅ 100% Fixed |
 | High     | 10    | ✅ 100% Fixed |
 | Medium   | 9     | ✅ 100% Fixed |
@@ -255,7 +248,6 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 ### Key Security Features
 
 **1. Authentication & Authorization**
-
 - ✅ NextAuth.js with JWT strategy
 - ✅ Bcrypt 14 rounds for password hashing
 - ✅ Constant-time password comparison (timing attack prevention)
@@ -265,7 +257,6 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 - ✅ Password reset with secure token system
 
 **2. Input Validation & Sanitization**
-
 - ✅ Zod schemas on all API endpoints
 - ✅ XSS prevention (sanitizeHtml, sanitizeText, sanitizeUrl)
 - ✅ SQL injection protection (Prisma parameterized queries)
@@ -274,14 +265,12 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 - ✅ URL validation (HTTPS only, max 2048 chars)
 
 **3. CSRF Protection**
-
 - ✅ Double-submit cookie pattern
 - ✅ React hook for client-side integration
 - ✅ Token rotation on every request
 - ✅ Secure, httpOnly cookies
 
 **4. Rate Limiting**
-
 - ✅ Atomic Lua scripts (zero race conditions)
 - ✅ Per-endpoint, per-user limits
 - ✅ Login: 10 attempts per IP per 15 min
@@ -291,14 +280,12 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 - ✅ Image uploads: 20 per user per hour
 
 **5. Payment Security**
-
 - ✅ Razorpay signature verification
 - ✅ Ownership checks before payment
 - ✅ Idempotency keys
 - ✅ Webhook signature validation
 
 **6. Data Protection**
-
 - ✅ DPDP Act 2023 compliance
 - ✅ CAN-SPAM Act compliance
 - ✅ GDPR-ready (account deletion endpoint)
@@ -306,7 +293,6 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 - ✅ Environment variable validation at startup
 
 **7. Error Handling**
-
 - ✅ Centralized error logging (never exposes stack traces)
 - ✅ Sentry integration for production monitoring
 - ✅ React error boundaries
@@ -314,7 +300,6 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 - ✅ User-friendly error messages
 
 **8. Infrastructure Security**
-
 - ✅ Content Security Policy (CSP) headers
 - ✅ HTTPS enforcement
 - ✅ Secure cookie flags (httpOnly, secure, sameSite)
@@ -327,45 +312,41 @@ SENTRY_DSN="https://xxx@sentry.io/xxx"
 
 ### Core Documentation Files (11 Documents)
 
-| File                                  | Size      | Purpose                          | Audience                  |
-| ------------------------------------- | --------- | -------------------------------- | ------------------------- |
-| **`README.md`**                       | 349 lines | Project overview, quick start    | All users                 |
-| **`README_ELITE.md`**                 | This file | Complete reference guide         | All stakeholders          |
-| **`.github/copilot-instructions.md`** | 415 lines | Development conventions          | Developers                |
-| **`CODE_REVIEW_REPORT.md`**           | 12.8 KB   | Security audit findings          | Developers, security team |
-| **`IMPLEMENTATION_SUMMARY.md`**       | 12.5 KB   | Phase 1 security fixes           | Developers, stakeholders  |
-| **`PHASE_2_COMPLETE.md`**             | 10.9 KB   | Infrastructure improvements      | Developers, DevOps        |
-| **`PHASE_3_COMPLETE.md`**             | 12.6 KB   | Password reset implementation    | Developers, QA            |
-| **`TESTING_PLAN.md`**                 | 34.1 KB   | Comprehensive testing strategy   | QA engineers              |
-| **`DEPLOYMENT_GUIDE.md`**             | 23.1 KB   | Production deployment procedures | DevOps, SREs              |
-| **`MONITORING_GUIDE.md`**             | 26.3 KB   | Production monitoring setup      | DevOps, SREs              |
-| **`ALL_DELIVERABLES_COMPLETE.md`**    | 12.9 KB   | Master completion document       | All stakeholders          |
+| File | Size | Purpose | Audience |
+|------|------|---------|----------|
+| **`README.md`** | 349 lines | Project overview, quick start | All users |
+| **`README_ELITE.md`** | This file | Complete reference guide | All stakeholders |
+| **`.github/copilot-instructions.md`** | 415 lines | Development conventions | Developers |
+| **`CODE_REVIEW_REPORT.md`** | 12.8 KB | Security audit findings | Developers, security team |
+| **`IMPLEMENTATION_SUMMARY.md`** | 12.5 KB | Phase 1 security fixes | Developers, stakeholders |
+| **`PHASE_2_COMPLETE.md`** | 10.9 KB | Infrastructure improvements | Developers, DevOps |
+| **`PHASE_3_COMPLETE.md`** | 12.6 KB | Password reset implementation | Developers, QA |
+| **`TESTING_PLAN.md`** | 34.1 KB | Comprehensive testing strategy | QA engineers |
+| **`DEPLOYMENT_GUIDE.md`** | 23.1 KB | Production deployment procedures | DevOps, SREs |
+| **`MONITORING_GUIDE.md`** | 26.3 KB | Production monitoring setup | DevOps, SREs |
+| **`ALL_DELIVERABLES_COMPLETE.md`** | 12.9 KB | Master completion document | All stakeholders |
 
 ### Documentation by Role
 
 **For New Developers:**
-
 1. Read this file (README_ELITE.md)
 2. Review `.github/copilot-instructions.md` for conventions
 3. Check `CODE_REVIEW_REPORT.md` for what was fixed
 4. Start coding!
 
 **For DevOps/SREs:**
-
 1. `DEPLOYMENT_GUIDE.md` — Deployment procedures
 2. `MONITORING_GUIDE.md` — Set up monitoring
 3. Run `scripts/pre-deploy-check.sh`
 4. Deploy with confidence!
 
 **For QA Engineers:**
-
 1. `TESTING_PLAN.md` — Complete testing strategy
 2. Manual testing checklists
 3. E2E test scenarios
 4. Start testing!
 
 **For Security Team:**
-
 1. `CODE_REVIEW_REPORT.md` — Original audit
 2. `IMPLEMENTATION_SUMMARY.md` — Security fixes
 3. `PHASE_2_COMPLETE.md` — CSRF & logging
@@ -503,63 +484,63 @@ All API routes are protected with authentication and rate limiting where necessa
 
 ### Authentication Endpoints
 
-| Endpoint                    | Method | Description                      | Rate Limit      |
-| --------------------------- | ------ | -------------------------------- | --------------- |
-| `/api/auth/[...nextauth]`   | \*     | NextAuth authentication handlers | -               |
-| `/api/auth/signup`          | POST   | User registration (credentials)  | 10/15min per IP |
-| `/api/auth/forgot-password` | POST   | Request password reset           | 3/hour per IP   |
-| `/api/auth/reset-password`  | POST   | Reset password with token        | 5/hour per IP   |
+| Endpoint | Method | Description | Rate Limit |
+|----------|--------|-------------|------------|
+| `/api/auth/[...nextauth]` | * | NextAuth authentication handlers | - |
+| `/api/auth/signup` | POST | User registration (credentials) | 10/15min per IP |
+| `/api/auth/forgot-password` | POST | Request password reset | 3/hour per IP |
+| `/api/auth/reset-password` | POST | Reset password with token | 5/hour per IP |
 
 ### Property Endpoints
 
-| Endpoint               | Method | Description                       | Rate Limit       |
-| ---------------------- | ------ | --------------------------------- | ---------------- |
-| `/api/properties`      | GET    | Fetch paginated listings (public) | -                |
-| `/api/properties/[id]` | GET    | Fetch single listing              | -                |
-| `/api/properties`      | POST   | Create new listing (owner only)   | 5/hour per user  |
-| `/api/properties/[id]` | PUT    | Update listing (owner/admin)      | 10/hour per user |
-| `/api/properties/[id]` | DELETE | Delete listing (owner/admin)      | -                |
+| Endpoint | Method | Description | Rate Limit |
+|----------|--------|-------------|------------|
+| `/api/properties` | GET | Fetch paginated listings (public) | - |
+| `/api/properties/[id]` | GET | Fetch single listing | - |
+| `/api/properties` | POST | Create new listing (owner only) | 5/hour per user |
+| `/api/properties/[id]` | PUT | Update listing (owner/admin) | 10/hour per user |
+| `/api/properties/[id]` | DELETE | Delete listing (owner/admin) | - |
 
 ### Booking Endpoints
 
-| Endpoint             | Method | Description           | Rate Limit      |
-| -------------------- | ------ | --------------------- | --------------- |
-| `/api/bookings`      | POST   | Create token booking  | 5/hour per user |
-| `/api/bookings/[id]` | GET    | Fetch booking details | -               |
-| `/api/bookings/[id]` | PUT    | Update booking status | -               |
+| Endpoint | Method | Description | Rate Limit |
+|----------|--------|-------------|------------|
+| `/api/bookings` | POST | Create token booking | 5/hour per user |
+| `/api/bookings/[id]` | GET | Fetch booking details | - |
+| `/api/bookings/[id]` | PUT | Update booking status | - |
 
 ### Payment Endpoints
 
-| Endpoint                     | Method | Description                       | Rate Limit       |
-| ---------------------------- | ------ | --------------------------------- | ---------------- |
-| `/api/payments/create-order` | POST   | Create Razorpay order (₹500)      | 5/hour per user  |
-| `/api/payments/verify`       | POST   | Verify Razorpay payment signature | 10/hour per user |
+| Endpoint | Method | Description | Rate Limit |
+|----------|--------|-------------|------------|
+| `/api/payments/create-order` | POST | Create Razorpay order (₹500) | 5/hour per user |
+| `/api/payments/verify` | POST | Verify Razorpay payment signature | 10/hour per user |
 
 ### Admin Endpoints
 
-| Endpoint                     | Method | Description                   | Auth Required |
-| ---------------------------- | ------ | ----------------------------- | ------------- |
-| `/api/admin/properties`      | GET    | List PGs awaiting approval    | ADMIN only    |
-| `/api/admin/properties/[id]` | PATCH  | Approve/reject PG             | ADMIN only    |
-| `/api/admin/owners`          | GET    | List owners awaiting approval | ADMIN only    |
-| `/api/admin/owners/[id]`     | PATCH  | Approve/reject owner          | ADMIN only    |
+| Endpoint | Method | Description | Auth Required |
+|----------|--------|-------------|---------------|
+| `/api/admin/properties` | GET | List PGs awaiting approval | ADMIN only |
+| `/api/admin/properties/[id]` | PATCH | Approve/reject PG | ADMIN only |
+| `/api/admin/owners` | GET | List owners awaiting approval | ADMIN only |
+| `/api/admin/owners/[id]` | PATCH | Approve/reject owner | ADMIN only |
 
 ### User Endpoints
 
-| Endpoint              | Method | Description                       | Auth Required |
-| --------------------- | ------ | --------------------------------- | ------------- |
-| `/api/profile`        | GET    | Get user profile                  | Yes           |
-| `/api/profile`        | PUT    | Update profile                    | Yes           |
-| `/api/profile/delete` | DELETE | Permanently delete account (DPDP) | Yes           |
-| `/api/kyc/digilocker` | POST   | Submit DigiLocker KYC             | Yes (owner)   |
+| Endpoint | Method | Description | Auth Required |
+|----------|--------|-------------|---------------|
+| `/api/profile` | GET | Get user profile | Yes |
+| `/api/profile` | PUT | Update profile | Yes |
+| `/api/profile/delete` | DELETE | Permanently delete account (DPDP) | Yes |
+| `/api/kyc/digilocker` | POST | Submit DigiLocker KYC | Yes (owner) |
 
 ### Utility Endpoints
 
-| Endpoint       | Method | Description                 | Public                 |
-| -------------- | ------ | --------------------------- | ---------------------- |
-| `/api/upload`  | POST   | Upload image to Cloudinary  | Rate limited (20/hour) |
-| `/api/health`  | GET    | Health check endpoint       | Yes                    |
-| `/api/metrics` | GET    | System metrics (admin only) | No                     |
+| Endpoint | Method | Description | Public |
+|----------|--------|-------------|--------|
+| `/api/upload` | POST | Upload image to Cloudinary | Rate limited (20/hour) |
+| `/api/health` | GET | Health check endpoint | Yes |
+| `/api/metrics` | GET | System metrics (admin only) | No |
 
 **API Documentation:** Full API docs available at [GitHub Wiki](https://github.com/cod-x-prince/pg-app/wiki/API)
 
@@ -573,13 +554,16 @@ All API routes are protected with authentication and rate limiting where necessa
   - City, price range, gender preference (MALE/FEMALE/UNISEX)
   - Amenities, ratings, room types (SINGLE/DOUBLE/TRIPLE/SHARED)
   - Food plans, house rules
+  
 - 📞 **Direct Contact**
   - WhatsApp integration with pre-filled messages
   - One-click chat with property owners
+  
 - 💳 **Token Booking**
   - Secure ₹500 payment via Razorpay
   - Reserve room with token (adjustable against rent)
   - Email confirmation to tenant and owner
+  
 - 🛡️ **Privacy Controls**
   - GDPR & DPDP Act 2023 compliance
   - Full account deletion capability
@@ -594,14 +578,17 @@ All API routes are protected with authentication and rate limiting where necessa
   4. Food Plans (meal options, pricing)
   5. Photos (property images, room images)
   6. Preview (review and submit)
+  
 - ✅ **DigiLocker KYC**
   - Quick verification using government ID
   - Secure integration with India Stack
+  
 - 📊 **Owner Dashboard**
   - Manage listings (edit, delete, view stats)
   - View booking requests
   - Track earnings
   - Manage availability
+  
 - 🔔 **Automated Alerts**
   - Email notifications for bookings
   - Listing approval/rejection notifications
@@ -613,10 +600,12 @@ All API routes are protected with authentication and rate limiting where necessa
   - Review new PGs before they become public
   - Approve/reject with reason
   - Email notification to owner
+  
 - 👥 **User Management**
   - Verify owners (approve/reject)
   - Manage KYC status
   - Assign verification badges
+  
 - 📈 **Platform Oversight**
   - Monitor listings, bookings, payments
   - System health metrics
@@ -629,7 +618,6 @@ All API routes are protected with authentication and rate limiting where necessa
 ### Core Models (9 Tables)
 
 **1. User**
-
 ```prisma
 model User {
   id            String    @id @default(cuid())
@@ -643,7 +631,7 @@ model User {
   avatar        String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-
+  
   // Relations
   properties    Property[]
   bookings      Booking[]
@@ -660,7 +648,6 @@ enum Role {
 ```
 
 **2. Property (PG Listings)**
-
 ```prisma
 model Property {
   id            String    @id @default(cuid())
@@ -675,7 +662,7 @@ model Property {
   ownerId       String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-
+  
   // Relations
   owner         User      @relation(fields: [ownerId], references: [id])
   rooms         Room[]
@@ -685,7 +672,7 @@ model Property {
   images        Image[]
   videos        Video[]
   likes         Like[]
-
+  
   @@index([city, isActive, gender])
   @@index([ownerId])
 }
@@ -698,7 +685,6 @@ enum Gender {
 ```
 
 **3. Room**
-
 ```prisma
 model Room {
   id            String    @id @default(cuid())
@@ -708,10 +694,10 @@ model Room {
   deposit       Int
   availability  Int
   capacity      Int
-
+  
   property      Property  @relation(fields: [propertyId], references: [id])
   bookings      Booking[]
-
+  
   @@index([propertyId])
 }
 
@@ -724,7 +710,6 @@ enum RoomType {
 ```
 
 **4. Booking**
-
 ```prisma
 model Booking {
   id            String    @id @default(cuid())
@@ -736,12 +721,12 @@ model Booking {
   razorpayId    String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-
+  
   property      Property  @relation(fields: [propertyId], references: [id])
   room          Room      @relation(fields: [roomId], references: [id])
   user          User      @relation(fields: [userId], references: [id])
   payment       Payment?
-
+  
   @@index([userId])
   @@index([propertyId])
 }
@@ -755,7 +740,6 @@ enum BookingStatus {
 ```
 
 **5. Payment**
-
 ```prisma
 model Payment {
   id            String    @id @default(cuid())
@@ -764,7 +748,7 @@ model Payment {
   status        PaymentStatus
   razorpayId    String?
   createdAt     DateTime  @default(now())
-
+  
   booking       Booking   @relation(fields: [bookingId], references: [id])
 }
 
@@ -776,7 +760,6 @@ enum PaymentStatus {
 ```
 
 **6. Review**
-
 ```prisma
 model Review {
   id            String    @id @default(cuid())
@@ -785,32 +768,30 @@ model Review {
   rating        Int       @default(0)
   comment       String?
   createdAt     DateTime  @default(now())
-
+  
   property      Property  @relation(fields: [propertyId], references: [id])
   user          User      @relation(fields: [userId], references: [id])
-
+  
   @@index([propertyId])
   @@index([userId])
 }
 ```
 
 **7. Amenity**
-
 ```prisma
 model Amenity {
   id            String    @id @default(cuid())
   propertyId    String
   name          String
   icon          String?
-
+  
   property      Property  @relation(fields: [propertyId], references: [id])
-
+  
   @@index([propertyId])
 }
 ```
 
 **8. Image**
-
 ```prisma
 model Image {
   id            String    @id @default(cuid())
@@ -818,15 +799,14 @@ model Image {
   url           String
   caption       String?
   order         Int       @default(0)
-
+  
   property      Property  @relation(fields: [propertyId], references: [id])
-
+  
   @@index([propertyId])
 }
 ```
 
 **9. PasswordResetToken**
-
 ```prisma
 model PasswordResetToken {
   id            String    @id @default(cuid())
@@ -834,7 +814,7 @@ model PasswordResetToken {
   token         String    @unique
   expiresAt     DateTime
   createdAt     DateTime  @default(now())
-
+  
   @@index([token])
   @@index([userId])
 }
@@ -843,14 +823,12 @@ model PasswordResetToken {
 ### Performance Optimizations
 
 **15 Composite Indexes:**
-
 - `[city, isActive, gender]` on Property — Search/filter queries (10-100x faster)
 - `[userId]` on Booking — User dashboard
 - `[propertyId]` on Room, Booking, Review — Property detail page
 - `[token]` on PasswordResetToken — Password reset lookup
 
 **Database Access Patterns:**
-
 - Always use Prisma Client (import from `@/lib/prisma`)
 - Never use raw SQL queries
 - Use `.select()` to fetch only needed fields
@@ -863,7 +841,6 @@ model PasswordResetToken {
 ### Vercel Deployment (Recommended)
 
 **Quick Deploy:**
-
 ```bash
 # 1. Push code to GitHub
 git push origin main
@@ -879,7 +856,6 @@ vercel --prod
 ```
 
 **Automated Deployment Workflow:**
-
 ```bash
 # Pre-deployment checks
 ./scripts/pre-deploy-check.sh
@@ -899,7 +875,6 @@ vercel --prod
 Automated pipeline in `.github/workflows/deploy-production.yml`:
 
 **Pipeline Steps:**
-
 1. ✅ Pre-deployment checks (TypeScript, ESLint, Build)
 2. 🗄️ Database migrations (with backup)
 3. 🚀 Vercel deployment
@@ -909,7 +884,6 @@ Automated pipeline in `.github/workflows/deploy-production.yml`:
 ### Production Checklist
 
 **Before First Deployment:**
-
 - [ ] Configure all environment variables in Vercel
 - [ ] Set up Supabase PostgreSQL (session pooler)
 - [ ] Configure Cloudinary (image uploads)
@@ -922,7 +896,6 @@ Automated pipeline in `.github/workflows/deploy-production.yml`:
 - [ ] Run `./scripts/migrate-all.sh`
 
 **After Deployment:**
-
 - [ ] Test `/api/health` endpoint
 - [ ] Verify authentication flow
 - [ ] Test payment integration (test mode)
@@ -935,7 +908,6 @@ Automated pipeline in `.github/workflows/deploy-production.yml`:
 ### Rollback Procedures
 
 **If Deployment Fails:**
-
 ```bash
 # 1. Rollback Vercel deployment
 vercel rollback <deployment-url>
@@ -950,7 +922,6 @@ vercel rollback <deployment-url>
 ```
 
 **Emergency Contacts:**
-
 - Vercel Dashboard: https://vercel.com/dashboard
 - Sentry Dashboard: https://sentry.io
 - Supabase Dashboard: https://app.supabase.com
@@ -964,7 +935,6 @@ vercel rollback <deployment-url>
 **Not Yet Implemented** (See `TESTING_PLAN.md` for complete strategy)
 
 **Recommended Stack:**
-
 - **Unit Tests:** Jest + React Testing Library
 - **Integration Tests:** Jest + Supertest (API testing)
 - **E2E Tests:** Playwright (browser automation)
@@ -974,7 +944,6 @@ vercel rollback <deployment-url>
 ### Manual Testing Checklist
 
 **Critical User Flows:**
-
 1. ✅ User Registration (credentials + Google OAuth)
 2. ✅ Login (credentials + Google OAuth)
 3. ✅ Password Reset (forgot → email → reset)
@@ -989,7 +958,6 @@ vercel rollback <deployment-url>
 12. ✅ CSRF Protection (all mutations)
 
 **Security Testing:**
-
 - [ ] SQL Injection (all input fields)
 - [ ] XSS Attacks (all text inputs)
 - [ ] CSRF Attacks (all mutations)
@@ -1026,7 +994,6 @@ npm run test:load             # k6 load testing
 ### Production Monitoring Setup
 
 **1. Sentry Error Tracking**
-
 ```typescript
 // Already configured in:
 // - instrumentation.ts (initialization)
@@ -1036,7 +1003,6 @@ npm run test:load             # k6 load testing
 ```
 
 **2. Health Check Endpoint**
-
 ```bash
 # Check system health
 curl https://gharam.com/api/health
@@ -1052,7 +1018,6 @@ curl https://gharam.com/api/health
 ```
 
 **3. Metrics API (Admin Only)**
-
 ```bash
 # Get system metrics
 curl https://gharam.com/api/metrics \
@@ -1067,13 +1032,11 @@ curl https://gharam.com/api/metrics \
 ```
 
 **4. Log Aggregation**
-
 - Vercel logs (automatic)
 - Sentry breadcrumbs
 - Custom logger (`src/lib/logger.ts`)
 
 **5. Alerting Rules**
-
 - Error rate > 1% → Slack notification
 - Response time > 5s → Slack notification
 - Database connection failed → Slack notification
@@ -1082,7 +1045,6 @@ curl https://gharam.com/api/metrics \
 ### Monitoring Dashboard
 
 **Grafana Dashboard** (See `MONITORING_GUIDE.md` for setup):
-
 - Real-time metrics
 - Error rates
 - API performance
@@ -1092,7 +1054,6 @@ curl https://gharam.com/api/metrics \
 ### Emergency Runbooks
 
 **Site Down:**
-
 1. Check `/api/health` endpoint
 2. Check Vercel status page
 3. Check Supabase dashboard
@@ -1100,14 +1061,12 @@ curl https://gharam.com/api/metrics \
 5. Rollback if needed
 
 **Payment Failures:**
-
 1. Check Razorpay dashboard
 2. Verify webhook signatures
 3. Check payment logs in Sentry
 4. Contact Razorpay support if needed
 
 **Rate Limit Issues:**
-
 1. Check Upstash Redis dashboard
 2. Review rate limit configuration
 3. Adjust limits if needed
@@ -1120,7 +1079,6 @@ curl https://gharam.com/api/metrics \
 ### Common Issues
 
 **1. Build Failures**
-
 ```bash
 # Issue: TypeScript errors
 # Solution: Run type check
@@ -1136,7 +1094,6 @@ npx prisma generate
 ```
 
 **2. Database Issues**
-
 ```bash
 # Issue: Schema out of sync
 # Solution: Push schema
@@ -1152,7 +1109,6 @@ npm run db:studio  # Opens Prisma Studio
 ```
 
 **3. Authentication Issues**
-
 ```bash
 # Issue: Login fails
 # Check: NEXTAUTH_SECRET is set (min 32 chars)
@@ -1164,7 +1120,6 @@ npm run db:studio  # Opens Prisma Studio
 ```
 
 **4. Payment Issues**
-
 ```bash
 # Issue: Razorpay payment fails
 # Check: RAZORPAY_KEY_SECRET matches dashboard
@@ -1175,7 +1130,6 @@ npm run db:studio  # Opens Prisma Studio
 ```
 
 **5. Email Issues**
-
 ```bash
 # Issue: Emails not sending
 # Check: RESEND_API_KEY is valid
@@ -1188,14 +1142,12 @@ npm run db:studio  # Opens Prisma Studio
 ### Support Resources
 
 **Documentation:**
-
 - This file (README_ELITE.md) — Complete reference
 - `.github/copilot-instructions.md` — Development conventions
 - `DEPLOYMENT_GUIDE.md` — Deployment procedures
 - `MONITORING_GUIDE.md` — Monitoring setup
 
 **External Resources:**
-
 - Next.js Docs: https://nextjs.org/docs
 - Prisma Docs: https://prisma.io/docs
 - NextAuth Docs: https://next-auth.js.org
@@ -1203,7 +1155,6 @@ npm run db:studio  # Opens Prisma Studio
 - Resend Docs: https://resend.com/docs
 
 **Community:**
-
 - GitHub Issues: https://github.com/cod-x-prince/pg-app/issues
 - GitHub Discussions: https://github.com/cod-x-prince/pg-app/discussions
 
@@ -1254,13 +1205,11 @@ We welcome contributions from the community! Please follow these guidelines:
 ### Getting Started
 
 1. **Fork the repository**
-
    ```bash
    gh repo fork cod-x-prince/pg-app
    ```
 
 2. **Create a feature branch**
-
    ```bash
    git checkout -b feature/amazing-feature
    ```
@@ -1271,13 +1220,11 @@ We welcome contributions from the community! Please follow these guidelines:
    - Update documentation
 
 4. **Commit your changes**
-
    ```bash
    git commit -m 'Add some amazing feature'
    ```
 
 5. **Push to your fork**
-
    ```bash
    git push origin feature/amazing-feature
    ```
@@ -1290,7 +1237,6 @@ We welcome contributions from the community! Please follow these guidelines:
 ### Code Quality Standards
 
 **Before submitting a PR:**
-
 ```bash
 # 1. Type check
 npm run type-check
@@ -1321,14 +1267,12 @@ npm run test
 ### Issue Reporting
 
 **Bug Report Template:**
-
 ```markdown
 **Describe the bug**
 A clear description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-
 1. Go to '...'
 2. Click on '...'
 3. See error
@@ -1340,14 +1284,12 @@ What you expected to happen.
 If applicable, add screenshots.
 
 **Environment:**
-
 - OS: [e.g. Windows, macOS, Linux]
 - Browser: [e.g. Chrome, Safari]
 - Version: [e.g. 1.0.0]
 ```
 
 **Feature Request Template:**
-
 ```markdown
 **Is your feature request related to a problem?**
 A clear description of the problem.
@@ -1400,13 +1342,12 @@ See the [LICENSE](LICENSE) file for full details.
 
 Built with obsession in India by:
 
-| Name               | Role                              | Links                                                                                          |
-| ------------------ | --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Name | Role | Links |
+|------|------|-------|
 | **Parmbeer Singh** | Lead Developer, Security Engineer | [GitHub](https://github.com/cod-x-prince) · [LinkedIn](https://linkedin.com/in/parmbeer-singh) |
-| **Paras Jamwal**   | Full Stack Developer, UI/UX       | [GitHub](https://github.com/parasjamwal) · [LinkedIn](https://linkedin.com/in/paras-jamwal)    |
+| **Paras Jamwal** | Full Stack Developer, UI/UX | [GitHub](https://github.com/parasjamwal) · [LinkedIn](https://linkedin.com/in/paras-jamwal) |
 
 **Special Thanks:**
-
 - All contributors who helped shape Gharam
 - Early testers and beta users
 - Open source community (Next.js, Prisma, NextAuth, etc.)
@@ -1416,19 +1357,16 @@ Built with obsession in India by:
 ## 📞 Contact & Support
 
 **Project Links:**
-
 - **Website:** https://pg-app-i1h8.vercel.app
 - **GitHub:** https://github.com/cod-x-prince/pg-app
 - **Issues:** https://github.com/cod-x-prince/pg-app/issues
 - **Discussions:** https://github.com/cod-x-prince/pg-app/discussions
 
 **For Business Inquiries:**
-
 - Email: contact@gharam.in (coming soon)
 - LinkedIn: [Parmbeer Singh](https://linkedin.com/in/parmbeer-singh)
 
 **For Technical Support:**
-
 - GitHub Issues: [Report Bug](https://github.com/cod-x-prince/pg-app/issues/new?template=bug_report.md)
 - GitHub Discussions: [Ask Question](https://github.com/cod-x-prince/pg-app/discussions/new)
 
@@ -1443,7 +1381,6 @@ Built with obsession in India by:
 ### Achievement Summary
 
 **Security:**
-
 - ✅ 31/31 Security issues resolved (100%)
 - ✅ Zero TypeScript errors
 - ✅ Zero security vulnerabilities
@@ -1451,14 +1388,12 @@ Built with obsession in India by:
 - ✅ GDPR-ready
 
 **Performance:**
-
 - ✅ 10-100x faster database queries
 - ✅ 90% session refresh reduction
 - ✅ Zero rate limiter race conditions
 - ✅ Optimized image delivery (Cloudinary)
 
 **Code Quality:**
-
 - ✅ 150 KB documentation
 - ✅ ~150,000 words written
 - ✅ 27 files created
@@ -1467,7 +1402,6 @@ Built with obsession in India by:
 - ✅ Comprehensive testing strategy
 
 **Deployment:**
-
 - ✅ Automated CI/CD pipeline
 - ✅ Pre-deployment scripts
 - ✅ Database migration automation
@@ -1476,7 +1410,6 @@ Built with obsession in India by:
 - ✅ Emergency runbooks
 
 **Monitoring:**
-
 - ✅ Sentry error tracking
 - ✅ Performance monitoring
 - ✅ Custom metrics API
