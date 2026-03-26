@@ -32,8 +32,11 @@ export default function CustomCursor() {
     }
     raf = requestAnimationFrame(animate)
 
+    // Fix P1-4: Store elements for proper cleanup
+    const interactiveElements = document.querySelectorAll("a, button, [role='button'], input, select, textarea, label")
+
     document.addEventListener("mousemove", move)
-    document.querySelectorAll("a, button, [role='button'], input, select, textarea, label").forEach(el => {
+    interactiveElements.forEach(el => {
       el.addEventListener("mouseenter", enter)
       el.addEventListener("mouseleave", leave)
     })
@@ -41,6 +44,11 @@ export default function CustomCursor() {
     return () => {
       cancelAnimationFrame(raf)
       document.removeEventListener("mousemove", move)
+      // Fix P1-4: Remove both mouseenter and mouseleave listeners on cleanup
+      interactiveElements.forEach(el => {
+        el.removeEventListener("mouseenter", enter)
+        el.removeEventListener("mouseleave", leave)
+      })
     }
   }, [])
 

@@ -31,7 +31,7 @@ export default function PropertyCard({ property }: Props) {
           <Image src={img} alt={property.name} fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            unoptimized
+            // Fix P2-7: Remove unoptimized flag (Cloudinary is in remotePatterns)
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">

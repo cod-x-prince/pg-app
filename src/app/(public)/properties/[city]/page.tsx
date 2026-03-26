@@ -1,4 +1,5 @@
-export const dynamic = "force-dynamic"
+// Fix P2-8: Remove force-dynamic to enable static generation with revalidation
+export const revalidate = 300 // Revalidate every 5 minutes
 import type { PropertyListItem } from "@/types"
 import { prisma } from "@/lib/prisma"
 import Navbar from "@/components/layout/Navbar"
@@ -21,34 +22,49 @@ export default async function PropertiesPage({ params, searchParams }: Props) {
   const where: Record<string, unknown> = { isActive: true, city: { equals: city, mode: "insensitive" } }
   if (gender) where.gender = gender
   if (foodPlan) where.foodPlan = foodPlan
-  if (moveIn) {
-    where.rooms = {
-      some: {
-        isAvailable: true,
-        OR: [
-          { availableFrom: null },
-          { availableFrom: { lte: new Date(moveIn) } },
-        ],
-      },
-    }
-  }
   if (amenityList.length) where.amenities = { some: { name: { in: amenityList } } }
-  if (minRent || maxRent) {
-    where.rooms = { some: { rent: {
-      ...(minRent && { gte: parseInt(minRent) }),
-      ...(maxRent && { lte: parseInt(maxRent) }),
-    }}}
+  
+  // Fix: Merge move-in and rent filters into one unified rooms.some object
+  if (moveIn || minRent || maxRent) {
+    const roomConditions: Record<string, unknown> = { isAvailable: true }
+    
+    // Move-in date filter
+    if (moveIn) {
+      roomConditions.OR = [
+        { availableFrom: null },
+        { availableFrom: { lte: new Date(moveIn) } },
+      ]
+    }
+    
+    // Rent range filter
+    if (minRent || maxRent) {
+      roomConditions.rent = {
+        ...(minRent && { gte: parseInt(minRent) }),
+        ...(maxRent && { lte: parseInt(maxRent) }),
+      }
+    }
+    
+    where.rooms = { some: roomConditions }
   }
 
+  // Fix: Fetch properties without sorting in query (we'll sort by price in-memory)
   const properties = await prisma.property.findMany({
     where,
     orderBy:
-      sort === "price_asc"  ? { rooms: { _count: "asc" } } :
-      sort === "price_desc" ? { rooms: { _count: "desc" } } :
       sort === "top_rated"  ? { reviews: { _count: "desc" } } :
-      { createdAt: "desc" },
+      !sort || sort === "newest" ? { createdAt: "desc" } :
+      { createdAt: "desc" }, // Default for price sorts (will sort after)
     include: { images: true, rooms: true, reviews: { select: { id: true, rating: true } }, amenities: true },
   })
+  
+  // Fix: Sort by actual minimum room price (not room count)
+  if (sort === "price_asc" || sort === "price_desc") {
+    properties.sort((a, b) => {
+      const minRentA = a.rooms.length ? Math.min(...a.rooms.map(r => r.rent)) : Infinity
+      const minRentB = b.rooms.length ? Math.min(...b.rooms.map(r => r.rent)) : Infinity
+      return sort === "price_asc" ? minRentA - minRentB : minRentB - minRentA
+    })
+  }
 
   return (
     <>

@@ -34,14 +34,21 @@ export default function TurnstileWidget({ onVerify, onError }: Props) {
       })
     }
 
+    // Fix P3-15: Check if script already exists before appending
+    const existingScript = document.querySelector('script[src*="turnstile"]')
+    
     if (window.turnstile) {
       render()
-    } else {
+    } else if (!existingScript) {
+      // Only inject script if it doesn't exist
       window.onloadTurnstileCallback = render
       const script = document.createElement("script")
       script.src   = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
       script.async = true
       document.head.appendChild(script)
+    } else {
+      // Script exists but not loaded yet, register callback
+      window.onloadTurnstileCallback = render
     }
 
     return () => {

@@ -139,12 +139,13 @@ export default function LoginPage() {
                   <label className="font-display text-sm font-medium text-foreground">
                     Password
                   </label>
-                  <a
-                    href="#"
+                  {/* Fix P1-5: Replace dead forgot-password link with valid route */}
+                  <Link
+                    href="/auth/forgot-password"
                     className="font-body text-xs text-primary hover:underline"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
                 <input
                   type="password"
