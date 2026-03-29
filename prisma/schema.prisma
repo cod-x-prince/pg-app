@@ -9,33 +9,37 @@ datasource db {
 }
 
 model User {
-  id           String     @id @default(cuid())
-  name         String
-  email        String     @unique
-  phone        String?
-  passwordHash String
-  role         Role       @default(TENANT)
-  isApproved   Boolean    @default(false)
-  avatar       String?
-  whatsapp     String?
-  kycDocUrl    String?
-  licenseUrl   String?
-  kycStatus    KycStatus  @default(NONE)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  properties   Property[]
-  bookings     Booking[]
-  reviews      Review[]
-  likes        Like[]
+  id            String          @id @default(cuid())
+  name          String
+  email         String          @unique
+  phone         String?
+  passwordHash  String
+  role          Role            @default(TENANT)
+  isApproved    Boolean         @default(false)
+  avatar        String?
+  whatsapp      String?
+  // REMOVED: kycDocUrl, licenseUrl, kycStatus (duplicates - use KYCDocument table instead)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  properties    Property[]
+  bookings      Booking[]
+  reviews       Review[]
+  likes         Like[]
+  kycDocuments  KYCDocument[]
+  notifications Notification[]
+
+  @@index([role, isApproved])
+  @@index([createdAt])
 }
 
 model Property {
   id          String     @id @default(cuid())
   ownerId     String
-  owner       User       @relation(fields: [ownerId], references: [id])
+  owner       User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   name        String
   description String
   city        String
+  locality    String?    // NEW: Locality/area within city
   address     String
   lat         Float?
   lng         Float?
@@ -62,13 +66,16 @@ model Property {
   @@index([ownerId])
   @@index([city, isActive])
   @@index([city, isActive, gender])
+  @@index([isVerified, isActive, city, gender, createdAt])
+  @@index([ownerId, isVerified, createdAt])
+  @@index([city, locality, isActive, gender])
   @@index([createdAt])
 }
 
 model Room {
   id          String    @id @default(cuid())
   propertyId  String
-  property    Property  @relation(fields: [propertyId], references: [id])
+  property    Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   type        String
   rent        Int
   deposit     Int
@@ -78,83 +85,97 @@ model Room {
 
   @@index([propertyId])
   @@index([propertyId, isAvailable])
+  @@index([propertyId, type, isAvailable])
+  @@index([propertyId, rent])
+  @@index([availableFrom])
 }
 
 model Booking {
-  id         String        @id @default(cuid())
-  tenantId   String
-  tenant     User          @relation(fields: [tenantId], references: [id])
-  propertyId String
-  property   Property      @relation(fields: [propertyId], references: [id])
-  roomId     String
-  room       Room          @relation(fields: [roomId], references: [id])
-  type       BookingType   @default(ENQUIRY)
-  status     BookingStatus @default(PENDING)
-  moveInDate DateTime
-  tokenPaid  Boolean       @default(false)
-  razorpayId String?
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+  id          String        @id @default(cuid())
+  tenantId    String
+  tenant      User          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  propertyId  String
+  property    Property      @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  roomId      String
+  room        Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  type        BookingType   @default(ENQUIRY)
+  status      BookingStatus @default(PENDING)
+  moveInDate  DateTime
+  tokenPaid   Boolean       @default(false)
+  tokenAmount Int           @default(500) // Token amount at time of booking (₹500)
+  monthlyRent Int           // Monthly rent at time of booking (price history)
+  razorpayId  String?       @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@index([tenantId])
   @@index([propertyId])
   @@index([roomId])
   @@index([tenantId, status])
+  @@index([propertyId, status, createdAt])
+  @@index([roomId, moveInDate, status])
+  @@index([tenantId, createdAt])
 }
 
 model Review {
   id         String   @id @default(cuid())
   tenantId   String
-  tenant     User     @relation(fields: [tenantId], references: [id])
+  tenant     User     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   rating     Int
   comment    String?
   createdAt  DateTime @default(now())
 
   @@unique([tenantId, propertyId])
   @@index([propertyId])
+  @@index([propertyId, rating])
+  @@index([createdAt])
 }
 
 model Image {
   id         String   @id @default(cuid())
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   url        String
   isPrimary  Boolean  @default(false)
 
   @@index([propertyId])
+  @@index([propertyId, isPrimary])
 }
 
 model Video {
   id         String   @id @default(cuid())
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   url        String
 
   @@index([propertyId])
+  @@index([propertyId, id])
 }
 
 model Amenity {
   id         String   @id @default(cuid())
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   name       String
 
   @@index([propertyId])
   @@index([name])
+  @@index([propertyId, name])
 }
 
 model Like {
   id         String   @id @default(cuid())
   userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
 
   @@unique([userId, propertyId])
   @@index([propertyId])
+  @@index([userId, createdAt])
 }
 
 enum Role {
@@ -206,4 +227,42 @@ model PasswordResetToken {
 
   @@index([email])
   @@index([expiresAt])
+  @@index([email, expiresAt])
+}
+
+model KYCDocument {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            String    // "aadhaar", "pan", "license", etc.
+  fileUrl         String
+  status          KycStatus @default(PENDING)
+  reason          String?
+  reviewedAt      DateTime?
+  reviewedBy      String?
+  uploadedAt      DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([userId, status, uploadedAt])
+  @@index([type, status])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // "booking", "approval", "payment", etc.
+  title     String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, isRead])
+  @@index([userId, isRead, createdAt])
+  @@index([createdAt])
 }
