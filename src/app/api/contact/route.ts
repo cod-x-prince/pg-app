@@ -1,46 +1,48 @@
-import { NextResponse } from "next/server"
-import { z } from "zod"
-import { rateLimit } from "@/lib/rateLimit"
-import { sendEmail } from "@/lib/email"
-import { withHandler } from "@/lib/handler"
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { rateLimit } from "@/lib/rateLimit";
+import { sendEmail } from "@/lib/email";
+import { withHandler } from "@/lib/handler";
 
 const ContactSchema = z.object({
   name: z.string().trim().min(2).max(100),
   email: z.string().email(),
   subject: z.string().trim().min(5).max(200),
   message: z.string().trim().min(20).max(2000),
-})
+});
 
 export const POST = withHandler(async (req: Request) => {
   // Check if Resend API key is configured
   if (!process.env.RESEND_API_KEY) {
-    console.warn("RESEND_API_KEY not configured. Email notifications disabled.")
+    console.warn(
+      "RESEND_API_KEY not configured. Email notifications disabled.",
+    );
     return NextResponse.json(
       { error: "Email service unavailable. Please try again later." },
-      { status: 503 }
-    )
+      { status: 503 },
+    );
   }
 
   // Rate limit: 5 contacts per hour per IP
-  const ip = req.headers.get("x-forwarded-for") || "unknown"
-  const rl = await rateLimit(`contact:${ip}`, 5, 60 * 60 * 1000)
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const rl = await rateLimit(`contact:${ip}`, 5, 60 * 60 * 1000);
   if (!rl.success) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
-      { status: 429 }
-    )
+      { status: 429 },
+    );
   }
 
-  const body = await req.json()
-  const parsed = ContactSchema.safeParse(body)
+  const body = await req.json();
+  const parsed = ContactSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
       { error: "Invalid input", details: parsed.error.flatten() },
-      { status: 400 }
-    )
+      { status: 400 },
+    );
   }
 
-  const { name, email, subject, message } = parsed.data
+  const { name, email, subject, message } = parsed.data;
 
   // Send email to support
   try {
@@ -63,7 +65,7 @@ export const POST = withHandler(async (req: Request) => {
           <p style="color: #9ca3af; font-size: 12px;">Sent from PGLife contact form</p>
         </div>
       `,
-    })
+    });
 
     // Send confirmation to user
     await sendEmail({
@@ -85,14 +87,20 @@ export const POST = withHandler(async (req: Request) => {
           </p>
         </div>
       `,
-    })
+    });
 
-    return NextResponse.json({ success: true, message: "Message sent successfully" })
+    return NextResponse.json({
+      success: true,
+      message: "Message sent successfully",
+    });
   } catch (error) {
-    console.error("Contact form error:", error)
+    console.error("Contact form error:", error);
     return NextResponse.json(
-      { error: "Failed to send message. Please try again or email support@gharam.in directly." },
-      { status: 500 }
-    )
+      {
+        error:
+          "Failed to send message. Please try again or email support@gharam.in directly.",
+      },
+      { status: 500 },
+    );
   }
-})
+});

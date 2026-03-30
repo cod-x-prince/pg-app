@@ -1,16 +1,24 @@
-import { Resend } from "resend"
+import { Resend } from "resend";
 
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
-const FROM   = process.env.RESEND_FROM_EMAIL ?? "Gharam <noreply@gharam.in>"
-const BASE   = process.env.NEXTAUTH_URL ?? "https://gharam.in"
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
+const FROM = process.env.RESEND_FROM_EMAIL ?? "Gharam <noreply@gharam.in>";
+const BASE = process.env.NEXTAUTH_URL ?? "https://gharam.in";
 
 // Helper to safely send email
-async function sendEmailSafe(params: Parameters<Resend['emails']['send']>[0]) {
+async function sendEmailSafe(params: Parameters<Resend["emails"]["send"]>[0]) {
   if (!resend) {
-    console.warn("Resend not configured. Email would have been sent to:", params.to)
-    return { success: false, error: { message: "Email service not configured" } }
+    console.warn(
+      "Resend not configured. Email would have been sent to:",
+      params.to,
+    );
+    return {
+      success: false,
+      error: { message: "Email service not configured" },
+    };
   }
-  return resend.emails.send(params)
+  return resend.emails.send(params);
 }
 
 // ── Templates ─────────────────────────────────────────────────────────────
@@ -74,25 +82,28 @@ function baseTemplate(content: string) {
     </td></tr>
   </table>
 </body>
-</html>`
+</html>`;
 }
 
 // ── Email: Booking confirmed (to tenant) ──────────────────────────────────
 
 export async function sendBookingConfirmedTenant(data: {
-  tenantName:   string
-  tenantEmail:  string
-  propertyName: string
-  propertyCity: string
-  roomType:     string
-  rent:         number
-  moveInDate:   Date
-  bookingId:    string
-  ownerWhatsapp?: string | null
+  tenantName: string;
+  tenantEmail: string;
+  propertyName: string;
+  propertyCity: string;
+  roomType: string;
+  rent: number;
+  moveInDate: Date;
+  bookingId: string;
+  ownerWhatsapp?: string | null;
 }) {
   const dateStr = new Date(data.moveInDate).toLocaleDateString("en-IN", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-  })
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const content = `
     <h1 style="color:#0F2347;font-size:24px;margin:0 0 8px;font-family:Georgia,serif;">
@@ -140,7 +151,9 @@ export async function sendBookingConfirmedTenant(data: {
       </td></tr>
     </table>
 
-    ${data.ownerWhatsapp ? `
+    ${
+      data.ownerWhatsapp
+        ? `
     <!-- WhatsApp CTA -->
     <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
       <tr><td>
@@ -153,40 +166,45 @@ export async function sendBookingConfirmedTenant(data: {
         </a>
       </td></tr>
     </table>
-    ` : ""}
+    `
+        : ""
+    }
 
     <a href="${BASE}/dashboard"
       style="display:inline-block;background:#1B3B6F;color:white;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:600;font-size:14px;">
       View My Bookings →
     </a>
-  `
+  `;
 
   return sendEmailSafe({
-    from:    FROM,
-    to:      data.tenantEmail,
+    from: FROM,
+    to: data.tenantEmail,
     subject: `Booking Confirmed — ${data.propertyName} | Gharam`,
-    html:    baseTemplate(content),
-  })
+    html: baseTemplate(content),
+  });
 }
 
 // ── Email: New booking alert (to owner) ───────────────────────────────────
 
 export async function sendNewBookingOwner(data: {
-  ownerName:    string
-  ownerEmail:   string
-  tenantName:   string
-  tenantPhone:  string
-  tenantEmail:  string
-  propertyName: string
-  roomType:     string
-  rent:         number
-  moveInDate:   Date
-  bookingId:    string
-  tokenPaid:    boolean
+  ownerName: string;
+  ownerEmail: string;
+  tenantName: string;
+  tenantPhone: string;
+  tenantEmail: string;
+  propertyName: string;
+  roomType: string;
+  rent: number;
+  moveInDate: Date;
+  bookingId: string;
+  tokenPaid: boolean;
 }) {
   const dateStr = new Date(data.moveInDate).toLocaleDateString("en-IN", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-  })
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const content = `
     <h1 style="color:#0F2347;font-size:24px;margin:0 0 8px;font-family:Georgia,serif;">
@@ -222,13 +240,17 @@ export async function sendNewBookingOwner(data: {
             </td>
           </tr>
         </table>
-        ${data.tokenPaid ? `
+        ${
+          data.tokenPaid
+            ? `
         <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;padding-top:16px;border-top:1px solid #e5e7eb;">
           <tr><td style="background:#ecfdf5;border-radius:8px;padding:12px;">
             <span style="color:#059669;font-weight:600;font-size:14px;">✓ Token of ₹500 received — Room is held for this tenant</span>
           </td></tr>
         </table>
-        ` : ""}
+        `
+            : ""
+        }
       </td></tr>
     </table>
 
@@ -236,24 +258,24 @@ export async function sendNewBookingOwner(data: {
       style="display:inline-block;background:#1B3B6F;color:white;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:600;font-size:14px;">
       View in Dashboard →
     </a>
-  `
+  `;
 
   return sendEmailSafe({
-    from:    FROM,
-    to:      data.ownerEmail,
+    from: FROM,
+    to: data.ownerEmail,
     subject: `New Booking — ${data.propertyName} (${data.tokenPaid ? "Token Paid" : "Enquiry"}) | Gharam`,
-    html:    baseTemplate(content),
-  })
+    html: baseTemplate(content),
+  });
 }
 
 // ── Email: Signup welcome ─────────────────────────────────────────────────
 
 export async function sendWelcomeEmail(data: {
-  name:  string
-  email: string
-  role:  string
+  name: string;
+  email: string;
+  role: string;
 }) {
-  const isOwner = data.role === "OWNER" || data.role === "BROKER"
+  const isOwner = data.role === "OWNER" || data.role === "BROKER";
 
   const content = `
     <h1 style="color:#0F2347;font-size:24px;margin:0 0 8px;font-family:Georgia,serif;">
@@ -263,7 +285,9 @@ export async function sendWelcomeEmail(data: {
       Hi ${data.name}, thanks for joining Gharam — stay where it feels right.
     </p>
 
-    ${isOwner ? `
+    ${
+      isOwner
+        ? `
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#fef3c7;border-radius:12px;padding:20px;margin-bottom:24px;">
       <tr><td>
         <p style="margin:0;color:#92400e;font-size:14px;font-weight:600;">⏳ Account Pending Approval</p>
@@ -273,7 +297,8 @@ export async function sendWelcomeEmail(data: {
         </p>
       </td></tr>
     </table>
-    ` : `
+    `
+        : `
     <p style="color:#374151;font-size:14px;margin:0 0 24px;">
       You can now browse verified PGs across India. Start exploring!
     </p>
@@ -281,22 +306,23 @@ export async function sendWelcomeEmail(data: {
       style="display:inline-block;background:#1B3B6F;color:white;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:600;font-size:14px;">
       Browse PGs →
     </a>
-    `}
-  `
+    `
+    }
+  `;
 
   return sendEmailSafe({
-    from:    FROM,
-    to:      data.email,
+    from: FROM,
+    to: data.email,
     subject: "Welcome to Gharam 🏠",
-    html:    baseTemplate(content),
-  })
+    html: baseTemplate(content),
+  });
 }
 
 // ── Email: Owner approved ─────────────────────────────────────────────────
 
 export async function sendOwnerApprovedEmail(data: {
-  name:  string
-  email: string
+  name: string;
+  email: string;
 }) {
   const content = `
     <h1 style="color:#0F2347;font-size:24px;margin:0 0 8px;font-family:Georgia,serif;">
@@ -310,24 +336,24 @@ export async function sendOwnerApprovedEmail(data: {
       style="display:inline-block;background:#F59E0B;color:#1B3B6F;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:700;font-size:14px;">
       List Your PG Now →
     </a>
-  `
+  `;
 
   return sendEmailSafe({
-    from:    FROM,
-    to:      data.email,
+    from: FROM,
+    to: data.email,
     subject: "Your Gharam owner account is approved ✓",
-    html:    baseTemplate(content),
-  })
+    html: baseTemplate(content),
+  });
 }
 
 // ── Email: Password Reset ─────────────────────────────────────────────────
 
 export async function sendPasswordResetEmail(data: {
-  name:  string
-  email: string
-  token: string
+  name: string;
+  email: string;
+  token: string;
 }) {
-  const resetUrl = `${BASE}/auth/reset-password?token=${encodeURIComponent(data.token)}`
+  const resetUrl = `${BASE}/auth/reset-password?token=${encodeURIComponent(data.token)}`;
 
   const content = `
     <h1 style="color:#0F2347;font-size:24px;margin:0 0 8px;font-family:Georgia,serif;">
@@ -356,28 +382,28 @@ export async function sendPasswordResetEmail(data: {
       Or copy and paste this link into your browser:<br>
       <span style="color:#6b7280;word-break:break-all;">${resetUrl}</span>
     </p>
-  `
+  `;
 
   return sendEmailSafe({
-    from:    FROM,
-    to:      data.email,
+    from: FROM,
+    to: data.email,
     subject: "Reset Your Gharam Password",
-    html:    baseTemplate(content),
-  })
+    html: baseTemplate(content),
+  });
 }
 
 // ── Generic Email Sender ──────────────────────────────────────────────────
 
 export async function sendEmail(data: {
-  to: string | string[]
-  subject: string
-  html: string
-  from?: string
+  to: string | string[];
+  subject: string;
+  html: string;
+  from?: string;
 }) {
   return sendEmailSafe({
     from: data.from ?? FROM,
     to: data.to,
     subject: data.subject,
     html: data.html,
-  })
+  });
 }
