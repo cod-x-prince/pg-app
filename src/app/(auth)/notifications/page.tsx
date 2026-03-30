@@ -42,7 +42,7 @@ export default function NotificationsPage() {
   const markAsRead = async (id: string) => {
     try {
       await fetch(`/api/notifications/${id}`, { method: "PUT" })
-      setNotifications(notifications.map(n => n.id === id ? { ...n, isRead: true } : n))
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n))
     } catch (error) {
       console.error("Failed to mark as read:", error)
     }
@@ -51,7 +51,7 @@ export default function NotificationsPage() {
   const markAllAsRead = async () => {
     try {
       await fetch("/api/notifications", { method: "PUT" })
-      setNotifications(notifications.map(n => ({ ...n, isRead: true })))
+      setNotifications(prev => prev.map(n => ({ ...n, isRead: true })))
     } catch (error) {
       console.error("Failed to mark all as read:", error)
     }
@@ -60,7 +60,7 @@ export default function NotificationsPage() {
   const deleteNotification = async (id: string) => {
     try {
       await fetch(`/api/notifications/${id}`, { method: "DELETE" })
-      setNotifications(notifications.filter(n => n.id !== id))
+      setNotifications(prev => prev.filter(n => n.id !== id))
     } catch (error) {
       console.error("Failed to delete notification:", error)
     }

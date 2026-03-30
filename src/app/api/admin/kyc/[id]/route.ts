@@ -26,7 +26,16 @@ export const PUT = withHandler(
     const document = await prisma.kYCDocument.update({
       where: { id: params.id },
       data: { status, reason, reviewedAt: new Date(), reviewedBy: user.id },
-      include: { user: true },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            isApproved: true,
+          },
+        },
+      },
     });
 
     const allDocs = await prisma.kYCDocument.findMany({

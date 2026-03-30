@@ -15,11 +15,17 @@ export async function generateMetadata({ params }: { params: { id: string; city:
     return { title: "Property Not Found" }
   }
 
-  const minRent = Math.min(...property.rooms.map(r => r.rent))
-  const maxRent = Math.max(...property.rooms.map(r => r.rent))
-  const priceRange = minRent === maxRent ? `₹${minRent}` : `₹${minRent} - ₹${maxRent}`
+  const hasRooms = property.rooms.length > 0
+  let priceRange: string | null = null
+  if (hasRooms) {
+    const rents = property.rooms.map(r => r.rent)
+    const minRent = Math.min(...rents)
+    const maxRent = Math.max(...rents)
+    priceRange = minRent === maxRent ? `₹${minRent}` : `₹${minRent} - ₹${maxRent}`
+  }
 
-  const title = `${property.name} - PG in ${property.locality || property.city} | ${priceRange}/month`
+  const baseTitle = `${property.name} - PG in ${property.locality || property.city}`
+  const title = priceRange ? `${baseTitle} | ${priceRange}/month` : baseTitle
   const description = `${property.description.slice(0, 150)}... Book PG accommodation in ${property.city}. ${property.gender} hostel with ${property.rooms.length} room types. Owner: ${property.owner.name}.`
 
   return {

@@ -11,7 +11,8 @@ import { SignupSchema, parseBody } from "@/lib/schemas"
 export async function POST(req: Request) {
   try {
     const isDev = process.env.NODE_ENV === "development"
-    const ip = req.headers.get("x-forwarded-for") ?? "unknown"
+    const rawIp = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "unknown"
+    const ip = rawIp.split(",")[0].trim()
     const rl = await rateLimit(`signup:${ip}`, 5, 60 * 60 * 1000)
     if (!rl.success)
       return NextResponse.json({ error: "Too many signup attempts. Try again later." }, { status: 429 })
@@ -39,22 +40,36 @@ export async function POST(req: Request) {
     if (turnstileToken && turnstileSecret) {
       const verifyResponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
           secret: turnstileSecret,
           response: turnstileToken,
           remoteip: ip,
         }),
       })
 
-      const verifyData = await verifyResponse.json()
-      if (!verifyData.success) {
-        logger.warn("[Signup] Turnstile verification failed", { ip, errors: verifyData["error-codes"] })
+      if (!verifyResponse.ok) {
+        logger.error("[Signup] Turnstile verification request failed", {
+          ip,
+          status: verifyResponse.status,
+          statusText: verifyResponse.statusText,
+        })
         if (!isDev) {
           return NextResponse.json(
             { error: "CAPTCHA verification failed. Please try again." },
-            { status: 400 }
+            { status: 500 }
           )
+        }
+      } else {
+        const verifyData = await verifyResponse.json()
+        if (!verifyData.success) {
+          logger.warn("[Signup] Turnstile verification failed", { ip, errors: verifyData["error-codes"] })
+          if (!isDev) {
+            return NextResponse.json(
+              { error: "CAPTCHA verification failed. Please try again." },
+              { status: 400 }
+            )
+          }
         }
       }
     } else if (isDev) {

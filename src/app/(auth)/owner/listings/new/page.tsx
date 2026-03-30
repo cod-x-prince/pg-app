@@ -102,11 +102,15 @@ export default function NewListingPage() {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
     setUploadingImg(true)
+    const failedFiles: string[] = []
     for (const file of files) {
-      try { await uploadFile(file) } catch { /* silently fail individual uploads */ }
+      try { await uploadFile(file) } catch { failedFiles.push(file.name) }
     }
     setUploadingImg(false)
     e.target.value = ""
+    if (failedFiles.length > 0) {
+      setError(`Failed to upload: ${failedFiles.join(", ")}. Please try again.`)
+    }
   }
 
   const toggleAmenity = (a: string) =>

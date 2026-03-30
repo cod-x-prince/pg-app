@@ -64,7 +64,7 @@ export default function TenantDashboard() {
         showToast("Booking cancelled successfully")
         setCancelModal(null)
         // Refresh bookings
-        setBookings(bookings.map(b =>
+        setBookings(prev => prev.map(b =>
           b.id === cancelModal.booking.id ? { ...b, status: "CANCELLED" } : b
         ))
       } else {

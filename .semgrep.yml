@@ -2,10 +2,9 @@ rules:
   # Security rules for Next.js + TypeScript
   - id: nextjs-sql-injection
     patterns:
-      - pattern: |
-          prisma.$aw...
-      - pattern-not: |
-          prisma.$aw"..."
+      - pattern-either:
+          - pattern: prisma.$queryRaw(...)
+          - pattern: prisma.$executeRaw(...)
     message: SQL injection risk - use parameterized queries
     severity: ERROR
     languages: [typescript, javascript]

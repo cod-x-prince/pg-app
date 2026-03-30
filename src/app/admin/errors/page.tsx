@@ -9,8 +9,15 @@ export default function AdminErrorsPage() {
   const router = useRouter();
   const user = session?.user as SessionUser | undefined;
 
-  if (!user || user.role !== "ADMIN") {
-    if (typeof window !== "undefined") router.push("/");
+  const isAdmin = !!user && user.role === "ADMIN";
+
+  useEffect(() => {
+    if (!isAdmin) {
+      router.push("/");
+    }
+  }, [isAdmin, router]);
+
+  if (!isAdmin) {
     return null;
   }
 
