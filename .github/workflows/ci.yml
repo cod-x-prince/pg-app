@@ -89,6 +89,7 @@ jobs:
     name: E2E Tests
     runs-on: ubuntu-latest
     needs: build
+    timeout-minutes: 40
     services:
       postgres:
         image: postgres:16
@@ -131,7 +132,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium firefox
+        run: npx playwright install chromium
 
       - name: Setup test database
         run: npx prisma db push
