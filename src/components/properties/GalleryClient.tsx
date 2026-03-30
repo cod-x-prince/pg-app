@@ -38,7 +38,7 @@ export default function GalleryClient({ images, name }: Props) {
 
           {images.length === 1 && (
             <div className="relative cursor-pointer group" onClick={() => setLightbox(0)}>
-              <Image src={images[0]} alt={name} fill className="object-cover group-hover:brightness-95 transition-all" />
+              <Image src={images[0]!} alt={name} fill className="object-cover group-hover:brightness-95 transition-all" />
               <GalleryOverlay total={images.length} />
             </div>
           )}
@@ -54,7 +54,7 @@ export default function GalleryClient({ images, name }: Props) {
             <>
               {/* Large left image */}
               <div className="col-span-2 row-span-2 relative cursor-pointer group" onClick={() => setLightbox(0)}>
-                <Image src={images[0]} alt={name} fill className="object-cover group-hover:brightness-95 transition-all" />
+                <Image src={images[0]!} alt={name} fill className="object-cover group-hover:brightness-95 transition-all" />
               </div>
               {/* Right 4 grid */}
               {images.slice(1, 5).map((url, i) => (

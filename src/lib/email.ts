@@ -356,3 +356,19 @@ export async function sendPasswordResetEmail(data: {
     html:    baseTemplate(content),
   })
 }
+
+// ── Generic Email Sender ──────────────────────────────────────────────────
+
+export async function sendEmail(data: {
+  to: string | string[]
+  subject: string
+  html: string
+  from?: string
+}) {
+  return resend.emails.send({
+    from: data.from ?? FROM,
+    to: data.to,
+    subject: data.subject,
+    html: data.html,
+  })
+}

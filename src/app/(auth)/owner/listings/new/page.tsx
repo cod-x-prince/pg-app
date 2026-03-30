@@ -103,7 +103,7 @@ export default function NewListingPage() {
     const files = Array.from(e.target.files || [])
     setUploadingImg(true)
     for (const file of files) {
-      try { await uploadFile(file) } catch { console.warn("Failed:", file.name) }
+      try { await uploadFile(file) } catch { /* silently fail individual uploads */ }
     }
     setUploadingImg(false)
     e.target.value = ""

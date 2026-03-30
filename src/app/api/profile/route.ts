@@ -21,9 +21,30 @@ export const GET = withHandler(async () => {
 
   const profile = await prisma.user.findUnique({
     where: { id: user.id },
-    select: { id: true, name: true, email: true, phone: true, whatsapp: true, avatar: true, role: true, createdAt: true, kycStatus: true },
+    select: { 
+      id: true, 
+      name: true, 
+      email: true, 
+      phone: true, 
+      whatsapp: true, 
+      avatar: true, 
+      role: true, 
+      createdAt: true,
+      kycDocuments: {
+        select: { type: true, status: true, fileUrl: true },
+        orderBy: { createdAt: "desc" }
+      }
+    },
   })
-  return NextResponse.json(profile)
+  
+  // Derive KYC status from documents
+  const kycStatus = profile?.kycDocuments.length 
+    ? profile.kycDocuments.some(d => d.status === "APPROVED") ? "APPROVED"
+      : profile.kycDocuments.some(d => d.status === "REJECTED") ? "REJECTED"
+      : "PENDING"
+    : "NONE"
+  
+  return NextResponse.json({ ...profile, kycStatus })
 })
 
 export const PATCH = withHandler(async (req: Request) => {

@@ -56,7 +56,10 @@ export default function Footer() {
               {[
                 { href: "/privacy", label: "Privacy Policy" },
                 { href: "/terms",   label: "Terms of Service" },
-                { href: "mailto:support@gharam.in", label: "Contact" },
+                { href: "/refund-policy", label: "Refund Policy" },
+                { href: "/cookies-policy", label: "Cookie Policy" },
+                { href: "/contact", label: "Contact Us" },
+                { href: "/help", label: "Help & FAQ" },
               ].map(item => (
                 <li key={item.href}>
                   <Link href={item.href} className="font-body text-sm opacity-60 hover:opacity-100 transition-opacity">{item.label}</Link>

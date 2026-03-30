@@ -21,7 +21,7 @@ export default function PropertyCard({ property }: Props) {
   const rating  = property.reviews.length
     ? (property.reviews.reduce((s, r) => s + r.rating, 0) / property.reviews.length).toFixed(1)
     : null
-  const gender  = GENDER[property.gender] ?? GENDER.UNISEX
+  const gender  = GENDER[property.gender] ?? GENDER.UNISEX!;
 
   return (
     <Link href={`/properties/${property.city.toLowerCase()}/${property.id}`} className="block group">

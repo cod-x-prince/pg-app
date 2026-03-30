@@ -1,66 +1,123 @@
 import { NextResponse } from "next/server";
-import { withAuth } from "next-auth/middleware";
+import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 
-export default withAuth(
-  function middleware(req: NextRequest & { nextauth?: any }) {
-    const token = (req as any).nextauth?.token;
-    const path = req.nextUrl.pathname;
+const MAINTENANCE_KEY = "sys:maintenance:enabled";
 
-    // Always redirect to login using NEXTAUTH_URL as base — not req.url
-    // This prevents callbackUrl from leaking the deployment-specific domain
-    const loginUrl = new URL(
-      "/auth/login",
-      process.env.NEXTAUTH_URL ?? req.nextUrl.origin,
-    );
-    
-    // SECURITY FIX: Validate callbackUrl to prevent open redirect vulnerability
-    // Only allow internal paths (starting with /)
-    const callbackUrl = req.nextUrl.searchParams.get("callbackUrl") || path;
-    const safeCallbackUrl = callbackUrl.startsWith("/") && !callbackUrl.startsWith("//") 
-      ? callbackUrl 
+async function getMaintenanceModeEdge(): Promise<boolean> {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) return false;
+
+  try {
+    const res = await fetch(`${url}/get/${MAINTENANCE_KEY}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+
+    if (!res.ok) return false;
+
+    const data = (await res.json()) as { result?: string | null };
+    return data.result === "1";
+  } catch {
+    return false;
+  }
+}
+
+export default async function middleware(req: NextRequest) {
+  const path = req.nextUrl.pathname;
+
+  // Google OAuth is currently a placeholder feature.
+  // Redirect all direct OAuth entry points to the custom coming-soon page.
+  if (
+    path.startsWith("/api/auth/signin/google") ||
+    path.startsWith("/api/auth/callback/google")
+  ) {
+    return NextResponse.redirect(new URL("/coming-soon", req.nextUrl.origin));
+  }
+
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET! });
+  const role = (token as { role?: string } | null)?.role;
+  const isAdmin = role === "ADMIN";
+  const isAdminSystemPath =
+    path === "/admin/system" || path.startsWith("/admin/system/");
+
+  const loginUrl = new URL(
+    "/auth/login",
+    process.env.NEXTAUTH_URL ?? req.nextUrl.origin,
+  );
+
+  const callbackUrl = req.nextUrl.searchParams.get("callbackUrl") || path;
+  const safeCallbackUrl =
+    callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
+      ? callbackUrl
       : path;
-    
-    loginUrl.searchParams.set("callbackUrl", safeCallbackUrl);
+  loginUrl.searchParams.set("callbackUrl", safeCallbackUrl);
 
-    // ── Role-based route protection ───────────────────────────────────
-    if (path.startsWith("/admin") && token?.role !== "ADMIN") {
-      return NextResponse.redirect(loginUrl);
+  // Maintenance mode gate:
+  // Only admin/system is reachable for admins.
+  // Everyone else is redirected to maintenance page (or 503 for API).
+  const maintenanceEnabled = await getMaintenanceModeEdge();
+
+  if (maintenanceEnabled) {
+    const adminSystemApi = path.startsWith("/api/admin/system");
+    const authApi = path.startsWith("/api/auth");
+
+    // Allow APIs needed for admin/system control and session checks.
+    if (adminSystemApi || authApi) {
+      return NextResponse.next();
     }
 
-    if (
-      (path.startsWith("/owner") || path.startsWith("/dashboard")) &&
-      !["OWNER", "BROKER", "ADMIN", "TENANT"].includes(token?.role ?? "")
-    ) {
-      return NextResponse.redirect(loginUrl);
+    if (isAdmin && isAdminSystemPath) {
+      return NextResponse.next();
     }
 
-    // ── Block unapproved owners from listing ──────────────────────────
-    if (
-      path.startsWith("/owner/listings") &&
-      !token?.isApproved &&
-      token?.role !== "ADMIN"
-    ) {
-      return NextResponse.redirect(
-        new URL(
-          "/auth/pending",
-          process.env.NEXTAUTH_URL ?? req.nextUrl.origin,
-        ),
+    if (path.startsWith("/api")) {
+      return NextResponse.json(
+        {
+          error:
+            "Service temporarily unavailable due to scheduled maintenance.",
+        },
+        { status: 503 },
       );
     }
 
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
-    pages: {
-      signIn: "/auth/login",
-    },
-  },
-);
+    if (path === "/maintenance") {
+      return NextResponse.next();
+    }
+
+    return NextResponse.redirect(new URL("/maintenance", req.nextUrl.origin));
+  }
+
+  // ── Role-based route protection ─────────────────────────────────────
+  if (path.startsWith("/admin") && role !== "ADMIN") {
+    return NextResponse.redirect(loginUrl);
+  }
+
+  if (
+    (path.startsWith("/owner") || path.startsWith("/dashboard")) &&
+    !["OWNER", "BROKER", "ADMIN", "TENANT"].includes(role ?? "")
+  ) {
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // ── Block unapproved owners from listing ────────────────────────────
+  if (
+    path.startsWith("/owner/listings") &&
+    !(token as { isApproved?: boolean } | null)?.isApproved &&
+    role !== "ADMIN"
+  ) {
+    return NextResponse.redirect(
+      new URL("/auth/pending", process.env.NEXTAUTH_URL ?? req.nextUrl.origin),
+    );
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/owner/:path*", "/admin/:path*"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|_error|_document|_next).*)",
+  ],
 };

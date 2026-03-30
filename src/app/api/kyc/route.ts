@@ -20,22 +20,49 @@ export const POST = withHandler(async (req: Request) => {
   if (!kycFile && !licenseFile)
     return NextResponse.json({ error: "No file provided" }, { status: 400 })
 
-  const uploadFile = async (file: File, folder: string) => {
+  const uploadFile = async (file: File, type: string) => {
     const bytes  = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
     const base64 = `data:${file.type};base64,${buffer.toString("base64")}`
     const result = await cloudinary.uploader.upload(base64, {
-      folder: `pglife/kyc/${user.id}/${folder}`,
+      folder: `pglife/kyc/${user.id}/${type}`,
       resource_type: "image",
       allowed_formats: ["jpg","jpeg","png","pdf","webp"],
-    })
+    } as any)
     return result.secure_url
   }
 
-  const updateData: Record<string, unknown> = { kycStatus: "PENDING" }
-  if (kycFile)     updateData.kycDocUrl   = await uploadFile(kycFile, "identity")
-  if (licenseFile) updateData.licenseUrl  = await uploadFile(licenseFile, "license")
+  // Upload files and create KYCDocument records
+  const uploads = []
+  
+  if (kycFile) {
+    const url = await uploadFile(kycFile, "identity")
+    uploads.push(
+      prisma.kYCDocument.create({
+        data: {
+          userId: user.id,
+          type: "identity",
+          fileUrl: url,
+          status: "PENDING",
+        }
+      })
+    )
+  }
+  
+  if (licenseFile) {
+    const url = await uploadFile(licenseFile, "license")
+    uploads.push(
+      prisma.kYCDocument.create({
+        data: {
+          userId: user.id,
+          type: "license",
+          fileUrl: url,
+          status: "PENDING",
+        }
+      })
+    )
+  }
 
-  await prisma.user.update({ where: { id: user.id }, data: updateData })
+  await Promise.all(uploads)
   return NextResponse.json({ success: true })
 })

@@ -1,22 +1,58 @@
-"use client"
-import { useState } from "react"
+"use client";
+import { useState } from "react";
+
+const INACTIVE_FEATURES = [
+  {
+    title: "DigiLocker KYC",
+    desc: "Faster identity verification for owners and tenants.",
+  },
+  {
+    title: "WhatsApp Notifications",
+    desc: "Booking and approval alerts on WhatsApp.",
+  },
+  {
+    title: "Broker Portal",
+    desc: "Dedicated dashboard and workflow for brokers.",
+  },
+  {
+    title: "Hindi Language Support",
+    desc: "Localized UI and key flows in Hindi.",
+  },
+  {
+    title: "Mobile App",
+    desc: "Native app experience for tenants and owners.",
+  },
+];
 
 export default function ComingSoon() {
-  const [email, setEmail] = useState("")
-  const [done, setDone]   = useState(false)
-  const [busy, setBusy]   = useState(false)
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    setBusy(true)
-    await new Promise(r => setTimeout(r, 700))
-    setDone(true)
-    setBusy(false)
-  }
+    e.preventDefault();
+    if (!email) return;
+    setBusy(true);
+    await new Promise((r) => setTimeout(r, 700));
+    setDone(true);
+    setBusy(false);
+  };
 
   return (
-    <main style={{minHeight:"100vh",background:"#0F172A",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"2.5rem 1.5rem",fontFamily:"'DM Sans',system-ui,sans-serif",position:"relative",overflow:"hidden"}}>
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "#0F172A",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2.5rem 1.5rem",
+        fontFamily: "'DM Sans',system-ui,sans-serif",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       <style>{`
         @keyframes gh-win-blink{0%,85%,100%{opacity:.9}87%,98%{opacity:.2}}
         @keyframes gh-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
@@ -45,66 +81,187 @@ export default function ComingSoon() {
         .gh-dot.active{background:#FF7A3D;animation:gh-ping 1.5s ease-in-out infinite}
         .gh-dot.live{background:#4CAF50;animation:gh-ping 1.5s ease-in-out infinite}
         .gh-moon{animation:gh-float 5s ease-in-out infinite}
+        .gh-cs-features{margin-top:1.25rem;width:100%;max-width:560px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 14px 6px;animation:gh-up .4s ease .6s both}
+        .gh-cs-features h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75);margin:0 0 10px;font-weight:700}
+        .gh-cs-feature{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid rgba(255,255,255,.08)}
+        .gh-cs-feature:first-of-type{border-top:none}
+        .gh-cs-feature-title{font-size:13px;color:white;font-weight:600}
+        .gh-cs-feature-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.45}
+        .gh-cs-badge{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#FFB38A;background:rgba(255,122,61,.14);border:1px solid rgba(255,122,61,.25);padding:4px 8px;border-radius:999px;height:fit-content}
       `}</style>
 
-      <div id="gh-stars" style={{position:"absolute",inset:0,pointerEvents:"none",overflow:"hidden"}}>
-        {Array.from({length:50}).map((_,i)=>{
-          const size = Math.random()*2.5+1
-          return <div key={i} style={{position:"absolute",width:size,height:size,borderRadius:"50%",background:"white",top:`${Math.random()*75}%`,left:`${Math.random()*100}%`,animation:`gh-twinkle ${2+Math.random()*3}s ease-in-out ${Math.random()*3}s infinite`}}/>
+      <div
+        id="gh-stars"
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          overflow: "hidden",
+        }}
+      >
+        {Array.from({ length: 50 }).map((_, i) => {
+          const size = Math.random() * 2.5 + 1;
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                width: size,
+                height: size,
+                borderRadius: "50%",
+                background: "white",
+                top: `${Math.random() * 75}%`,
+                left: `${Math.random() * 100}%`,
+                animation: `gh-twinkle ${2 + Math.random() * 3}s ease-in-out ${Math.random() * 3}s infinite`,
+              }}
+            />
+          );
         })}
       </div>
 
-      <svg className="gh-moon" width="60" height="60" viewBox="0 0 60 60" style={{position:"absolute",top:28,right:60}}>
-        <circle cx="30" cy="30" r="24" fill="#FFD580"/>
-        <circle cx="40" cy="20" r="16" fill="#0F172A"/>
+      <svg
+        className="gh-moon"
+        width="60"
+        height="60"
+        viewBox="0 0 60 60"
+        style={{ position: "absolute", top: 28, right: 60 }}
+      >
+        <circle cx="30" cy="30" r="24" fill="#FFD580" />
+        <circle cx="40" cy="20" r="16" fill="#0F172A" />
       </svg>
 
-      <svg width="680" height="130" viewBox="0 0 680 130" preserveAspectRatio="xMidYMax meet" style={{position:"absolute",bottom:0,left:0,right:0,width:"100%"}}>
-        <rect x="0" y="70" width="680" height="60" fill="#1a2744"/>
-        <rect x="20" y="30" width="50" height="70" rx="2" fill="#1a2744"/>
-        <rect x="80" y="10" width="80" height="90" rx="3" fill="#243454"/>
-        <rect x="170" y="40" width="60" height="60" rx="2" fill="#1a2744"/>
-        <rect x="240" y="20" width="44" height="80" rx="2" fill="#1e3358"/>
-        <rect x="295" y="30" width="70" height="70" rx="3" fill="#243454"/>
-        <rect x="375" y="15" width="55" height="85" rx="2" fill="#1a2744"/>
-        <rect x="440" y="35" width="70" height="65" rx="3" fill="#1e3358"/>
-        <rect x="520" y="25" width="40" height="75" rx="2" fill="#243454"/>
-        <rect x="570" y="45" width="110" height="55" fill="#1a2744"/>
-        {[90,110,132,158,185,210,248,270,300,322,348,386,408,450,472,528,578,600].map((x,i)=>(
-          <rect key={i} x={x} y={i%2===0?50:65} width={10} height={i%2===0?12:10} rx="1" fill="#FFD580" className="gh-win-blink" style={{animationDelay:`${(i*0.3)%2}s`}}/>
+      <svg
+        width="680"
+        height="130"
+        viewBox="0 0 680 130"
+        preserveAspectRatio="xMidYMax meet"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+        }}
+      >
+        <rect x="0" y="70" width="680" height="60" fill="#1a2744" />
+        <rect x="20" y="30" width="50" height="70" rx="2" fill="#1a2744" />
+        <rect x="80" y="10" width="80" height="90" rx="3" fill="#243454" />
+        <rect x="170" y="40" width="60" height="60" rx="2" fill="#1a2744" />
+        <rect x="240" y="20" width="44" height="80" rx="2" fill="#1e3358" />
+        <rect x="295" y="30" width="70" height="70" rx="3" fill="#243454" />
+        <rect x="375" y="15" width="55" height="85" rx="2" fill="#1a2744" />
+        <rect x="440" y="35" width="70" height="65" rx="3" fill="#1e3358" />
+        <rect x="520" y="25" width="40" height="75" rx="2" fill="#243454" />
+        <rect x="570" y="45" width="110" height="55" fill="#1a2744" />
+        {[
+          90, 110, 132, 158, 185, 210, 248, 270, 300, 322, 348, 386, 408, 450,
+          472, 528, 578, 600,
+        ].map((x, i) => (
+          <rect
+            key={i}
+            x={x}
+            y={i % 2 === 0 ? 50 : 65}
+            width={10}
+            height={i % 2 === 0 ? 12 : 10}
+            rx="1"
+            fill="#FFD580"
+            className="gh-win-blink"
+            style={{ animationDelay: `${(i * 0.3) % 2}s` }}
+          />
         ))}
-        <rect x="0" y="126" width="680" height="4" rx="2" fill="#243454"/>
+        <rect x="0" y="126" width="680" height="4" rx="2" fill="#243454" />
       </svg>
 
       <a href="/" className="gh-cs-logo">
-        <div style={{width:36,height:36,borderRadius:10,background:"#FF7A3D",display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <svg width="18" height="18" viewBox="0 0 26 26" fill="none"><path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/><rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/></svg>
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: 10,
+            background: "#FF7A3D",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
+            <path
+              d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z"
+              fill="white"
+              opacity=".95"
+            />
+            <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white" />
+          </svg>
         </div>
         <span className="gh-cs-brand">Gharam</span>
       </a>
 
       <div className="gh-cs-pill">Coming Soon</div>
-      <h1 className="gh-cs-h1">The best PG experience<br />is <span className="gh-cs-orange">on its way.</span></h1>
-      <p className="gh-cs-sub">We&apos;re building something that makes finding a home in a new city feel easy, safe, and honest. Be the first to know.</p>
+      <h1 className="gh-cs-h1">
+        The best PG experience
+        <br />
+        is <span className="gh-cs-orange">on its way.</span>
+      </h1>
+      <p className="gh-cs-sub">
+        We&apos;re building something that makes finding a home in a new city
+        feel easy, safe, and honest. Be the first to know.
+      </p>
 
       {!done ? (
         <form onSubmit={submit} className="gh-cs-form">
-          <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-            placeholder="your@email.com" autoComplete="email" className="gh-cs-inp" />
-          <button type="submit" className="gh-cs-btn" disabled={busy}>{busy ? "Saving..." : "Notify me"}</button>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="your@email.com"
+            autoComplete="email"
+            className="gh-cs-inp"
+          />
+          <button type="submit" className="gh-cs-btn" disabled={busy}>
+            {busy ? "Saving..." : "Notify me"}
+          </button>
         </form>
       ) : (
-        <div className="gh-cs-done">You&apos;re on the list — we&apos;ll reach out when we launch!</div>
+        <div className="gh-cs-done">
+          You&apos;re on the list — we&apos;ll reach out when we launch!
+        </div>
       )}
 
       <div className="gh-cs-cities">
-        {[{city:"Bangalore",active:true,live:false},{city:"Mumbai",active:false,live:false},{city:"Pune",active:false,live:false},{city:"Hyderabad",active:false,live:false}].map(c=>(
-          <div key={c.city} className={`gh-city-dot${c.active?" active":""}`}>
-            <div className={`gh-dot${c.active?" active":c.live?" live":""}`}/>
+        {[
+          { city: "Bangalore", active: true, live: false },
+          { city: "Mumbai", active: false, live: false },
+          { city: "Pune", active: false, live: false },
+          { city: "Hyderabad", active: false, live: false },
+        ].map((c) => (
+          <div
+            key={c.city}
+            className={`gh-city-dot${c.active ? " active" : ""}`}
+          >
+            <div
+              className={`gh-dot${c.active ? " active" : c.live ? " live" : ""}`}
+            />
             <span>{c.city}</span>
           </div>
         ))}
       </div>
+
+      <section
+        className="gh-cs-features"
+        aria-label="Upcoming inactive features"
+      >
+        <h3>Planned Features (Not Active Yet)</h3>
+        {INACTIVE_FEATURES.map((f) => (
+          <div key={f.title} className="gh-cs-feature">
+            <div>
+              <div className="gh-cs-feature-title">{f.title}</div>
+              <div className="gh-cs-feature-desc">{f.desc}</div>
+            </div>
+            <span className="gh-cs-badge">Inactive</span>
+          </div>
+        ))}
+      </section>
     </main>
-  )
+  );
 }

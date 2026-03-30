@@ -17,6 +17,7 @@ const SUGGESTIONS = [
 export default function HeroSearch() {
   const router   = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
+  const blurTimeoutRef = useRef<NodeJS.Timeout>()
   const [value,   setValue]   = useState("")
   const [focused, setFocused] = useState(false)
   const [hovered, setHovered] = useState(-1)
@@ -37,8 +38,20 @@ export default function HeroSearch() {
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") { e.preventDefault(); setHovered(h => Math.min(h + 1, filtered.length - 1)) }
     if (e.key === "ArrowUp")   { e.preventDefault(); setHovered(h => Math.max(h - 1, -1)) }
-    if (e.key === "Enter" && hovered >= 0) { e.preventDefault(); go(filtered[hovered].city) }
+    if (e.key === "Enter" && hovered >= 0) { e.preventDefault(); go(filtered[hovered]!.city) }
     if (e.key === "Escape") { setFocused(false); inputRef.current?.blur() }
+  }
+
+  // Fix P3-11: Improved blur handling to prevent race conditions
+  const handleBlur = () => {
+    blurTimeoutRef.current = setTimeout(() => setFocused(false), 200)
+  }
+
+  const handleDropdownInteraction = () => {
+    // Cancel pending blur when interacting with dropdown
+    if (blurTimeoutRef.current) {
+      clearTimeout(blurTimeoutRef.current)
+    }
   }
 
   return (
@@ -59,7 +72,7 @@ export default function HeroSearch() {
             value={value}
             onChange={e => { setValue(e.target.value); setHovered(-1) }}
             onFocus={() => setFocused(true)}
-            onBlur={() => setTimeout(() => setFocused(false), 150)}
+            onBlur={handleBlur}
             placeholder="Search city — Bangalore, Mumbai, Delhi..."
             className="w-full text-sm bg-transparent outline-none font-sans"
             style={{ color: "var(--text-primary)", fontWeight: 400, letterSpacing: "0.02em" }}
@@ -84,6 +97,8 @@ export default function HeroSearch() {
       {/* Dropdown */}
       {focused && (
         <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl overflow-hidden z-50"
+          onMouseDown={handleDropdownInteraction}
+          onMouseEnter={handleDropdownInteraction}
           style={{ background: "var(--ink2)", border: "1px solid var(--border-gold)", backdropFilter: "blur(20px)", boxShadow: "0 24px 64px rgba(0,0,0,0.6)" }}>
           <div className="p-2">
             {filtered.map((s, i) => (

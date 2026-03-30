@@ -5,7 +5,10 @@ export default tseslint.config(
     ignores: [
       ".next/**",
       "node_modules/**",
-      "public/**"
+      "public/**",
+      "scripts/**",
+      "*.config.js",
+      "*.config.mjs"
     ]
   },
   ...tseslint.configs.recommended,

@@ -35,8 +35,16 @@ export const POST = withHandler(async (req: Request) => {
     return NextResponse.json({ error: "You already have an active booking for this room" }, { status: 409 })
 
   const booking = await prisma.booking.create({
-    data: { tenantId: user.id, propertyId, roomId, moveInDate: new Date(moveInDate), type },
-    select: { id: true, type: true, status: true, moveInDate: true },
+    data: { 
+      tenantId: user.id, 
+      propertyId, 
+      roomId, 
+      moveInDate: new Date(moveInDate), 
+      type,
+      tokenAmount: 500,           // Lock in token amount at booking time
+      monthlyRent: room.rent      // Lock in rent at booking time (price history)
+    },
+    select: { id: true, type: true, status: true, moveInDate: true, tokenAmount: true, monthlyRent: true },
   })
   return NextResponse.json(booking, { status: 201 })
 })

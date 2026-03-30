@@ -3,6 +3,7 @@ import { useSession, signOut } from "next-auth/react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import type { SessionUser } from "@/types"
+import NotificationBell from "@/components/layout/NotificationBell"
 
 export default function Navbar({ forceWhite = false }: { forceWhite?: boolean }) {
   const { data: session } = useSession()
@@ -53,16 +54,18 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
           </Link>
 
           {/* Desktop center — city links */}
+          {/* Fix P3-10: Use class-based hover states instead of JS mutation */}
           <div className="hidden lg:flex items-center gap-1">
             {["Bangalore","Mumbai","Delhi","Hyderabad"].map(city => (
               <Link key={city} href={`/properties/${city.toLowerCase()}`}
-                className="font-body text-sm px-3 py-1.5 rounded-lg transition-all duration-150"
+                className={`font-body text-sm px-3 py-1.5 rounded-lg transition-all duration-150 hover:bg-muted hover:text-foreground ${
+                  (scrolled || forceWhite) 
+                    ? "text-muted-foreground" 
+                    : "text-white/95"
+                }`}
                 style={{
-                  color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.95)",
                   textShadow: !(scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
                 }}
-                onMouseOver={e => (e.currentTarget.style.background = "hsl(var(--muted))", e.currentTarget.style.color = "hsl(var(--foreground))")}
-                onMouseOut={e => (e.currentTarget.style.background = "transparent", e.currentTarget.style.color = scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.85)")}
               >
                 {city}
               </Link>
@@ -73,6 +76,7 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
           <div className="hidden md:flex items-center gap-2">
             {session ? (
               <>
+                <NotificationBell />
                 <span className="font-body text-sm mr-1"
                   style={{
                     color: (scrolled || forceWhite) ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.95)",
