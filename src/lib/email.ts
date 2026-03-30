@@ -1,8 +1,17 @@
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 const FROM   = process.env.RESEND_FROM_EMAIL ?? "Gharam <noreply@gharam.in>"
 const BASE   = process.env.NEXTAUTH_URL ?? "https://gharam.in"
+
+// Helper to safely send email
+async function sendEmailSafe(params: Parameters<Resend['emails']['send']>[0]) {
+  if (!resend) {
+    console.warn("Resend not configured. Email would have been sent to:", params.to)
+    return { success: false, error: { message: "Email service not configured" } }
+  }
+  return resend.emails.send(params)
+}
 
 // ── Templates ─────────────────────────────────────────────────────────────
 
@@ -152,7 +161,7 @@ export async function sendBookingConfirmedTenant(data: {
     </a>
   `
 
-  return resend.emails.send({
+  return sendEmailSafe({
     from:    FROM,
     to:      data.tenantEmail,
     subject: `Booking Confirmed — ${data.propertyName} | Gharam`,
@@ -229,7 +238,7 @@ export async function sendNewBookingOwner(data: {
     </a>
   `
 
-  return resend.emails.send({
+  return sendEmailSafe({
     from:    FROM,
     to:      data.ownerEmail,
     subject: `New Booking — ${data.propertyName} (${data.tokenPaid ? "Token Paid" : "Enquiry"}) | Gharam`,
@@ -275,7 +284,7 @@ export async function sendWelcomeEmail(data: {
     `}
   `
 
-  return resend.emails.send({
+  return sendEmailSafe({
     from:    FROM,
     to:      data.email,
     subject: "Welcome to Gharam 🏠",
@@ -303,7 +312,7 @@ export async function sendOwnerApprovedEmail(data: {
     </a>
   `
 
-  return resend.emails.send({
+  return sendEmailSafe({
     from:    FROM,
     to:      data.email,
     subject: "Your Gharam owner account is approved ✓",
@@ -349,7 +358,7 @@ export async function sendPasswordResetEmail(data: {
     </p>
   `
 
-  return resend.emails.send({
+  return sendEmailSafe({
     from:    FROM,
     to:      data.email,
     subject: "Reset Your Gharam Password",
@@ -365,7 +374,7 @@ export async function sendEmail(data: {
   html: string
   from?: string
 }) {
-  return resend.emails.send({
+  return sendEmailSafe({
     from: data.from ?? FROM,
     to: data.to,
     subject: data.subject,

@@ -12,6 +12,15 @@ const ContactSchema = z.object({
 })
 
 export const POST = withHandler(async (req: Request) => {
+  // Check if Resend API key is configured
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("RESEND_API_KEY not configured. Email notifications disabled.")
+    return NextResponse.json(
+      { error: "Email service unavailable. Please try again later." },
+      { status: 503 }
+    )
+  }
+
   // Rate limit: 5 contacts per hour per IP
   const ip = req.headers.get("x-forwarded-for") || "unknown"
   const rl = await rateLimit(`contact:${ip}`, 5, 60 * 60 * 1000)

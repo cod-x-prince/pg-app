@@ -2,7 +2,6 @@ import { describe, expect, it } from '@jest/globals'
 import {
   SignupSchema,
   CreatePropertySchema,
-  UpdatePropertySchema,
   CreateRoomSchema,
   CreateBookingSchema,
   CreateReviewSchema,
