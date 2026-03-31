@@ -75,7 +75,7 @@ export async function rateLimit(
 
     const remaining = Math.max(0, maxRequests - count);
     return { success: count <= maxRequests, remaining };
-  } catch (err) {
+  } catch {
     // If Redis fails for any reason (network, timeout, etc.), fail open
     // Don't block legitimate users; log once to avoid noisy E2E/CI output
     if (!hasLoggedRedisFailure) {
