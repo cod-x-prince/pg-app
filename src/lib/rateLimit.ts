@@ -7,8 +7,18 @@ import { logger } from "@/lib/logger";
 
 let redis: Redis | null = null;
 let redisAvailable = true; // Track if Redis is available
+let hasLoggedRedisFailure = false;
+
+function shouldBypassRateLimit(): boolean {
+  return (
+    process.env.DISABLE_RATE_LIMIT === "true" ||
+    process.env.CI === "true" ||
+    process.env.NODE_ENV === "test"
+  );
+}
 
 function getRedis(): Redis | null {
+  if (shouldBypassRateLimit()) return null;
   if (!redisAvailable) return null;
 
   if (!redis) {
@@ -32,6 +42,10 @@ export async function rateLimit(
   maxRequests: number,
   windowMs: number,
 ): Promise<{ success: boolean; remaining: number }> {
+  if (shouldBypassRateLimit()) {
+    return { success: true, remaining: maxRequests };
+  }
+
   try {
     const client = getRedis();
 
@@ -63,8 +77,13 @@ export async function rateLimit(
     return { success: count <= maxRequests, remaining };
   } catch (err) {
     // If Redis fails for any reason (network, timeout, etc.), fail open
-    // Don't block legitimate users and log for debugging
-    logger.error("[RateLimit] Redis error, failing open", err);
+    // Don't block legitimate users; log once to avoid noisy E2E/CI output
+    if (!hasLoggedRedisFailure) {
+      logger.warn(
+        "[RateLimit] Redis unavailable, rate limiting disabled for this runtime",
+      );
+      hasLoggedRedisFailure = true;
+    }
     redisAvailable = false; // Mark Redis as unavailable to avoid repeated connection attempts
     return { success: true, remaining: maxRequests };
   }
