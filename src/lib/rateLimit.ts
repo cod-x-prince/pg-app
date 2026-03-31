@@ -6,11 +6,15 @@ import { logger } from "@/lib/logger"
 // This persists across all instances and cold starts.
 
 let redis: Redis | null = null
+let redisAvailable = true // Track if Redis is available
 
-function getRedis(): Redis {
+function getRedis(): Redis | null {
+  if (!redisAvailable) return null
+  
   if (!redis) {
     if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-      throw new Error("UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set")
+      redisAvailable = false
+      return null
     }
     redis = new Redis({
       url: process.env.UPSTASH_REDIS_REST_URL,
@@ -25,11 +29,17 @@ export async function rateLimit(
   maxRequests: number,
   windowMs: number
 ): Promise<{ success: boolean; remaining: number }> {
-  const client = getRedis()
-  const windowSeconds = Math.ceil(windowMs / 1000)
-  const redisKey = `rl:${key}:${Math.floor(Date.now() / windowMs)}`
-
   try {
+    const client = getRedis()
+    
+    // If Redis is not configured/available, skip rate limiting (fail open)
+    if (!client) {
+      return { success: true, remaining: maxRequests }
+    }
+    
+    const windowSeconds = Math.ceil(windowMs / 1000)
+    const redisKey = `rl:${key}:${Math.floor(Date.now() / windowMs)}`
+
     // Use Lua script for atomic INCR + EXPIRE operation
     // This prevents race condition where key persists forever if crash occurs between INCR and EXPIRE
     const luaScript = `
@@ -49,9 +59,10 @@ export async function rateLimit(
     const remaining = Math.max(0, maxRequests - count)
     return { success: count <= maxRequests, remaining }
   } catch (err) {
-    // If Redis is down, fail open — don't block legitimate users
-    // Sentry will catch this and alert you
+    // If Redis fails for any reason (network, timeout, etc.), fail open
+    // Don't block legitimate users and log for debugging
     logger.error("[RateLimit] Redis error, failing open", err)
+    redisAvailable = false // Mark Redis as unavailable to avoid repeated connection attempts
     return { success: true, remaining: maxRequests }
   }
 }
