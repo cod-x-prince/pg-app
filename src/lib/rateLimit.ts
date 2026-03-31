@@ -1,9 +1,11 @@
 import { Redis } from "@upstash/redis";
 import { logger } from "@/lib/logger";
 
-// Upstash Redis — persistent rate limiting across all Vercel function instances.
-// In-memory Map was resetting on cold starts, allowing bots to bypass limits.
-// This persists across all instances and cold starts.
+/**
+ * Upstash Redis — persistent rate limiting across all Vercel function instances.
+ * In-memory Map was resetting on cold starts, allowing bots to bypass limits.
+ * This persists across all instances and cold starts.
+ */
 
 let redis: Redis | null = null;
 let redisAvailable = true; // Track if Redis is available
