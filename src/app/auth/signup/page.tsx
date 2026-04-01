@@ -105,6 +105,7 @@ export default function SignupPage() {
             src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=90"
             alt="Cozy room"
             fill
+            sizes="(min-width: 1024px) 52vw, 0vw"
             priority
             className="object-cover"
           />
@@ -113,8 +114,19 @@ export default function SignupPage() {
             <Link href="/" className="flex items-center gap-2.5">
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-elevated">
                 <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
-                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
-                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                  <path
+                    d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z"
+                    fill="white"
+                    opacity=".95"
+                  />
+                  <rect
+                    x="13"
+                    y="15"
+                    width="4"
+                    height="7"
+                    rx="1.5"
+                    fill="white"
+                  />
                 </svg>
               </div>
               <span className="font-display font-bold text-xl text-white">
@@ -168,8 +180,19 @@ export default function SignupPage() {
             <Link href="/" className="flex items-center gap-2 mb-8 lg:hidden">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
-                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
-                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                  <path
+                    d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z"
+                    fill="white"
+                    opacity=".95"
+                  />
+                  <rect
+                    x="13"
+                    y="15"
+                    width="4"
+                    height="7"
+                    rx="1.5"
+                    fill="white"
+                  />
                 </svg>
               </div>
               <span className="font-display font-bold text-lg">Gharam</span>
@@ -341,12 +364,14 @@ export default function SignupPage() {
                       label: "Phone",
                       type: "tel",
                       placeholder: "+91 9876543210",
+                      autoComplete: "tel",
                     },
                     {
                       key: "password",
                       label: "Password",
                       type: "password",
                       placeholder: "Min 8 characters",
+                      autoComplete: "new-password",
                     },
                   ].map((field) => (
                     <div key={field.key}>
@@ -354,8 +379,10 @@ export default function SignupPage() {
                         {field.label}
                       </label>
                       <input
+                        name={field.key}
                         type={field.type}
                         required
+                        autoComplete={field.autoComplete}
                         value={form[field.key as keyof typeof form]}
                         onChange={(e) => update(field.key, e.target.value)}
                         placeholder={field.placeholder}

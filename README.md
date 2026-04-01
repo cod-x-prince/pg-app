@@ -1,81 +1,131 @@
 <div align="center">
   
-  <img src="https://github.com/cod-x-prince/pg-app/blob/main/public/icon.svg" alt="Gharam Logo" width="120" />
+  <img src="https://github.com/cod-x-prince/pg-app/blob/main/public/icon.svg" alt="PGLife Logo" width="120" />
 
-# Gharam — Elite Documentation Hub
+# PGLife (Gharam)
 
-### India's Trusted PG Booking Marketplace — Complete Reference Guide
+### India's Trusted PG Booking Marketplace
 
 _Verified listings · Zero broker fees · Direct booking · Production-Ready Security_
 
 [![Next.js](https://img.shields.io/badge/Next.js-14.2.35-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma)](https://prisma.io)
-[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel)](https://vercel.com)
-[![Security](https://img.shields.io/badge/Security-Audited-green?style=flat-square)](https://github.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-3ECF8E?style=flat-square&logo=postgresql)](https://supabase.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-**[Live Demo](https://pg-app-i1h8.vercel.app)** · **[Report Bug](https://github.com/cod-x-prince/pg-app/issues)** · **[Request Feature](https://github.com/cod-x-prince/pg-app/issues)**
+**[Live Demo](https://pg-app-i1h8.vercel.app)** · **[Documentation](./DOCUMENTATION_MAP.md)** · **[Report Bug](https://github.com/cod-x-prince/pg-app/issues)** · **[Request Feature](https://github.com/cod-x-prince/pg-app/issues)**
+
+> 📚 **New here?** Check the [Documentation Guide](#-documentation-guide) below to find what you need.
 
 </div>
 
 ---
 
-## 📚 Elite Documentation Navigator
+## 📋 Table of Contents
 
-This is the **master reference document** for Gharam. It consolidates all essential information from across the project into a single, comprehensive guide for developers, DevOps, QA, security teams, and stakeholders.
-
-**Quick Links:**
-
-- [Project Overview](#what-is-gharam) — What we built and why
-- [Quick Start](#getting-started) — Get running in 5 minutes
-- [Security & Compliance](#security--compliance) — Production-ready security features
-- [Complete Documentation Index](#complete-documentation-index) — All 11 documentation files
-- [Tech Stack](#tech-stack) — Architecture and technologies
-- [Deployment](#deployment-production-ready) — Vercel deployment guide
-- [Testing Strategy](#testing-strategy) — Comprehensive testing approach
-- [Monitoring & Operations](#monitoring--operations) — Production monitoring setup
-- [API Reference](#api-routes) — All 23+ REST endpoints
-- [Troubleshooting](#troubleshooting--support) — Emergency runbooks
+- [About The Project](#-about-the-project)
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Documentation Guide](#-documentation-guide)
+- [Development](#-development)
+- [Testing](#-testing)
+- [Deployment](#-deployment)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Support](#-support)
 
 ---
 
-## 🎯 What is Gharam?
+## 📚 Documentation Guide
 
-**Gharam** (formerly PGLife) is a production-ready, security-audited, two-sided marketplace for Paying Guest (PG) accommodations in India. It connects property owners with verified tenants, enabling seamless discovery, direct communication, and secure token bookings — all without broker interference.
+**Looking for specific information?** We have comprehensive documentation organized by topic:
 
-### The Problem We Solve
+### Quick Access
 
-**Market Challenges:**
+| What You Need | Where to Find It |
+|--------------|------------------|
+| 🚀 **Get started & setup** | This file (README.md) |
+| 👨‍💻 **Contribute code** | [CONTRIBUTING.md](./CONTRIBUTING.md) |
+| 🚢 **Deploy to production** | [DEPLOYMENT.md](./DEPLOYMENT.md) |
+| 📋 **Version history** | [CHANGELOG.md](./CHANGELOG.md) |
+| 💻 **Command reference** | [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) |
+| 🧪 **Testing & CI/CD** | [docs/guides/TESTING.md](./docs/guides/TESTING.md) |
+| 🔐 **Security audit** | [docs/CODE_REVIEW_REPORT.md](./docs/CODE_REVIEW_REPORT.md) |
+| 📊 **Production monitoring** | [docs/MONITORING_GUIDE.md](./docs/MONITORING_GUIDE.md) |
+| 🚨 **Emergency procedures** | [docs/RUNBOOK.md](./docs/RUNBOOK.md) |
+| 🗺️ **Full documentation map** | [DOCUMENTATION_MAP.md](./DOCUMENTATION_MAP.md) |
+
+### By Role
+
+**👨‍💻 New Developer?**
+1. Read this README (setup instructions below)
+2. Check [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines
+3. Review [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) for commands
+4. See [docs/PROJECT_STRUCTURE.md](./docs/PROJECT_STRUCTURE.md) for codebase organization
+
+**🚀 DevOps/SRE?**
+1. [DEPLOYMENT.md](./DEPLOYMENT.md) for deployment steps
+2. [docs/MONITORING_GUIDE.md](./docs/MONITORING_GUIDE.md) for monitoring setup
+3. [docs/RUNBOOK.md](./docs/RUNBOOK.md) for emergency procedures
+
+**🧪 QA Engineer?**
+1. [docs/guides/TESTING.md](./docs/guides/TESTING.md) for testing strategy
+2. [tests/e2e/README.md](./tests/e2e/README.md) for E2E test docs
+
+**📖 Complete Documentation Index:** See [docs/README.md](./docs/README.md)
+
+---
+
+## 🎯 About The Project
+
+**PGLife (Gharam)** is a production-ready, security-audited marketplace for Paying Guest (PG) accommodations in India. It connects property owners with verified tenants, enabling seamless discovery, direct communication, and secure token bookings — all without broker interference.
+
+### The Problem
+
+**Current challenges in the PG market:**
 
 - 🏚️ **Fragmented market** — No centralized, reliable platform for PG listings
-- 💰 **Broker dominance** — Brokers charge 1–2 months' rent as fees with misleading information
+- 💰 **High broker fees** — Brokers charge 1–2 months' rent with misleading information
 - 🚫 **Fake listings** — Duplicate photos, incorrect amenities, zero accountability
-- ⚠️ **Zero trust** — No verification of owners or properties, leading to unsafe experiences
+- ⚠️ **No trust** — No verification of owners or properties
 
-### The Gharam Solution
+### Our Solution
 
-**Trust & Transparency:**
+**Trust-based marketplace with:**
 
-- ✅ **Verified listings** — Every PG is manually reviewed by admins before going live
-- 🆓 **Zero broker fees** — Direct owner-tenant interaction without middlemen
-- 💳 **Token booking system** — Hold a room with ₹500 token payment (adjustable against rent)
-- 🆔 **DigiLocker KYC** — Owners verify identity through India's official DigiLocker platform
-- 💬 **WhatsApp integration** — One-click chat with property owners
-- 🛡️ **Admin approval pipeline** — Ensures quality and trust across all listings
+- ✅ **Verified listings** — Manual admin review before going live
+- 🆓 **Zero broker fees** — Direct owner-tenant interaction
+- 💳 **Token booking** — Hold rooms with ₹500 payment via Razorpay
+- 🆔 **KYC verification** — Owner identity verification (DigiLocker ready)
+- 💬 **WhatsApp integration** — Direct property owner contact
+- 🛡️ **Admin approval pipeline** — Quality assurance on all listings
 
-### Security-First Architecture
+---
 
-**Production-Ready Features:**
+## ✨ Key Features
 
-- 🔐 **31/31 Security Issues Resolved** — Complete security audit passed
-- 🚨 **CSRF Protection** — Double-submit cookie pattern
-- 🛡️ **XSS Prevention** — Comprehensive input sanitization
-- 🔒 **SQL Injection Protection** — Parameterized queries via Prisma
-- ⚡ **Rate Limiting** — Atomic Lua scripts with Upstash Redis
-- 📊 **Error Tracking** — Sentry integration for production monitoring
-- 🚀 **10-100x Performance** — 15 composite database indexes
+### For Tenants
+- 🔍 **Smart Search** — Filter by city, price, gender, amenities, room type
+- 📍 **Location-based** — Find PGs near your college/office
+- 💰 **Transparent pricing** — No hidden costs, see exact rent and deposit
+- 🔒 **Secure booking** — Razorpay integrated token payment system
+- ⭐ **Reviews & Ratings** — Authentic feedback from verified tenants
+- 📱 **Mobile responsive** — Works perfectly on all devices
+
+### For Property Owners
+- 📝 **Easy listing** — Step-by-step property upload wizard
+- 📸 **Media uploads** — Multiple images and videos via Cloudinary
+- 📊 **Dashboard** — Manage bookings and property details
+- 🔔 **Notifications** — Email alerts for new bookings
+- ✅ **Admin approved** — Build trust with verified badge
+
+### For Administrators
+- 🛠️ **Admin panel** — Approve/reject listings and owners
+- 📈 **Analytics** — View platform metrics and user stats
+- 👥 **User management** — Manage tenant and owner accounts
+- 🔍 **Moderation** — Review reported listings and content
 
 ---
 

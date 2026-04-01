@@ -13,7 +13,7 @@ export function useCsrfToken(): string | null {
     // Get token from cookie
     const getCookie = (name: string): string | null => {
       const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`))
-      return match ? match[2] : null
+      return match?.[2] ?? null
     }
 
     const csrfToken = getCookie("csrf-token")

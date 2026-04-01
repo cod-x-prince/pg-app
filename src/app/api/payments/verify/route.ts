@@ -38,9 +38,16 @@ export const POST = withHandler(async (req: Request) => {
   }
 
   // Verify Razorpay signature
+  if (!process.env.RAZORPAY_KEY_SECRET) {
+    return NextResponse.json(
+      { error: "Payment service not configured" },
+      { status: 503 }
+    )
+  }
+
   const body      = `${razorpay_order_id}|${razorpay_payment_id}`
   const expected  = crypto
-    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(body)
     .digest("hex")
 

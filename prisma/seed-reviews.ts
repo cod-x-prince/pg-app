@@ -48,6 +48,8 @@ async function main() {
           status: "CONFIRMED",
           moveInDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
           tokenPaid: true,
+          tokenAmount: 500,
+          monthlyRent: room.rent,
         },
       });
     }

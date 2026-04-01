@@ -128,6 +128,116 @@ async function seedUsers() {
         phone: "9833445566",
       },
     }),
+
+    // E2E fixture users (aligned with Playwright specs)
+    prisma.user.upsert({
+      where: { email: "admin@test.com" },
+      update: {
+        name: "E2E Admin",
+        passwordHash: await hash("AdminPassword123!"),
+        role: "ADMIN",
+        isApproved: true,
+        phone: "9000000001",
+      },
+      create: {
+        name: "E2E Admin",
+        email: "admin@test.com",
+        passwordHash: await hash("AdminPassword123!"),
+        role: "ADMIN",
+        isApproved: true,
+        phone: "9000000001",
+      },
+    }),
+    prisma.user.upsert({
+      where: { email: "owner@test.com" },
+      update: {
+        name: "E2E Owner",
+        passwordHash: await hash("TestPassword123!"),
+        role: "OWNER",
+        isApproved: true,
+        phone: "9000000002",
+      },
+      create: {
+        name: "E2E Owner",
+        email: "owner@test.com",
+        passwordHash: await hash("TestPassword123!"),
+        role: "OWNER",
+        isApproved: true,
+        phone: "9000000002",
+      },
+    }),
+    prisma.user.upsert({
+      where: { email: "tenant@test.com" },
+      update: {
+        name: "E2E Tenant",
+        passwordHash: await hash("TestPassword123!"),
+        role: "TENANT",
+        isApproved: true,
+        phone: "9000000003",
+      },
+      create: {
+        name: "E2E Tenant",
+        email: "tenant@test.com",
+        passwordHash: await hash("TestPassword123!"),
+        role: "TENANT",
+        isApproved: true,
+        phone: "9000000003",
+      },
+    }),
+    prisma.user.upsert({
+      where: { email: "unapproved@test.com" },
+      update: {
+        name: "E2E Unapproved Owner",
+        passwordHash: await hash("TestPassword123!"),
+        role: "OWNER",
+        isApproved: false,
+        phone: "9000000004",
+      },
+      create: {
+        name: "E2E Unapproved Owner",
+        email: "unapproved@test.com",
+        passwordHash: await hash("TestPassword123!"),
+        role: "OWNER",
+        isApproved: false,
+        phone: "9000000004",
+      },
+    }),
+    prisma.user.upsert({
+      where: { email: "duplicate@test.com" },
+      update: {
+        name: "E2E Duplicate User",
+        passwordHash: await hash("TestPassword123!"),
+        role: "TENANT",
+        isApproved: true,
+        phone: "9000000005",
+      },
+      create: {
+        name: "E2E Duplicate User",
+        email: "duplicate@test.com",
+        passwordHash: await hash("TestPassword123!"),
+        role: "TENANT",
+        isApproved: true,
+        phone: "9000000005",
+      },
+    }),
+    prisma.user.upsert({
+      where: { email: "newowner@test.com" },
+      update: {
+        name: "E2E New Owner",
+        passwordHash: await hash("TestPassword123!"),
+        role: "OWNER",
+        isApproved: false,
+        phone: "9000000006",
+      },
+      create: {
+        name: "E2E New Owner",
+        email: "newowner@test.com",
+        passwordHash: await hash("TestPassword123!"),
+        role: "OWNER",
+        isApproved: false,
+        phone: "9000000006",
+      },
+    }),
   ]);
 
   console.log(`   ✓ ${users.length} users created`);
@@ -487,6 +597,8 @@ async function seedBookingsAndReviews(
             status: "CONFIRMED",
             moveInDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
             tokenPaid: true,
+            tokenAmount: 500,
+            monthlyRent: room.rent,
           },
         });
         bookingCount++;

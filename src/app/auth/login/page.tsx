@@ -19,7 +19,20 @@ export default function LoginPage() {
     const res = await signIn("credentials", { ...form, redirect: false });
     setLoading(false);
     if (res?.error) setError("Invalid email or password. Please try again.");
-    else router.push("/dashboard");
+    else {
+      try {
+        const sessionRes = await fetch("/api/auth/session");
+        const sessionData = await sessionRes.json();
+        const role = sessionData?.user?.role;
+
+        if (role === "ADMIN") router.push("/admin");
+        else if (role === "OWNER" || role === "BROKER")
+          router.push("/owner/dashboard");
+        else router.push("/dashboard");
+      } catch {
+        router.push("/dashboard");
+      }
+    }
   }
 
   return (
@@ -39,8 +52,19 @@ export default function LoginPage() {
             <Link href="/" className="flex items-center gap-2.5">
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-elevated">
                 <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
-                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
-                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                  <path
+                    d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z"
+                    fill="white"
+                    opacity=".95"
+                  />
+                  <rect
+                    x="13"
+                    y="15"
+                    width="4"
+                    height="7"
+                    rx="1.5"
+                    fill="white"
+                  />
                 </svg>
               </div>
               <span className="font-display font-bold text-xl text-white">
@@ -95,8 +119,19 @@ export default function LoginPage() {
             <Link href="/" className="flex items-center gap-2 mb-8 lg:hidden">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <svg width="16" height="16" viewBox="0 0 26 26" fill="none">
-                  <path d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z" fill="white" opacity=".95"/>
-                  <rect x="13" y="15" width="4" height="7" rx="1.5" fill="white"/>
+                  <path
+                    d="M13 2L22 8V22H16V15H13V22H4V8L13 2Z"
+                    fill="white"
+                    opacity=".95"
+                  />
+                  <rect
+                    x="13"
+                    y="15"
+                    width="4"
+                    height="7"
+                    rx="1.5"
+                    fill="white"
+                  />
                 </svg>
               </div>
               <span className="font-display font-bold text-lg text-foreground">
@@ -122,6 +157,7 @@ export default function LoginPage() {
                   Email
                 </label>
                 <input
+                  name="email"
                   type="email"
                   required
                   autoComplete="email"
@@ -139,14 +175,16 @@ export default function LoginPage() {
                   <label className="font-display text-sm font-medium text-foreground">
                     Password
                   </label>
-                  <a
-                    href="#"
+                  {/* Fix P1-5: Replace dead forgot-password link with valid route */}
+                  <Link
+                    href="/auth/forgot-password"
                     className="font-body text-xs text-primary hover:underline"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
                 <input
+                  name="password"
                   type="password"
                   required
                   autoComplete="current-password"
@@ -192,7 +230,7 @@ export default function LoginPage() {
               {/* Google */}
               <button
                 type="button"
-                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                onClick={() => router.push("/coming-soon")}
                 className="btn-outline w-full h-12 gap-3"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -213,7 +251,9 @@ export default function LoginPage() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                Continue with Google
+                <span suppressHydrationWarning>
+                  Continue with Google (Coming Soon)
+                </span>
               </button>
             </form>
 

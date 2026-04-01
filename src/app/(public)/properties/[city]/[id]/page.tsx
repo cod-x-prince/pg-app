@@ -1,7 +1,9 @@
-export const dynamic = "force-dynamic"
+// Fix P2-8: Remove force-dynamic to enable static generation with revalidation
+export const revalidate = 300 // Revalidate every 5 minutes
 import type { PropertyAmenity, PropertyRoom, PropertyReview } from "@/types"
 
 import { notFound } from "next/navigation"
+import Link from "next/link"
 import { prisma } from "@/lib/prisma"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
@@ -62,11 +64,11 @@ export default async function PropertyDetailPage({
         {/* ── MAIN CONTENT ─────────────────────────────────────────────── */}
         <div className="max-w-7xl mx-auto px-4 py-8">
 
-          {/* Breadcrumb */}
+          {/* Breadcrumb - Fix P1-6: Use Next.js Link for SPA navigation */}
           <nav className="text-xs text-gray-400 mb-6 flex items-center gap-1.5">
-            <a href="/" className="hover:text-[#1B3B6F] transition-colors">Home</a>
+            <Link href="/" className="hover:text-[#1B3B6F] transition-colors">Home</Link>
             <span>/</span>
-            <a href={`/properties/${params.city}`} className="hover:text-[#1B3B6F] transition-colors capitalize">{params.city}</a>
+            <Link href={`/properties/${params.city}`} className="hover:text-[#1B3B6F] transition-colors capitalize">{params.city}</Link>
             <span>/</span>
             <span className="text-gray-700 font-medium truncate max-w-48">{property.name}</span>
           </nav>
@@ -209,7 +211,12 @@ export default async function PropertyDetailPage({
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg ${
                           room.isAvailable ? "bg-[#EEF3FB]" : "bg-gray-100"
                         }`}>
-                          {room.type === "Single" ? "🛏️" : room.type === "Double" ? "🛏️" : "🏠"}
+                          {/* Fix P3-13: Normalize room type icon mapping */}
+                          {room.type?.toUpperCase() === "SINGLE" ? "🛏️" :
+                           room.type?.toUpperCase() === "DOUBLE" ? "🛏️🛏️" :
+                           room.type?.toUpperCase() === "TRIPLE" ? "🏠" :
+                           room.type?.toUpperCase() === "SHARED" ? "👥" :
+                           "🛏️"}
                         </div>
                         <div>
                           <p className="font-medium text-gray-900 text-sm">{room.type} Room</p>
@@ -326,7 +333,8 @@ export default async function PropertyDetailPage({
 
             {/* ── RIGHT COLUMN — BOOKING PANEL ────────────────────── */}
             <div className="lg:w-80 xl:w-96 shrink-0">
-              <div className="sticky top-20">
+              {/* Fix P0-3: Add booking anchor for mobile CTA */}
+              <div id="booking" className="sticky top-20">
                 <BookingForm
                   propertyId={property.id}
                   rooms={property.rooms}

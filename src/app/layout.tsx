@@ -1,32 +1,48 @@
-import type { Metadata, Viewport } from "next"
-import Script from "next/script"
-import "./globals.css"
-import { Providers } from "@/components/Providers"
-import { Analytics } from "@vercel/analytics/next"
-import PageLoader from "@/components/ui/PageLoader"
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
+import "./globals.css";
+import { Providers } from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import PageLoader from "@/components/ui/PageLoader";
+import CookieConsent from "@/components/ui/CookieConsent";
 
-const BASE = process.env.NEXTAUTH_URL ?? "https://gharam.in"
+const BASE = process.env.NEXTAUTH_URL ?? "https://gharam.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE),
-  title: { default: "Gharam — Stay where it feels right", template: "%s | Gharam" },
-  description: "Verified PGs across India. No brokers, no surprises. Just honest stays.",
+  title: {
+    default: "Gharam — Stay where it feels right",
+    template: "%s | Gharam",
+  },
+  description:
+    "Verified PGs across India. No brokers, no surprises. Just honest stays.",
   openGraph: {
-    type: "website", locale: "en_IN", url: BASE, siteName: "Gharam",
+    type: "website",
+    locale: "en_IN",
+    url: BASE,
+    siteName: "Gharam",
     title: "Gharam — Stay where it feels right",
-    description: "Verified PGs across India. No brokers, no surprises. Just honest stays.",
+    description:
+      "Verified PGs across India. No brokers, no surprises. Just honest stays.",
     images: [{ url: `${BASE}/og-image.svg`, width: 1200, height: 630 }],
   },
   robots: { index: true, follow: true },
-}
+};
 
 export const viewport: Viewport = {
-  width: "device-width", initialScale: 1, themeColor: "#0F172A",
-}
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0F172A",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* GA4 inline bootstrap — detectable by Google verification bot */}
         <script
@@ -35,16 +51,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <PageLoader />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <CookieConsent />
+        </Providers>
         <Analytics />
+        <SpeedInsights />
         {/* Google Analytics GA4 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-FM435ELBD1"
@@ -52,5 +76,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </body>
     </html>
-  )
+  );
 }

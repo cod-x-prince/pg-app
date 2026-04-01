@@ -19,12 +19,63 @@ export default function TenantDashboard() {
   const user = session?.user as SessionUser | undefined
   const [bookings, setBookings] = useState<any[]>([])
   const [loading, setLoading]   = useState(true)
+  const [cancelModal, setCancelModal] = useState<{ booking: any; refundInfo: any } | null>(null)
+  const [cancelling, setCancelling] = useState(false)
+  const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
 
   useEffect(() => {
     fetch("/api/bookings")
       .then(r => r.json())
       .then(data => { setBookings(Array.isArray(data) ? data : []); setLoading(false) })
   }, [])
+
+  const showToast = (msg: string, ok = true) => {
+    setToast({ msg, ok })
+    setTimeout(() => setToast(null), 4000)
+  }
+
+  const calculateRefund = (moveInDate: string) => {
+    const moveIn = new Date(moveInDate)
+    const now = new Date()
+    const daysUntil = Math.ceil((moveIn.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+
+    if (daysUntil > 7) return { amount: 500, percentage: 100, days: daysUntil }
+    if (daysUntil >= 2) return { amount: 250, percentage: 50, days: daysUntil }
+    return { amount: 0, percentage: 0, days: daysUntil }
+  }
+
+  const handleCancelClick = (booking: any) => {
+    const refundInfo = calculateRefund(booking.moveInDate)
+    setCancelModal({ booking, refundInfo })
+  }
+
+  const confirmCancel = async () => {
+    if (!cancelModal) return
+    setCancelling(true)
+
+    try {
+      const res = await fetch(`/api/bookings/${cancelModal.booking.id}/cancel`, {
+        method: "POST",
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        showToast("Booking cancelled successfully")
+        setCancelModal(null)
+        // Refresh bookings
+        setBookings(prev => prev.map(b =>
+          b.id === cancelModal.booking.id ? { ...b, status: "CANCELLED" } : b
+        ))
+      } else {
+        showToast(data.error || "Failed to cancel booking", false)
+      }
+    } catch {
+      showToast("Network error. Please try again.", false)
+    } finally {
+      setCancelling(false)
+    }
+  }
 
   const confirmed = bookings.filter(b => b.status === "CONFIRMED").length
   const pending   = bookings.filter(b => b.status === "PENDING").length
@@ -113,30 +164,47 @@ export default function TenantDashboard() {
               {bookings.map((b) => {
                 const s = STATUS[b.status] ?? STATUS.PENDING
                 const img = b.property?.images?.[0]?.url
+                const canCancel = b.status !== "CANCELLED" && b.status !== "COMPLETED"
                 return (
-                  <div key={b.id} className="rounded-xl bg-popover shadow-soft p-5 flex items-center gap-5">
-                    {img && (
-                      <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0">
-                        <Image src={img} alt={b.property.name} fill className="object-cover" sizes="80px" unoptimized />
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <h3 className="font-display font-semibold text-base text-foreground truncate">{b.property?.name}</h3>
-                        <span className={`${s.cls} shrink-0`}>{s.label}</span>
-                      </div>
-                      <p className="font-body text-sm text-muted-foreground mb-1">{b.property?.city}</p>
-                      <div className="flex items-center gap-3">
-                        <span className="font-body text-xs text-muted-foreground">{b.room?.type}</span>
-                        <span className="text-muted-foreground">·</span>
-                        <span className="font-display font-semibold text-sm text-foreground">
-                          ₹{b.room?.rent?.toLocaleString("en-IN")}/mo
-                        </span>
-                        {b.tokenPaid && <span className="badge-success text-[10px]">Token Paid</span>}
+                  <div key={b.id} className="rounded-xl bg-popover shadow-soft p-5">
+                    <div className="flex items-center gap-5">
+                      {img && (
+                        <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0">
+                          <Image src={img} alt={b.property.name} fill className="object-cover" sizes="80px" unoptimized />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <h3 className="font-display font-semibold text-base text-foreground truncate">{b.property?.name}</h3>
+                          <span className={`${s.cls} shrink-0`}>{s.label}</span>
+                        </div>
+                        <p className="font-body text-sm text-muted-foreground mb-1">{b.property?.city}</p>
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <span className="font-body text-xs text-muted-foreground">{b.room?.type}</span>
+                          <span className="text-muted-foreground">·</span>
+                          <span className="font-display font-semibold text-sm text-foreground">
+                            ₹{b.room?.rent?.toLocaleString("en-IN")}/mo
+                          </span>
+                          {b.tokenPaid && <span className="badge-success text-[10px]">Token Paid</span>}
+                          <span className="text-muted-foreground">·</span>
+                          <span className="font-body text-xs text-muted-foreground">
+                            Move-in: {new Date(b.moveInDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    <Link href={`/properties/${b.property?.city?.toLowerCase()}/${b.property?.id}`}
-                      className="btn-outline btn-sm shrink-0">View</Link>
+                    <div className="flex items-center gap-2 mt-3">
+                      <Link href={`/properties/${b.property?.city?.toLowerCase()}/${b.property?.id}`}
+                        className="btn-outline btn-sm">View Property</Link>
+                      {canCancel && (
+                        <button
+                          onClick={() => handleCancelClick(b)}
+                          className="btn-secondary btn-sm text-red-600 hover:text-red-700 hover:bg-red-50"
+                        >
+                          Cancel Booking
+                        </button>
+                      )}
+                    </div>
                   </div>
                 )
               })}
@@ -145,6 +213,81 @@ export default function TenantDashboard() {
         </div>
       </div>
       </main>
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed bottom-8 right-8 rounded-xl p-4 shadow-lg border ${
+          toast.ok ? "bg-green-50 border-green-200 text-green-900" : "bg-red-50 border-red-200 text-red-900"
+        }`} style={{ zIndex: 9999 }}>
+          <div className="flex items-center gap-3">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {toast.ok ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              )}
+            </svg>
+            <p className="font-medium text-sm">{toast.msg}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Cancel Confirmation Modal */}
+      {cancelModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4" style={{ zIndex: 9999 }}>
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+              </div>
+              <h3 className="font-display font-semibold text-lg text-foreground">Cancel Booking?</h3>
+            </div>
+
+            <p className="text-muted-foreground text-sm mb-4">
+              Are you sure you want to cancel your booking for <strong>{cancelModal.booking.property?.name}</strong>?
+            </p>
+
+            {/* Refund Info */}
+            <div className={`rounded-lg p-4 mb-4 ${
+              cancelModal.refundInfo.percentage === 100 ? "bg-green-50 border border-green-200" :
+              cancelModal.refundInfo.percentage === 50 ? "bg-yellow-50 border border-yellow-200" :
+              "bg-red-50 border border-red-200"
+            }`}>
+              <h4 className="font-semibold text-sm mb-2">Refund Details</h4>
+              <div className="space-y-1 text-sm">
+                <p><strong>Days until move-in:</strong> {cancelModal.refundInfo.days} days</p>
+                <p><strong>Refund amount:</strong> ₹{cancelModal.refundInfo.amount} ({cancelModal.refundInfo.percentage}%)</p>
+                {cancelModal.refundInfo.amount > 0 && (
+                  <p className="text-xs mt-2 opacity-75">Refund will be processed within 5-7 business days</p>
+                )}
+                {cancelModal.refundInfo.amount === 0 && (
+                  <p className="text-xs mt-2 opacity-75">No refund applicable (less than 2 days before move-in)</p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setCancelModal(null)}
+                disabled={cancelling}
+                className="btn-outline flex-1"
+              >
+                Keep Booking
+              </button>
+              <button
+                onClick={confirmCancel}
+                disabled={cancelling}
+                className="btn-danger flex-1"
+              >
+                {cancelling ? "Cancelling..." : "Yes, Cancel"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </>
   )

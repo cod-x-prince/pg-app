@@ -7,15 +7,24 @@ import { prisma } from "@/lib/prisma"
 import { withHandler } from "@/lib/handler"
 import Razorpay from "razorpay"
 
-const razorpay = new Razorpay({
-  key_id:     process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-})
+const razorpay = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
+  ? new Razorpay({
+      key_id:     process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    })
+  : null
 
 // Token amount in paise (₹500 = 50000 paise)
 const TOKEN_AMOUNT = 50000
 
 export const POST = withHandler(async (req: Request) => {
+  if (!razorpay) {
+    return NextResponse.json(
+      { error: "Payment service not configured" },
+      { status: 503 }
+    )
+  }
+
   const session = await getServerSession(authOptions)
   const user = session?.user as SessionUser | undefined
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })

@@ -1,0 +1,55 @@
+rules:
+  # Security rules for Next.js + TypeScript
+  - id: nextjs-sql-injection
+    patterns:
+      - pattern-either:
+          - pattern: prisma.$queryRaw(...)
+          - pattern: prisma.$executeRaw(...)
+    message: SQL injection risk - use parameterized queries
+    severity: ERROR
+    languages: [typescript, javascript]
+    
+  - id: hardcoded-secrets
+    patterns:
+      - pattern-regex: "(password|secret|key|token)\\s*=\\s*['\"]\\w+['\"]"
+      - pattern-not-regex: "(password|secret|key|token)\\s*=\\s*['\"]<[A-Z_]+>['\"]"
+    message: Possible hardcoded secret
+    severity: ERROR
+    languages: [typescript, javascript, python]
+    
+  - id: eval-usage
+    patterns:
+      - pattern: eval(...)
+      - pattern-not: client.eval(...)
+    message: eval() is dangerous - avoid it
+    severity: WARNING
+    languages: [typescript, javascript]
+    
+  - id: dangerouslysetinnerhtml-xss
+    patterns:
+      - pattern: dangerouslySetInnerHTML={{...}}
+      - pattern-not: dangerouslySetInnerHTML={{__html: <script...}}
+    message: XSS risk with dangerouslySetInnerHTML
+    severity: WARNING
+    languages: [typescript, tsx, javascript, jsx]
+    
+  - id: nextjs-api-no-auth
+    patterns:
+      - pattern: |
+          export const POST = async (...) => { ... }
+      - pattern-not-inside: |
+          const session = await getServerSession(...)
+          if (!session) return ...
+    message: API route should check authentication
+    severity: WARNING
+    languages: [typescript]
+    paths:
+      include:
+        - src/app/api/**/*.ts
+    
+  - id: insecure-random
+    patterns:
+      - pattern: Math.random()
+    message: Math.random() is not cryptographically secure - use crypto.randomBytes()
+    severity: INFO
+    languages: [typescript, javascript]

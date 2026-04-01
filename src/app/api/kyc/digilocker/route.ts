@@ -14,11 +14,13 @@ export async function POST() {
   // Simulate DigiLocker OAuth fetch and verification
   await new Promise(resolve => setTimeout(resolve, 800))
 
-  await prisma.user.update({
-    where: { id: user.id },
+  // Create KYCDocument record for DigiLocker verification
+  await prisma.kYCDocument.create({
     data: {
-      kycStatus: "APPROVED",
-      kycDocUrl: "digilocker_verified_mock_token_12345",
+      userId: user.id,
+      type: "digilocker_aadhaar",
+      fileUrl: "digilocker_verified_mock_token_12345",
+      status: "APPROVED",
     },
   })
 

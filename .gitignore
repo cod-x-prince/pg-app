@@ -61,6 +61,25 @@ custom ui/
 *.avi
 clean.ps1
 
+# Deep scan reports (generated files)
+deep-scan-reports/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Test results and reports
+test-results/
+playwright-report/
+coverage/
+
+# Debug and build artifacts
+*.tsbuildinfo
+.build-*.txt
+output.txt
+
 # Prisma
 prisma/dev.db
 prisma/dev.db-journal

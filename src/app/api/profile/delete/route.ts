@@ -60,8 +60,7 @@ export const DELETE = withHandler(async () => {
         phone:        null,
         avatar:       null,
         whatsapp:     null,
-        kycDocUrl:    null,
-        licenseUrl:   null,
+        // REMOVED: kycDocUrl, licenseUrl (CASCADE will delete KYCDocuments)
         passwordHash: "ACCOUNT_DELETED",
         isApproved:   false,
       },

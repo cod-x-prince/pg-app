@@ -9,7 +9,26 @@ export default function PageLoader() {
   const startRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const DURATION = 2600;
+    // Fix P2-9: Gate loader to first load only via sessionStorage
+    const hasLoaded = sessionStorage.getItem('page-loaded')
+    if (hasLoaded) {
+      setHidden(true)
+      return
+    }
+
+    const DURATION = 1200 // Reduced from 2600ms to 1200ms
+    
+    // Fix P2-9: Respect reduced-motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) {
+      setCount(100)
+      setDone(true)
+      setTimeout(() => {
+        setHidden(true)
+        sessionStorage.setItem('page-loaded', 'true')
+      }, 300)
+      return
+    }
 
     function easeInOut(t: number) {
       return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
@@ -26,7 +45,10 @@ export default function PageLoader() {
         setCount(100);
         setTimeout(() => {
           setDone(true);
-          setTimeout(() => setHidden(true), 700);
+          setTimeout(() => {
+            setHidden(true)
+            sessionStorage.setItem('page-loaded', 'true')
+          }, 700);
         }, 80);
       }
     }

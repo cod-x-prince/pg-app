@@ -7,8 +7,8 @@
 type LogLevel = "debug" | "info" | "warn" | "error";
 
 interface LogContext {
-  userId?: string;
-  requestId?: string;
+  userId?: string | undefined;
+  requestId?: string | undefined;
   [key: string]: any;
 }
 
@@ -129,5 +129,8 @@ export const logApiError = (
   error: unknown,
   userId?: string
 ): void => {
-  logger.error(`API Error: ${endpoint}`, error as Error, { userId, endpoint });
+  logger.error(`API Error: ${endpoint}`, error as Error, { 
+    userId: userId ?? undefined, 
+    endpoint 
+  });
 };
