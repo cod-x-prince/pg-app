@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   },
   description:
     "Verified PGs across India. No brokers, no surprises. Just honest stays.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -41,6 +48,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const shouldLoadVercelInsights = process.env.NODE_ENV === "production";
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -67,8 +76,8 @@ export default function RootLayout({
           {children}
           <CookieConsent />
         </Providers>
-        <Analytics />
-        <SpeedInsights />
+        {shouldLoadVercelInsights ? <Analytics /> : null}
+        {shouldLoadVercelInsights ? <SpeedInsights /> : null}
         {/* Google Analytics GA4 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-FM435ELBD1"

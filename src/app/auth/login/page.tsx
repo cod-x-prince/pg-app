@@ -44,6 +44,7 @@ export default function LoginPage() {
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=90"
             alt="Warm home"
             fill
+            sizes="(min-width: 1024px) 52vw, 100vw"
             priority
             className="object-cover"
           />

@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const { buildCSP } = require('./lib/csp');
+
 const nextConfig = {
   compress: true,
   poweredByHeader: false,
@@ -23,7 +25,7 @@ const nextConfig = {
         source: "/(.*)",
         headers: [
           { key: "X-DNS-Prefetch-Control", value: "on" },
-          { key: "X-Frame-Options", value: "DENY" },
+          // X-Frame-Options removed - CSP frame-ancestors is more robust
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           {
@@ -36,17 +38,7 @@ const nextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              process.env.NODE_ENV === "development"
-                ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://checkout.razorpay.com https://browser.sentry-cdn.com https://vercel.live https://challenges.cloudflare.com https://www.googletagmanager.com https://va.vercel-scripts.com"
-                : "script-src 'self' 'unsafe-inline' blob: https://checkout.razorpay.com https://browser.sentry-cdn.com https://vercel.live https://challenges.cloudflare.com https://www.googletagmanager.com https://va.vercel-scripts.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com",
-              "connect-src 'self' https://*.supabase.co https://api.razorpay.com https://o4504.ingest.sentry.io https://o4505.ingest.sentry.io https://o4506.ingest.sentry.io https://*.upstash.io https://challenges.cloudflare.com https://api.resend.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://vitals.vercel-insights.com https://va.vercel-scripts.com",
-              "frame-src https://api.razorpay.com https://challenges.cloudflare.com https://vercel.live",
-            ].join("; "),
+            value: buildCSP(),
           },
         ],
       },

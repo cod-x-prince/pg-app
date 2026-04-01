@@ -52,7 +52,8 @@ _Verified listings · Zero broker fees · Direct booking · Production-Ready Sec
 | 📋 **Version history** | [CHANGELOG.md](./CHANGELOG.md) |
 | 💻 **Command reference** | [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) |
 | 🧪 **Testing & CI/CD** | [docs/guides/TESTING.md](./docs/guides/TESTING.md) |
-| 🔐 **Security audit** | [docs/CODE_REVIEW_REPORT.md](./docs/CODE_REVIEW_REPORT.md) |
+| 🔐 **Security & CSP** | [docs/SECURITY.md](./docs/SECURITY.md) ⭐ **NEW** |
+| 🔍 **Security audit** | [docs/CODE_REVIEW_REPORT.md](./docs/CODE_REVIEW_REPORT.md) |
 | 📊 **Production monitoring** | [docs/MONITORING_GUIDE.md](./docs/MONITORING_GUIDE.md) |
 | 🚨 **Emergency procedures** | [docs/RUNBOOK.md](./docs/RUNBOOK.md) |
 | 🗺️ **Full documentation map** | [DOCUMENTATION_MAP.md](./DOCUMENTATION_MAP.md) |
@@ -73,6 +74,10 @@ _Verified listings · Zero broker fees · Direct booking · Production-Ready Sec
 **🧪 QA Engineer?**
 1. [docs/guides/TESTING.md](./docs/guides/TESTING.md) for testing strategy
 2. [tests/e2e/README.md](./tests/e2e/README.md) for E2E test docs
+
+**🔒 Security Team?**
+1. [docs/SECURITY.md](./docs/SECURITY.md) for security features & CSP ⭐ **NEW**
+2. [docs/CODE_REVIEW_REPORT.md](./docs/CODE_REVIEW_REPORT.md) for security audit
 
 **📖 Complete Documentation Index:** See [docs/README.md](./docs/README.md)
 

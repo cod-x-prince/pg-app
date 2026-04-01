@@ -27,6 +27,9 @@ Quick reference guide to navigate PGLife documentation.
 ├─ 🧪 TESTING.md .................... Testing & CI/CD
 └─ 🔍 DEEP_SCAN.md .................. Code quality tools
 
+📁 docs/ (Security)
+└─ 🔐 SECURITY.md ................... Security features & CSP ⭐ NEW
+
 📁 docs/archive/ (Historical)
 ├─ 📈 DEEP_SCAN_COMPARISON.md ....... Tool comparison
 └─ 🎨 UI_AUDIT_REPORT.md ............ UI/UX audit
@@ -58,8 +61,9 @@ Quick reference guide to navigate PGLife documentation.
 3. Contributing: [CONTRIBUTING.md](../CONTRIBUTING.md)
 
 ### 🔒 Security Team
-1. Audit: [docs/CODE_REVIEW_REPORT.md](docs/CODE_REVIEW_REPORT.md)
-2. Scanning: [docs/guides/DEEP_SCAN.md](docs/guides/DEEP_SCAN.md)
+1. **Security Guide:** [docs/SECURITY.md](docs/SECURITY.md) ⭐ **NEW - CSP & Security Features**
+2. Audit: [docs/CODE_REVIEW_REPORT.md](docs/CODE_REVIEW_REPORT.md)
+3. Scanning: [docs/guides/DEEP_SCAN.md](docs/guides/DEEP_SCAN.md)
 
 ### 👔 Product/Management
 1. Overview: [README.md](../README.md)
@@ -74,6 +78,7 @@ Quick reference guide to navigate PGLife documentation.
 | **DEPLOYMENT.md** | 10KB | Production deployment |
 | **CHANGELOG.md** | 6KB | Version history |
 | **docs/CODE_REVIEW_REPORT.md** | 13KB | Security findings |
+| **docs/SECURITY.md** | 13KB | Security & CSP guide ⭐ NEW |
 | **docs/DEVELOPMENT.md** | 15KB | Command reference |
 | **docs/MONITORING_GUIDE.md** | 26KB | Monitoring setup |
 | **docs/PROJECT_STRUCTURE.md** | 10KB | Codebase structure |

@@ -1,5 +1,5 @@
 import PageTransition from "@/components/animations/PageTransition";
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return <PageTransition>{children}</PageTransition>;
 }

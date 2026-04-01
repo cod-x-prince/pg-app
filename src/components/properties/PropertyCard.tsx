@@ -2,7 +2,10 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
+import { motion } from "framer-motion"
 import type { PropertyListItem } from "@/types"
+import { useHoverScale } from "@/lib/animations/hooks"
+import { shouldAnimate } from "@/lib/animations/config"
 
 interface Props { property: PropertyListItem }
 
@@ -14,6 +17,7 @@ const GENDER: Record<string, { label: string; cls: string }> = {
 
 export default function PropertyCard({ property }: Props) {
   const [saved, setSaved] = useState(false)
+  const hoverProps = useHoverScale(1.02)
 
   const img     = property.images.find(i => i.isPrimary)?.url || property.images[0]?.url
   const avail   = property.rooms.filter(r => r.isAvailable)
@@ -23,10 +27,24 @@ export default function PropertyCard({ property }: Props) {
     : null
   const gender  = GENDER[property.gender] ?? GENDER.UNISEX!;
 
+  // Heart animation variants
+  const heartVariants = {
+    initial: { scale: 1 },
+    animate: { 
+      scale: [1, 1.3, 1],
+      transition: { duration: 0.3 }
+    }
+  };
+
+  // Use motion.div wrapper if animations enabled, otherwise use regular div
+  const CardWrapper = shouldAnimate() ? motion.div : 'div';
+  const cardProps = shouldAnimate() ? hoverProps : {};
+
   return (
     <Link href={`/properties/${property.city.toLowerCase()}/${property.id}`} className="block group">
-      {/* Image — Airbnb style: rounded, no border, zoom on hover */}
-      <div className="relative rounded-2xl overflow-hidden mb-3" style={{ aspectRatio: "20/19" }}>
+      <CardWrapper {...cardProps} className="gpu-accelerated">
+        {/* Image — Airbnb style: rounded, no border, zoom on hover */}
+        <div className="relative rounded-2xl overflow-hidden mb-3" style={{ aspectRatio: "20/19" }}>
         {img ? (
           <Image src={img} alt={property.name} fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -42,11 +60,14 @@ export default function PropertyCard({ property }: Props) {
         )}
 
         {/* Save heart — top right, appears on hover */}
-        <button
+        <motion.button
           onClick={e => { e.preventDefault(); setSaved(s => !s) }}
           aria-label={saved ? "Unsave" : "Save"}
           className="absolute top-3 right-3 cursor-pointer transition-all duration-200 opacity-0 group-hover:opacity-100"
           style={{ opacity: saved ? 1 : undefined }}
+          variants={heartVariants}
+          initial="initial"
+          animate={saved ? "animate" : "initial"}
         >
           <svg className="w-6 h-6 drop-shadow-md" viewBox="0 0 32 32"
             fill={saved ? "hsl(var(--primary))" : "rgba(0,0,0,0.5)"}
@@ -55,7 +76,7 @@ export default function PropertyCard({ property }: Props) {
           >
             <path d="M16 28c7-4.733 14-10 14-17a6 6 0 0 0-12 0 6 6 0 0 0-12 0c0 7 7 12.267 14 17z"/>
           </svg>
-        </button>
+        </motion.button>
 
         {/* Verified — top left */}
         {property.isVerified && (
@@ -113,6 +134,7 @@ export default function PropertyCard({ property }: Props) {
           )
         })()}
       </div>
+      </CardWrapper>
     </Link>
   )
 }

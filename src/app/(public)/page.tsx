@@ -6,6 +6,9 @@ import { prisma } from "@/lib/prisma"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import HeroSearch from "@/components/home/HeroSearch"
+import ScrollReveal from "@/components/animations/ScrollReveal"
+import AnimatedCounter from "@/components/animations/AnimatedCounter"
+import StaggeredList from "@/components/animations/StaggeredList"
 
 export const revalidate = 3600
 
@@ -84,43 +87,54 @@ export default async function HomePage() {
 
       {/* ── HERO — Airbnb style: full bleed image, search centered ─── */}
       <section className="relative h-[580px] md:h-[640px] flex flex-col items-center justify-center overflow-hidden bg-[#0F172A]">
-        {/* Background image */}
-        <Image
-          src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1800&q=80"
-          alt="Find your perfect PG"
-          fill priority className="object-cover"
-          sizes="100vw"
-        />
+        {/* Background image with parallax */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1800&q=80"
+            alt="Find your perfect PG"
+            fill priority className="object-cover"
+            sizes="100vw"
+            style={{ transform: "scale(1.1)" }}
+          />
+        </div>
         {/* Light gradient overlay — not too dark */}
         <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/30 to-black/50" />
 
         {/* Content */}
         <div className="relative z-10 w-full max-w-3xl mx-auto px-4 text-center">
-          <h1
-            className="font-display font-bold text-white mb-3 text-balance"
-            style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)", letterSpacing: "-0.03em", textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}
-          >
-            Find your perfect PG in India
-          </h1>
-          <p className="font-body text-white/80 text-base md:text-lg mb-8">
-            Verified listings · Zero broker fees · Direct booking
-          </p>
+          <ScrollReveal variant="fade-up">
+            <h1
+              className="font-display font-bold text-white mb-3 text-balance"
+              style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)", letterSpacing: "-0.03em", textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}
+            >
+              Find your perfect PG in India
+            </h1>
+          </ScrollReveal>
+          <ScrollReveal variant="fade-up" delay={0.1}>
+            <p className="font-body text-white/80 text-base md:text-lg mb-8">
+              Verified listings · Zero broker fees · Direct booking
+            </p>
+          </ScrollReveal>
 
           {/* Search bar */}
-          <div className="max-w-2xl mx-auto">
-            <HeroSearch />
-          </div>
+          <ScrollReveal variant="scale-up" delay={0.2}>
+            <div className="max-w-2xl mx-auto">
+              <HeroSearch />
+            </div>
+          </ScrollReveal>
 
           {/* City pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-5">
-            {["Bangalore","Mumbai","Delhi","Hyderabad","Pune","Jammu"].map(city => (
-              <Link key={city} href={`/properties/${city.toLowerCase()}`}
-                className="font-body text-xs text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm
-                           border border-white/30 px-3 py-1.5 rounded-full transition-all duration-150 cursor-pointer">
-                {city}
-              </Link>
-            ))}
-          </div>
+          <ScrollReveal variant="fade-up" delay={0.3}>
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-5">
+              {["Bangalore","Mumbai","Delhi","Hyderabad","Pune","Jammu"].map(city => (
+                <Link key={city} href={`/properties/${city.toLowerCase()}`}
+                  className="font-body text-xs text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm
+                             border border-white/30 px-3 py-1.5 rounded-full transition-all duration-150 cursor-pointer">
+                  {city}
+                </Link>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -128,17 +142,30 @@ export default async function HomePage() {
       <section className="border-b border-border">
         <div className="section-wrap py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-border">
-            {[
-              { value: `${stats.totalProperties}+`, label: "Verified PGs" },
-              { value: `${stats.totalTenants}+`,    label: "Happy Tenants" },
-              { value: `${stats.citiesCount}`,       label: "Cities" },
-              { value: `${stats.avgRating.toFixed(1)}★`, label: "Avg Rating" },
-            ].map((s, i) => (
-              <div key={i} className="text-center md:px-8">
-                <p className="font-display font-bold text-2xl md:text-3xl text-primary tabular-nums">{s.value}</p>
-                <p className="font-body text-sm text-muted-foreground mt-0.5">{s.label}</p>
-              </div>
-            ))}
+            <ScrollReveal variant="fade-up" className="text-center md:px-8">
+              <p className="font-display font-bold text-2xl md:text-3xl text-primary tabular-nums">
+                <AnimatedCounter target={stats.totalProperties} format />+
+              </p>
+              <p className="font-body text-sm text-muted-foreground mt-0.5">Verified PGs</p>
+            </ScrollReveal>
+            <ScrollReveal variant="fade-up" delay={0.1} className="text-center md:px-8">
+              <p className="font-display font-bold text-2xl md:text-3xl text-primary tabular-nums">
+                <AnimatedCounter target={stats.totalTenants} format />+
+              </p>
+              <p className="font-body text-sm text-muted-foreground mt-0.5">Happy Tenants</p>
+            </ScrollReveal>
+            <ScrollReveal variant="fade-up" delay={0.2} className="text-center md:px-8">
+              <p className="font-display font-bold text-2xl md:text-3xl text-primary tabular-nums">
+                <AnimatedCounter target={stats.citiesCount} format={false} />
+              </p>
+              <p className="font-body text-sm text-muted-foreground mt-0.5">Cities</p>
+            </ScrollReveal>
+            <ScrollReveal variant="fade-up" delay={0.3} className="text-center md:px-8">
+              <p className="font-display font-bold text-2xl md:text-3xl text-primary tabular-nums">
+                {stats.avgRating.toFixed(1)}★
+              </p>
+              <p className="font-body text-sm text-muted-foreground mt-0.5">Avg Rating</p>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -146,11 +173,13 @@ export default async function HomePage() {
       {/* ── HOW IT WORKS ────────────────────────────────────────── */}
       <section className="py-20 bg-background">
         <div className="section-wrap">
-          <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground mb-2"
-            style={{ letterSpacing: "-0.02em" }}>How Gharam works</h2>
-          <p className="font-body text-muted-foreground mb-12">Simple. Fast. No broker.</p>
+          <ScrollReveal variant="fade-up">
+            <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground mb-2"
+              style={{ letterSpacing: "-0.02em" }}>How Gharam works</h2>
+            <p className="font-body text-muted-foreground mb-12">Simple. Fast. No broker.</p>
+          </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <StaggeredList className="grid md:grid-cols-3 gap-8" staggerDelay={0.1}>
             {HOW.map((h, i) => (
               <div key={i} className="flex gap-5">
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
@@ -162,29 +191,31 @@ export default async function HomePage() {
                 </div>
               </div>
             ))}
-          </div>
+          </StaggeredList>
         </div>
       </section>
 
       {/* ── EXPLORE CITIES ──────────────────────────────────────── */}
       <section className="py-20 bg-background border-t border-border">
         <div className="section-wrap">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground"
-                style={{ letterSpacing: "-0.02em" }}>Explore cities</h2>
-              <p className="font-body text-sm text-muted-foreground mt-1">Find PGs near where you work or study</p>
+          <ScrollReveal variant="fade-up">
+            <div className="flex items-end justify-between mb-8">
+              <div>
+                <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground"
+                  style={{ letterSpacing: "-0.02em" }}>Explore cities</h2>
+                <p className="font-body text-sm text-muted-foreground mt-1">Find PGs near where you work or study</p>
+              </div>
+              <Link href="/properties/bangalore" className="font-body text-sm text-primary hover:underline font-medium hidden md:block">
+                View all →
+              </Link>
             </div>
-            <Link href="/properties/bangalore" className="font-body text-sm text-primary hover:underline font-medium hidden md:block">
-              View all →
-            </Link>
-          </div>
+          </ScrollReveal>
 
           {/* Airbnb-style grid — equal cards, no bento weirdness */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {CITIES.map((city, i) => (
+          <StaggeredList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3" staggerDelay={0.05}>
+            {CITIES.map((city) => (
               <Link key={city.slug} href={`/properties/${city.slug}`}
-                className="group cursor-pointer reveal" style={{ animationDelay: `${i * 0.05}s` }}>
+                className="group cursor-pointer">
                 <div className="relative rounded-2xl overflow-hidden mb-2.5" style={{ aspectRatio: "1" }}>
                   <Image src={city.img} alt={city.name} fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -198,7 +229,7 @@ export default async function HomePage() {
                 <p className="font-body text-xs text-muted-foreground">{city.tag}</p>
               </Link>
             ))}
-          </div>
+          </StaggeredList>
         </div>
       </section>
 
