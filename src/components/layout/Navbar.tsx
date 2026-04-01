@@ -10,9 +10,12 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
   const user = session?.user as SessionUser | undefined
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen]         = useState(false)
+  const [mounted, setMounted] = useState(false) // Fix hydration
 
   useEffect(() => {
+    setMounted(true) // Mark as client-side mounted
     const fn = () => setScrolled(window.scrollY > 10)
+    fn() // Set initial scroll state
     window.addEventListener("scroll", fn)
     return () => window.removeEventListener("scroll", fn)
   }, [])
@@ -24,10 +27,13 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
     return "/dashboard"
   }
 
+  // Use forceWhite for initial render to avoid hydration mismatch
+  const shouldBeWhite = forceWhite || (mounted && scrolled)
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
-        scrolled || forceWhite ? "bg-white/95 backdrop-blur-md border-b shadow-sm" : "bg-transparent"
+        shouldBeWhite ? "bg-white/95 backdrop-blur-md border-b shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="section-wrap">
@@ -59,12 +65,12 @@ export default function Navbar({ forceWhite = false }: { forceWhite?: boolean })
             {["Bangalore","Mumbai","Delhi","Hyderabad"].map(city => (
               <Link key={city} href={`/properties/${city.toLowerCase()}`}
                 className={`font-body text-sm px-3 py-1.5 rounded-lg transition-all duration-150 hover:bg-muted hover:text-foreground ${
-                  (scrolled || forceWhite) 
+                  shouldBeWhite 
                     ? "text-muted-foreground" 
                     : "text-white/95"
                 }`}
                 style={{
-                  textShadow: !(scrolled || forceWhite) ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
+                  textShadow: !shouldBeWhite ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
                 }}
               >
                 {city}
